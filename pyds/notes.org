@@ -1,0 +1,420 @@
+#+TITLE: Python Data Science Handbook Notes
+
+:SETUP:
+#+STARTUP: showall inlineimages
+#+PROPERTY: header-args :session pyds :exports both :results raw drawer
+#+INFOJS_OPT: view:t toc:t ltoc:0 mouse:underline buttons:0 path:http://thomasf.github.io/solarized-css/org-info.min.js
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://thomasf.github.io/solarized-css/solarized-dark.min.css" />
+#+HTML_HEAD: <style>pre.example {background: #001e26;}</style>
+#+BEGIN_SRC ipython :exports none :results none
+  from __future__ import print_function
+  %matplotlib inline
+  %config InlineBackend.rc={'figure.dpi': 120}
+  import numpy as np
+  import matplotlib.pyplot as plt
+  plt.style.use("ggplot")
+#+END_SRC
+:END:
+
+* IPython
+** Shell commands
+   All shell commands can be used with ~!~ prefix.  Results can be assigned to
+   python variables.  ~!~ functions run in temporary shell.  ~%~ *magic*
+   functions has permanent effect. Many ~%~ magic functions can be used without
+   ~%~, these are called *automagic* functions.
+
+   #+BEGIN_SRC ipython
+   files = !ls
+   files
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[101]:
+   : ['notes.html', 'notes.org', 'obipy']
+   :END:
+
+** Debugger
+   ~%debug~ to enter debugger on last exception
+
+** Timing
+   + ~%timeit~ - one line, may run multiple times for short functions
+   + ~%%timeit~ - works for multiple code lines, may run multple times
+   + ~%time~ - only run one time
+   + ~%%time~ - only run one time, multi line cell
+   + ~%prun~ - profile function call
+
+* NumPy
+** Array creating functions
+   - ~np.zeros(10, dtype=int)~
+   - ~np.ones((3,5), dtype=float)~
+   - ~np.full((3,5), 3.14)~
+   - ~np.arange(0, 20, 2)~
+   - ~np.linspace(0, 1, 5)~
+   - ~np.random.random((3, 3))~
+   - ~np.random.normal(0, 1, (3, 3))~ normally distributed random values
+   - ~np.random.randint(0, 10, (3, 3))~
+   - ~np.eye(3)~  3x3 identity matrix
+   - ~np.empty(3)~ uninitialized array
+** Array attributes
+   
+   #+BEGIN_SRC ipython :results output pp
+   x3 = np.random.randint(10, size=(3, 4, 5))
+   print("x3 ndim", x3.ndim)         # dimension
+   print("x3 shape", x3.shape)       # shape
+   print("x3 size", x3.size)         # total elements
+   print("x3 dtype", x3.dtype)       # array type
+   print("x3 itemsize", x3.itemsize) # bytes per item
+   print("x3 nbytes", x3.nbytes)     # total bytes
+   #+END_SRC
+
+   #+RESULTS:
+   : x3 ndim 3
+   : x3 shape (3, 4, 5)
+   : x3 size 60
+   : x3 dtype int32
+   : x3 itemsize 4
+   : x3 nbytes 240
+
+** Array slicing
+   
+   Slicing returns a *view* into the original. No copy is made.
+
+   #+BEGIN_SRC ipython :results raw drawer
+   x2 = np.random.randint(10, size=(3, 4))
+   x2
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[104]:
+   #+BEGIN_EXAMPLE
+     array([[0, 4, 6, 9],
+            [8, 9, 9, 7],
+            [3, 7, 5, 3]])
+   #+END_EXAMPLE
+   :END:
+
+   Extract 2x2
+
+   #+BEGIN_SRC ipython
+    x2[:2, :2]
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[105]:
+   #+BEGIN_EXAMPLE
+     array([[0, 4],
+            [8, 9]])
+   #+END_EXAMPLE
+   :END:
+
+   Reverse
+   #+BEGIN_SRC ipython
+    x2[::-1, ::-1]
+   #+END_SRC
+
+   Get column
+   #+BEGIN_SRC ipython
+    x2[:, 0]
+   #+END_SRC
+
+   Get row
+   #+BEGIN_SRC ipython
+    x2[0, :]
+   #+END_SRC
+
+   To make a copy,  use .copy()
+   #+BEGIN_SRC ipython
+   x2[:2, :2].copy()
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[140]:
+   #+BEGIN_EXAMPLE
+     array([[2, 4],
+            [3, 3]])
+   #+END_EXAMPLE
+   :END:
+
+** Change dimension
+   
+   With ~.reshape()~
+
+   #+BEGIN_SRC ipython
+   x = np.array([1,2,3])
+   x.reshape((1,3))  # make row vector
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[141]:
+   : array([[1, 2, 3]])
+   :END:
+
+   #+BEGIN_SRC ipython
+   x.reshape((3,1))  # make column vector
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[142]:
+   #+BEGIN_EXAMPLE
+     array([[1],
+            [2],
+            [3]])
+   #+END_EXAMPLE
+   :END:
+
+   Or with ~np.newaxis~
+
+   #+BEGIN_SRC ipython
+   x[np.newaxis, :]
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[143]:
+   : array([[1, 2, 3]])
+   :END:
+
+   #+BEGIN_SRC ipython
+   x[:, np.newaxis]
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[144]:
+   #+BEGIN_EXAMPLE
+     array([[1],
+            [2],
+            [3]])
+   #+END_EXAMPLE
+   :END:
+
+** Merging and splitting
+
+   #+BEGIN_SRC ipython
+   np.concatenate([x2, x2]) # or np.vstack()
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[161]:
+   #+BEGIN_EXAMPLE
+     array([[4, 5, 8, 2],
+            [4, 7, 2, 4],
+            [7, 8, 6, 5],
+            [4, 5, 8, 2],
+            [4, 7, 2, 4],
+            [7, 8, 6, 5]])
+   #+END_EXAMPLE
+   :END:
+
+   #+BEGIN_SRC ipython
+   np.concatenate([x2, x2], axis=1) # or np.hstack()
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[162]:
+   #+BEGIN_EXAMPLE
+     array([[4, 5, 8, 2, 4, 5, 8, 2],
+            [4, 7, 2, 4, 4, 7, 2, 4],
+            [7, 8, 6, 5, 7, 8, 6, 5]])
+   #+END_EXAMPLE
+   :END:
+
+   Split with ~np.split()~ , ~np.hsplit()~ , ~np.vsplit()~
+
+   #+BEGIN_SRC ipython
+   x = [1, 2, 3, 99, 99, 3, 2, 1]
+   np.split(x, [3, 5]) # pass a list of split points
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[165]:
+   : [array([1, 2, 3]), array([99, 99]), array([3, 2, 1])]
+   :END:
+
+** Specify output container
+
+   To avoid creating temporaries.
+   
+   #+BEGIN_SRC ipython
+   x = np.arange(5)
+   y = np.empty(5)
+   np.multiply(x, 10, out=y)
+   y
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[205]:
+   : array([  0.,  10.,  20.,  30.,  40.])
+   :END:
+
+   This can even be used with array views. For example, we can write the results
+   of a computation to every other element of a specified array:
+
+   #+BEGIN_SRC ipython
+   y = np.zeros(10)
+   np.power(2, x, out=y[::2])
+   y
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[206]:
+   : array([  1.,   0.,   2.,   0.,   4.,   0.,   8.,   0.,  16.,   0.])
+   :END:
+
+** reduce() and accumulate()
+   
+   ufuncs supports ~reduce()~ and ~accumulate()~
+
+   ~reduce()~ computes a final result.
+   
+   #+BEGIN_SRC ipython
+   x = np.arange(1, 6)
+   np.add.reduce(x)
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[207]:
+   : 15
+   :END:
+
+   ~accumulate()~ saves all intermediate results.
+
+   #+BEGIN_SRC ipython
+   np.add.accumulate(x)
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[208]:
+   : array([ 1,  3,  6, 10, 15], dtype=int32)
+   :END:
+
+** Sort and index sort
+
+   ~np.sort()~ returns new copy of sorted array.
+
+   ~x.sort()~ sorts ~x~ in place.
+
+   ~np.argsort()~ returns sorted index array.
+
+   #+BEGIN_SRC ipython
+   x = np.array([2,1,4,3,5])
+   np.sort(x)
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[353]:
+   : array([1, 2, 3, 4, 5])
+   :END:
+
+   #+BEGIN_SRC ipython
+   np.argsort(x)
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[354]:
+   : array([1, 0, 3, 2, 4], dtype=int64)
+   :END:
+
+** Example: k-Nearest Neighbors
+
+   https://jakevdp.github.io/PythonDataScienceHandbook/02.08-sorting.html
+
+   Create 10 random points.
+   
+   #+BEGIN_SRC ipython :ipyfile ./obipy/dmv85B.png
+   np.random.seed(42)
+   X = np.random.rand(10, 2)
+   plt.scatter(X[:, 0], X[:, 1], s=100);
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[553]:
+   [[file:./obipy/dmv85B.png]]
+   :END:
+
+
+   Compute the distance between each pair of points.
+   Take the 2 left most columns.
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/Fmmxx1.png
+   dist_sq = np.sum((X[:, np.newaxis, :] - X[np.newaxis, :, :]) ** 2, axis=-1)
+   K = 2
+   nearest_partition = np.argpartition(dist_sq, K + 1, axis=1)
+   plt.scatter(X[:, 0], X[:, 1], s=100)
+   for i in range(X.shape[0]):
+       for j in nearest_partition[i, :K+1]:
+           # plot a line from X[i] to X[j]
+           # use some zip magic to make it happen:
+           plt.plot(*zip(X[j], X[i]), color='black')
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[575]:
+   [[file:./obipy/Fmmxx1.png]]
+   :END:
+
+
+* Org-mode tricks
+** Inline LaTeX
+   Equation:
+
+   \begin{equation}
+   x=\sqrt{b}
+   \end{equation}
+
+   Inline math:
+   
+   If $a^2=b$ and \( b=2 \), then the solution must be
+   either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \]
+
+   Align equations:
+
+   \begin{align*}
+   1 + 2&= 3\\
+   1 &= 3 - 2
+   \end{align*}
+
+** Output LaTex from code blocks
+   #+BEGIN_SRC ipython :results output
+     from sympy import *
+     x = Symbol("x")
+     a = 1/((x+2)*(x+1))
+     print("$${}$$".format(latex(a)))
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   $$\frac{1}{\left(x + 1\right) \left(x + 2\right)}$$
+   :END:
+
+** Ploting
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/vZiLDk.png
+   x = np.linspace(0, 3*np.pi, 500)
+   plt.plot(x, np.sin(x**2))
+   plt.title('A simple chirp')
+   plt.show()
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[107]:
+   [[file:./obipy/vZiLDk.png]]
+   :END:
