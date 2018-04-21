@@ -334,25 +334,13 @@
 
    https://jakevdp.github.io/PythonDataScienceHandbook/02.08-sorting.html
 
-   Create 10 random points.
+   - Create 10 random points.
+   - Compute the distance between each pair of points.
+   - Take the 2 left most columns.
    
    #+BEGIN_SRC ipython :ipyfile ./obipy/dmv85B.png
    np.random.seed(42)
    X = np.random.rand(10, 2)
-   plt.scatter(X[:, 0], X[:, 1], s=100);
-   #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[553]:
-   [[file:./obipy/dmv85B.png]]
-   :END:
-
-
-   Compute the distance between each pair of points.
-   Take the 2 left most columns.
-
-   #+BEGIN_SRC ipython :ipyfile ./obipy/Fmmxx1.png
    dist_sq = np.sum((X[:, np.newaxis, :] - X[np.newaxis, :, :]) ** 2, axis=-1)
    K = 2
    nearest_partition = np.argpartition(dist_sq, K + 1, axis=1)
@@ -366,8 +354,8 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[575]:
-   [[file:./obipy/Fmmxx1.png]]
+   # Out[3]:
+   [[file:./obipy/dmv85B.png]]
    :END:
 
 
