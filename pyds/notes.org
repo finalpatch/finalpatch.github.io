@@ -17,6 +17,26 @@
 :END:
 
 * IPython
+** Completion on Windows
+   To get Emacs Python shell completion on Windows, install pyreadline. Then it
+   just works.
+
+** Disable pager in Emacs
+   
+   put this in ~${HOME}/.ipython/profile_default/startup/no-pager.py~
+
+   #+BEGIN_SRC ipython :exports code :results none
+   from __future__ import print_function
+   def page_printer(data, start=0, screen_lines=0, pager_cmd=None):
+       if isinstance(data, dict):
+           data = data['text/plain']
+       print(data)
+   import os
+   TERM = os.environ.get('TERM')
+   if TERM in ['emacs']:
+       get_ipython().hooks.show_in_pager = page_printer
+   #+END_SRC
+
 ** Shell commands
    All shell commands can be used with ~!~ prefix.  Results can be assigned to
    python variables.  ~!~ functions run in temporary shell.  ~%~ *magic*
