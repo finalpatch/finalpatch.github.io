@@ -18,46 +18,47 @@
 :END:
 
 * IPython
-** Completion on Windows
-   To get Emacs Python shell completion on Windows, install pyreadline. Then it
-   just works.
+** Emacs
+*** Completion on Windows
+    To get Emacs Python shell completion on Windows, install pyreadline. Then it
+    just works.
 
-** Disable pager in Emacs
+*** Disable pager in Emacs
    
-   put this in ~${HOME}/.ipython/profile_default/startup/no-pager.py~
+    put this in ~${HOME}/.ipython/profile_default/startup/no-pager.py~
 
-   #+BEGIN_SRC ipython :exports code :results none
-   from __future__ import print_function
-   def page_printer(data, start=0, screen_lines=0, pager_cmd=None):
-       if isinstance(data, dict):
-           data = data['text/plain']
-       print(data)
-   import os
-   TERM = os.environ.get('TERM')
-   if TERM in ['emacs']:
-       get_ipython().hooks.show_in_pager = page_printer
-   #+END_SRC
-** Format DataFrame as org table
+    #+BEGIN_SRC ipython :exports code :results none
+    from __future__ import print_function
+    def page_printer(data, start=0, screen_lines=0, pager_cmd=None):
+        if isinstance(data, dict):
+            data = data['text/plain']
+        print(data)
+    import os
+    TERM = os.environ.get('TERM', 'dumb')
+    if TERM in ['emacs', 'dumb', 'xterm-color']:
+        get_ipython().hooks.show_in_pager = page_printer
+    #+END_SRC
+*** Format DataFrame as org table
    
-   put this in ~${HOME}/.ipython/profile_default/startup/org-formatter.py~
+    put this in ~${HOME}/.ipython/profile_default/startup/org-formatter.py~
    
-   #+BEGIN_SRC ipython :session :results none :exports code
-   import IPython, sys
-   from tabulate import tabulate
-   class OrgFormatter(IPython.core.formatters.BaseFormatter):
-     def __call__(self, obj):
-         try:
-             if 'pandas' in sys.modules:
-                 import pandas as pd
-             else:
-                 return None
-             if (type(obj) == pd.core.frame.DataFrame):
-                 return tabulate(obj, headers='keys', tablefmt='orgtbl')
-         except:
-             return None
-   ip = get_ipython()
-   ip.display_formatter.formatters['text/org'] = OrgFormatter()
-   #+END_SRC
+    #+BEGIN_SRC ipython :exports code :results none
+    import IPython, sys
+    from tabulate import tabulate
+    class OrgFormatter(IPython.core.formatters.BaseFormatter):
+      def __call__(self, obj):
+          try:
+              if 'pandas' in sys.modules:
+                  import pandas as pd
+              else:
+                  return None
+              if (type(obj) == pd.core.frame.DataFrame):
+                  return tabulate(obj, headers='keys', tablefmt='orgtbl')
+          except:
+              return None
+    ip = get_ipython()
+    ip.display_formatter.formatters['text/org'] = OrgFormatter()
+    #+END_SRC
 
 ** Shell commands
    All shell commands can be used with ~!~ prefix.  Results can be assigned to
