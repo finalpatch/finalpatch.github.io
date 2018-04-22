@@ -408,6 +408,10 @@
    
    Series is like strong typed dictionary.
 
+   Series supports indexing with keys: ~data['b']~
+
+   And checking presence with operator ~in~: ~'a' in data~
+
 *** Constructing
     
     data can be a scalar, which is repeated to fill the specified index:
@@ -466,3 +470,5 @@
 
    Similar to Series, but 2D, where both rows and columns have generalized
    index.
+
+   It can be seen as a dictionary of column names to series.
