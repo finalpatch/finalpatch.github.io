@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-04-22 Sun 01:00 -->
+<!-- 2018-04-22 Sun 16:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python Data Science Handbook Notes</title>
@@ -329,45 +329,55 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf0137f1">1. IPython</a>
+<li><a href="#orgff48e2f">1. IPython</a>
 <ul>
-<li><a href="#org57c1527">1.1. Completion on Windows</a></li>
-<li><a href="#org03cca2a">1.2. Disable pager in Emacs</a></li>
-<li><a href="#orgae3296f">1.3. Shell commands</a></li>
-<li><a href="#org94ee44a">1.4. Debugger</a></li>
-<li><a href="#org76290ed">1.5. Timing</a></li>
+<li><a href="#orgd03d093">1.1. Completion on Windows</a></li>
+<li><a href="#org3c8e96a">1.2. Disable pager in Emacs</a></li>
+<li><a href="#org4151040">1.3. Shell commands</a></li>
+<li><a href="#org03f623a">1.4. Debugger</a></li>
+<li><a href="#org2990bcc">1.5. Timing</a></li>
 </ul>
 </li>
-<li><a href="#orgaec24e8">2. NumPy</a>
+<li><a href="#orgaee1bd3">2. NumPy</a>
 <ul>
-<li><a href="#org6ffb843">2.1. Array creating functions</a></li>
-<li><a href="#org1961817">2.2. Array attributes</a></li>
-<li><a href="#orgef3c92e">2.3. Array slicing</a></li>
-<li><a href="#org89efdff">2.4. Change dimension</a></li>
-<li><a href="#org70268fb">2.5. Merging and splitting</a></li>
-<li><a href="#orgcece1b7">2.6. Specify output container</a></li>
-<li><a href="#org6ee8256">2.7. reduce() and accumulate()</a></li>
-<li><a href="#org45dba06">2.8. Sort and index sort</a></li>
-<li><a href="#org775a9df">2.9. Example: k-Nearest Neighbors</a></li>
+<li><a href="#org28cf360">2.1. Array creating functions</a></li>
+<li><a href="#orgf958f3e">2.2. Array attributes</a></li>
+<li><a href="#org4b6fee5">2.3. Array slicing</a></li>
+<li><a href="#org8665498">2.4. Change dimension</a></li>
+<li><a href="#org250db18">2.5. Merging and splitting</a></li>
+<li><a href="#org6cc304b">2.6. Specify output container</a></li>
+<li><a href="#org61fe938">2.7. reduce() and accumulate()</a></li>
+<li><a href="#org0b36f64">2.8. Sort and index sort</a></li>
+<li><a href="#org8448e36">2.9. Example: k-Nearest Neighbors</a></li>
 </ul>
 </li>
-<li><a href="#org094b320">3. Org-mode tricks</a>
+<li><a href="#org3953035">3. Pandas</a>
 <ul>
-<li><a href="#org20f8fc0">3.1. Inline LaTeX</a></li>
-<li><a href="#org7a89540">3.2. Output LaTex from code blocks</a></li>
-<li><a href="#orgac4a681">3.3. Ploting</a></li>
+<li><a href="#org566024f">3.1. Series</a>
+<ul>
+<li><a href="#orgb7bbd10">3.1.1. Constructing</a></li>
+</ul>
+</li>
+<li><a href="#orge1c5bec">3.2. DataFrame</a></li>
+</ul>
+</li>
+<li><a href="#org0e8f0da">4. Org-mode tricks</a>
+<ul>
+<li><a href="#orga395d5b">4.1. Inline LaTeX</a></li>
+<li><a href="#org114c147">4.2. Output LaTex from code blocks</a></li>
+<li><a href="#org5b27140">4.3. Ploting</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf0137f1" class="outline-2">
-<h2 id="orgf0137f1"><span class="section-number-2">1</span> IPython</h2>
+<div id="outline-container-orgff48e2f" class="outline-2">
+<h2 id="orgff48e2f"><span class="section-number-2">1</span> IPython</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org57c1527" class="outline-3">
-<h3 id="org57c1527"><span class="section-number-3">1.1</span> Completion on Windows</h3>
+<div id="outline-container-orgd03d093" class="outline-3">
+<h3 id="orgd03d093"><span class="section-number-3">1.1</span> Completion on Windows</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 To get Emacs Python shell completion on Windows, install pyreadline. Then it
@@ -376,8 +386,8 @@ just works.
 </div>
 </div>
 
-<div id="outline-container-org03cca2a" class="outline-3">
-<h3 id="org03cca2a"><span class="section-number-3">1.2</span> Disable pager in Emacs</h3>
+<div id="outline-container-org3c8e96a" class="outline-3">
+<h3 id="org3c8e96a"><span class="section-number-3">1.2</span> Disable pager in Emacs</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 put this in <code>${HOME}/.ipython/profile_default/startup/no-pager.py</code>
@@ -387,19 +397,19 @@ put this in <code>${HOME}/.ipython/profile_default/startup/no-pager.py</code>
 <pre class="src src-ipython"><span style="color: #ff79c6; font-weight: bold;">from</span> __future__ <span style="color: #ff79c6; font-weight: bold;">import</span> print_function
 <span style="color: #ff79c6; font-weight: bold;">def</span> <span style="color: #50fa7b; font-weight: bold;">page_printer</span>(data, start=0, screen_lines=0, pager_cmd=<span style="color: #8be9fd;">None</span>):
     <span style="color: #ff79c6; font-weight: bold;">if</span> <span style="color: #ffb86c;">isinstance</span>(data, <span style="color: #ffb86c;">dict</span>):
-        <span style="color: #f8f8f2;">data</span> = data[<span style="color: #f1fa8c;">'text/plain'</span>]
+        <span style="font-weight: bold;">data</span> = data[<span style="color: #f1fa8c;">'text/plain'</span>]
     <span style="color: #ff79c6; font-weight: bold;">print</span>(data)
 <span style="color: #ff79c6; font-weight: bold;">import</span> os
-<span style="color: #f8f8f2;">TERM</span> = os.environ.get(<span style="color: #f1fa8c;">'TERM'</span>)
+<span style="font-weight: bold;">TERM</span> = os.environ.get(<span style="color: #f1fa8c;">'TERM'</span>)
 <span style="color: #ff79c6; font-weight: bold;">if</span> TERM <span style="color: #ff79c6; font-weight: bold;">in</span> [<span style="color: #f1fa8c;">'emacs'</span>]:
-    get_ipython()<span style="color: #f8f8f2;">.hooks.show_in_pager</span> = page_printer
+    get_ipython()<span style="font-weight: bold;">.hooks.show_in_pager</span> = page_printer
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgae3296f" class="outline-3">
-<h3 id="orgae3296f"><span class="section-number-3">1.3</span> Shell commands</h3>
+<div id="outline-container-org4151040" class="outline-3">
+<h3 id="org4151040"><span class="section-number-3">1.3</span> Shell commands</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 All shell commands can be used with <code>!</code> prefix.  Results can be assigned to
@@ -409,7 +419,7 @@ functions has permanent effect. Many <code>%</code> magic functions can be used 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #f8f8f2;">files</span> = !ls
+<pre class="src src-ipython"><span style="font-weight: bold;">files</span> = !ls
 files
 </pre>
 </div>
@@ -421,8 +431,8 @@ files
 </div>
 </div>
 
-<div id="outline-container-org94ee44a" class="outline-3">
-<h3 id="org94ee44a"><span class="section-number-3">1.4</span> Debugger</h3>
+<div id="outline-container-org03f623a" class="outline-3">
+<h3 id="org03f623a"><span class="section-number-3">1.4</span> Debugger</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 <code>%debug</code> to enter debugger on last exception
@@ -430,8 +440,8 @@ files
 </div>
 </div>
 
-<div id="outline-container-org76290ed" class="outline-3">
-<h3 id="org76290ed"><span class="section-number-3">1.5</span> Timing</h3>
+<div id="outline-container-org2990bcc" class="outline-3">
+<h3 id="org2990bcc"><span class="section-number-3">1.5</span> Timing</h3>
 <div class="outline-text-3" id="text-1-5">
 <ul class="org-ul">
 <li><code>%timeit</code> - one line, may run multiple times for short functions</li>
@@ -444,12 +454,12 @@ files
 </div>
 </div>
 
-<div id="outline-container-orgaec24e8" class="outline-2">
-<h2 id="orgaec24e8"><span class="section-number-2">2</span> NumPy</h2>
+<div id="outline-container-orgaee1bd3" class="outline-2">
+<h2 id="orgaee1bd3"><span class="section-number-2">2</span> NumPy</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org6ffb843" class="outline-3">
-<h3 id="org6ffb843"><span class="section-number-3">2.1</span> Array creating functions</h3>
+<div id="outline-container-org28cf360" class="outline-3">
+<h3 id="org28cf360"><span class="section-number-3">2.1</span> Array creating functions</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li><code>np.zeros(10, dtype=int)</code></li>
@@ -465,11 +475,11 @@ files
 </ul>
 </div>
 </div>
-<div id="outline-container-org1961817" class="outline-3">
-<h3 id="org1961817"><span class="section-number-3">2.2</span> Array attributes</h3>
+<div id="outline-container-orgf958f3e" class="outline-3">
+<h3 id="orgf958f3e"><span class="section-number-3">2.2</span> Array attributes</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #f8f8f2;">x3</span> = np.random.randint(10, size=(3, 4, 5))
+<pre class="src src-ipython"><span style="font-weight: bold;">x3</span> = np.random.randint(10, size=(3, 4, 5))
 <span style="color: #ff79c6; font-weight: bold;">print</span>(<span style="color: #f1fa8c;">"x3 ndim"</span>, x3.ndim)         <span style="color: #6272a4;"># </span><span style="color: #6272a4;">dimension</span>
 <span style="color: #ff79c6; font-weight: bold;">print</span>(<span style="color: #f1fa8c;">"x3 shape"</span>, x3.shape)       <span style="color: #6272a4;"># </span><span style="color: #6272a4;">shape</span>
 <span style="color: #ff79c6; font-weight: bold;">print</span>(<span style="color: #f1fa8c;">"x3 size"</span>, x3.size)         <span style="color: #6272a4;"># </span><span style="color: #6272a4;">total elements</span>
@@ -491,15 +501,15 @@ x3 nbytes 240
 </div>
 </div>
 
-<div id="outline-container-orgef3c92e" class="outline-3">
-<h3 id="orgef3c92e"><span class="section-number-3">2.3</span> Array slicing</h3>
+<div id="outline-container-org4b6fee5" class="outline-3">
+<h3 id="org4b6fee5"><span class="section-number-3">2.3</span> Array slicing</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Slicing returns a <b>view</b> into the original. No copy is made.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #f8f8f2;">x2</span> = np.random.randint(10, size=(3, 4))
+<pre class="src src-ipython"><span style="font-weight: bold;">x2</span> = np.random.randint(10, size=(3, 4))
 x2
 </pre>
 </div>
@@ -579,15 +589,15 @@ array([[2, 0],
 </div>
 </div>
 
-<div id="outline-container-org89efdff" class="outline-3">
-<h3 id="org89efdff"><span class="section-number-3">2.4</span> Change dimension</h3>
+<div id="outline-container-org8665498" class="outline-3">
+<h3 id="org8665498"><span class="section-number-3">2.4</span> Change dimension</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 With <code>.reshape()</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #f8f8f2;">x</span> = np.array([1,2,3])
+<pre class="src src-ipython"><span style="font-weight: bold;">x</span> = np.array([1,2,3])
 x.reshape((1,3))  <span style="color: #6272a4;"># </span><span style="color: #6272a4;">make row vector</span>
 </pre>
 </div>
@@ -635,9 +645,13 @@ array([[1],
 </div>
 </div>
 
-<div id="outline-container-org70268fb" class="outline-3">
-<h3 id="org70268fb"><span class="section-number-3">2.5</span> Merging and splitting</h3>
+<div id="outline-container-org250db18" class="outline-3">
+<h3 id="org250db18"><span class="section-number-3">2.5</span> Merging and splitting</h3>
 <div class="outline-text-3" id="text-2-5">
+<p>
+Merging with <code>np.concatenate()</code>, <code>np.vstack()</code>, <code>np.hstack()</code>
+</p>
+
 <div class="org-src-container">
 <pre class="src src-ipython">np.concatenate([x2, x2]) <span style="color: #6272a4;"># </span><span style="color: #6272a4;">or np.vstack()</span>
 </pre>
@@ -668,7 +682,7 @@ Split with <code>np.split()</code> , <code>np.hsplit()</code> , <code>np.vsplit(
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #f8f8f2;">x</span> = [1, 2, 3, 99, 99, 3, 2, 1]
+<pre class="src src-ipython"><span style="font-weight: bold;">x</span> = [1, 2, 3, 99, 99, 3, 2, 1]
 np.split(x, [3, 5]) <span style="color: #6272a4;"># </span><span style="color: #6272a4;">pass a list of split points</span>
 </pre>
 </div>
@@ -680,16 +694,16 @@ np.split(x, [3, 5]) <span style="color: #6272a4;"># </span><span style="color: #
 </div>
 </div>
 
-<div id="outline-container-orgcece1b7" class="outline-3">
-<h3 id="orgcece1b7"><span class="section-number-3">2.6</span> Specify output container</h3>
+<div id="outline-container-org6cc304b" class="outline-3">
+<h3 id="org6cc304b"><span class="section-number-3">2.6</span> Specify output container</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 To avoid creating temporaries.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #f8f8f2;">x</span> = np.arange(5)
-<span style="color: #f8f8f2;">y</span> = np.empty(5)
+<pre class="src src-ipython"><span style="font-weight: bold;">x</span> = np.arange(5)
+<span style="font-weight: bold;">y</span> = np.empty(5)
 np.multiply(x, 10, out=y)
 y
 </pre>
@@ -706,7 +720,7 @@ of a computation to every other element of a specified array:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #f8f8f2;">y</span> = np.zeros(10)
+<pre class="src src-ipython"><span style="font-weight: bold;">y</span> = np.zeros(10)
 np.power(2, x, out=y[::2])
 y
 </pre>
@@ -719,8 +733,8 @@ array([  1.,   0.,   2.,   0.,   4.,   0.,   8.,   0.,  16.,   0.])
 </div>
 </div>
 
-<div id="outline-container-org6ee8256" class="outline-3">
-<h3 id="org6ee8256"><span class="section-number-3">2.7</span> reduce() and accumulate()</h3>
+<div id="outline-container-org61fe938" class="outline-3">
+<h3 id="org61fe938"><span class="section-number-3">2.7</span> reduce() and accumulate()</h3>
 <div class="outline-text-3" id="text-2-7">
 <p>
 ufuncs supports <code>reduce()</code> and <code>accumulate()</code>
@@ -731,7 +745,7 @@ ufuncs supports <code>reduce()</code> and <code>accumulate()</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #f8f8f2;">x</span> = np.arange(1, 6)
+<pre class="src src-ipython"><span style="font-weight: bold;">x</span> = np.arange(1, 6)
 np.add.<span style="color: #ffb86c;">reduce</span>(x)
 </pre>
 </div>
@@ -757,8 +771,8 @@ array([ 1,  3,  6, 10, 15], dtype=int32)
 </div>
 </div>
 
-<div id="outline-container-org45dba06" class="outline-3">
-<h3 id="org45dba06"><span class="section-number-3">2.8</span> Sort and index sort</h3>
+<div id="outline-container-org0b36f64" class="outline-3">
+<h3 id="org0b36f64"><span class="section-number-3">2.8</span> Sort and index sort</h3>
 <div class="outline-text-3" id="text-2-8">
 <p>
 <code>np.sort()</code> returns new copy of sorted array.
@@ -773,7 +787,7 @@ array([ 1,  3,  6, 10, 15], dtype=int32)
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #f8f8f2;">x</span> = np.array([2,1,4,3,5])
+<pre class="src src-ipython"><span style="font-weight: bold;">x</span> = np.array([2,1,4,3,5])
 np.sort(x)
 </pre>
 </div>
@@ -795,8 +809,8 @@ array([1, 0, 3, 2, 4], dtype=int64)
 </div>
 </div>
 
-<div id="outline-container-org775a9df" class="outline-3">
-<h3 id="org775a9df"><span class="section-number-3">2.9</span> Example: k-Nearest Neighbors</h3>
+<div id="outline-container-org8448e36" class="outline-3">
+<h3 id="org8448e36"><span class="section-number-3">2.9</span> Example: k-Nearest Neighbors</h3>
 <div class="outline-text-3" id="text-2-9">
 <p>
 <a href="https://jakevdp.github.io/PythonDataScienceHandbook/02.08-sorting.html">https://jakevdp.github.io/PythonDataScienceHandbook/02.08-sorting.html</a>
@@ -810,10 +824,10 @@ array([1, 0, 3, 2, 4], dtype=int64)
 
 <div class="org-src-container">
 <pre class="src src-ipython">np.random.seed(42)
-<span style="color: #f8f8f2;">X</span> = np.random.rand(10, 2)
-<span style="color: #f8f8f2;">dist_sq</span> = np.<span style="color: #ffb86c;">sum</span>((X[:, np.newaxis, :] - X[np.newaxis, :, :]) ** 2, axis=-1)
-<span style="color: #f8f8f2;">K</span> = 2
-<span style="color: #f8f8f2;">nearest_partition</span> = np.argpartition(dist_sq, K + 1, axis=1)
+<span style="font-weight: bold;">X</span> = np.random.rand(10, 2)
+<span style="font-weight: bold;">dist_sq</span> = np.<span style="color: #ffb86c;">sum</span>((X[:, np.newaxis, :] - X[np.newaxis, :, :]) ** 2, axis=-1)
+<span style="font-weight: bold;">K</span> = 2
+<span style="font-weight: bold;">nearest_partition</span> = np.argpartition(dist_sq, K + 1, axis=1)
 plt.scatter(X[:, 0], X[:, 1], s=100)
 <span style="color: #ff79c6; font-weight: bold;">for</span> i <span style="color: #ff79c6; font-weight: bold;">in</span> <span style="color: #ffb86c;">range</span>(X.shape[0]):
     <span style="color: #ff79c6; font-weight: bold;">for</span> j <span style="color: #ff79c6; font-weight: bold;">in</span> nearest_partition[i, :K+1]:
@@ -832,14 +846,93 @@ plt.scatter(X[:, 0], X[:, 1], s=100)
 </div>
 </div>
 
-
-<div id="outline-container-org094b320" class="outline-2">
-<h2 id="org094b320"><span class="section-number-2">3</span> Org-mode tricks</h2>
+<div id="outline-container-org3953035" class="outline-2">
+<h2 id="org3953035"><span class="section-number-2">3</span> Pandas</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org20f8fc0" class="outline-3">
-<h3 id="org20f8fc0"><span class="section-number-3">3.1</span> Inline LaTeX</h3>
+<div id="outline-container-org566024f" class="outline-3">
+<h3 id="org566024f"><span class="section-number-3">3.1</span> Series</h3>
 <div class="outline-text-3" id="text-3-1">
+<p>
+Series is like strong typed dictionary.
+</p>
+</div>
+
+<div id="outline-container-orgb7bbd10" class="outline-4">
+<h4 id="orgb7bbd10"><span class="section-number-4">3.1.1</span> Constructing</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+data can be a scalar, which is repeated to fill the specified index:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">pd.Series(5, index=[100, 200, 300])
+</pre>
+</div>
+
+<pre class="example">
+100    5
+200    5
+300    5
+dtype: int64
+</pre>
+
+<p>
+data can be a dictionary:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">pd.Series({2:<span style="color: #f1fa8c;">'a'</span>, 1:<span style="color: #f1fa8c;">'b'</span>, 3:<span style="color: #f1fa8c;">'c'</span>})
+</pre>
+</div>
+
+<pre class="example">
+1    b
+2    a
+3    c
+dtype: object
+</pre>
+
+<p>
+Explicitly specify index:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">pd.Series({2:<span style="color: #f1fa8c;">'a'</span>, 1:<span style="color: #f1fa8c;">'b'</span>, 3:<span style="color: #f1fa8c;">'c'</span>}, index=[3, 2])
+</pre>
+</div>
+
+<pre class="example">
+3    c
+2    a
+dtype: object
+</pre>
+
+<p>
+In above example, 'b' is dropped, as 1 is not in the index.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge1c5bec" class="outline-3">
+<h3 id="orge1c5bec"><span class="section-number-3">3.2</span> DataFrame</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Similar to Series, but 2D, where both rows and columns have generalized
+index.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0e8f0da" class="outline-2">
+<h2 id="org0e8f0da"><span class="section-number-2">4</span> Org-mode tricks</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orga395d5b" class="outline-3">
+<h3 id="orga395d5b"><span class="section-number-3">4.1</span> Inline LaTeX</h3>
+<div class="outline-text-3" id="text-4-1">
 <p>
 Equation:
 </p>
@@ -868,13 +961,13 @@ Align equations:
 </div>
 </div>
 
-<div id="outline-container-org7a89540" class="outline-3">
-<h3 id="org7a89540"><span class="section-number-3">3.2</span> Output LaTex from code blocks</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-org114c147" class="outline-3">
+<h3 id="org114c147"><span class="section-number-3">4.2</span> Output LaTex from code blocks</h3>
+<div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 <pre class="src src-ipython"><span style="color: #ff79c6; font-weight: bold;">from</span> sympy <span style="color: #ff79c6; font-weight: bold;">import</span> *
-<span style="color: #f8f8f2;">x</span> = Symbol(<span style="color: #f1fa8c;">"x"</span>)
-<span style="color: #f8f8f2;">a</span> = 1/((x+2)*(x+1))
+<span style="font-weight: bold;">x</span> = Symbol(<span style="color: #f1fa8c;">"x"</span>)
+<span style="font-weight: bold;">a</span> = 1/((x+2)*(x+1))
 <span style="color: #ff79c6; font-weight: bold;">print</span>(<span style="color: #f1fa8c;">"$${}$$"</span>.<span style="color: #ffb86c;">format</span>(latex(a)))
 </pre>
 </div>
@@ -885,11 +978,11 @@ Align equations:
 </div>
 </div>
 
-<div id="outline-container-orgac4a681" class="outline-3">
-<h3 id="orgac4a681"><span class="section-number-3">3.3</span> Ploting</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-org5b27140" class="outline-3">
+<h3 id="org5b27140"><span class="section-number-3">4.3</span> Ploting</h3>
+<div class="outline-text-3" id="text-4-3">
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #f8f8f2;">x</span> = np.linspace(0, 3*np.pi, 500)
+<pre class="src src-ipython"><span style="font-weight: bold;">x</span> = np.linspace(0, 3*np.pi, 500)
 plt.plot(x, np.sin(x**2))
 plt.title(<span style="color: #f1fa8c;">'A simple chirp'</span>)
 plt.show()
@@ -906,7 +999,7 @@ plt.show()
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2018-04-22 Sun 01:00</p>
+<p class="date">Created: 2018-04-22 Sun 16:01</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

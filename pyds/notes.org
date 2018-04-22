@@ -11,6 +11,7 @@
   %matplotlib inline
   %config InlineBackend.rc={'figure.dpi': 120}
   import numpy as np
+  import pandas as pd
   import matplotlib.pyplot as plt
   plt.style.use("ggplot")
 #+END_SRC
@@ -50,7 +51,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[101]:
+   # Out[32]:
    : ['notes.html', 'notes.org', 'obipy']
    :END:
 
@@ -107,11 +108,11 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[104]:
+   # Out[34]:
    #+BEGIN_EXAMPLE
-     array([[0, 4, 6, 9],
-            [8, 9, 9, 7],
-            [3, 7, 5, 3]])
+     array([[2, 0, 7, 2],
+            [2, 0, 4, 9],
+            [6, 9, 8, 6]])
    #+END_EXAMPLE
    :END:
 
@@ -123,10 +124,10 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[105]:
+   # Out[35]:
    #+BEGIN_EXAMPLE
-     array([[0, 4],
-            [8, 9]])
+     array([[2, 0],
+            [2, 0]])
    #+END_EXAMPLE
    :END:
 
@@ -135,15 +136,37 @@
     x2[::-1, ::-1]
    #+END_SRC
 
+   #+RESULTS:
+   :RESULTS:
+   # Out[36]:
+   #+BEGIN_EXAMPLE
+     array([[6, 8, 9, 6],
+            [9, 4, 0, 2],
+            [2, 7, 0, 2]])
+   #+END_EXAMPLE
+   :END:
+
    Get column
    #+BEGIN_SRC ipython
     x2[:, 0]
    #+END_SRC
 
+   #+RESULTS:
+   :RESULTS:
+   # Out[37]:
+   : array([2, 2, 6])
+   :END:
+
    Get row
    #+BEGIN_SRC ipython
     x2[0, :]
    #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[38]:
+   : array([2, 0, 7, 2])
+   :END:
 
    To make a copy,  use .copy()
    #+BEGIN_SRC ipython
@@ -152,10 +175,10 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[140]:
+   # Out[39]:
    #+BEGIN_EXAMPLE
-     array([[2, 4],
-            [3, 3]])
+     array([[2, 0],
+            [2, 0]])
    #+END_EXAMPLE
    :END:
 
@@ -170,7 +193,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[141]:
+   # Out[40]:
    : array([[1, 2, 3]])
    :END:
 
@@ -180,7 +203,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[142]:
+   # Out[41]:
    #+BEGIN_EXAMPLE
      array([[1],
             [2],
@@ -196,7 +219,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[143]:
+   # Out[42]:
    : array([[1, 2, 3]])
    :END:
 
@@ -206,7 +229,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[144]:
+   # Out[43]:
    #+BEGIN_EXAMPLE
      array([[1],
             [2],
@@ -216,20 +239,22 @@
 
 ** Merging and splitting
 
+   Merging with ~np.concatenate()~, ~np.vstack()~, ~np.hstack()~
+
    #+BEGIN_SRC ipython
    np.concatenate([x2, x2]) # or np.vstack()
    #+END_SRC
 
    #+RESULTS:
    :RESULTS:
-   # Out[161]:
+   # Out[44]:
    #+BEGIN_EXAMPLE
-     array([[4, 5, 8, 2],
-            [4, 7, 2, 4],
-            [7, 8, 6, 5],
-            [4, 5, 8, 2],
-            [4, 7, 2, 4],
-            [7, 8, 6, 5]])
+     array([[2, 0, 7, 2],
+            [2, 0, 4, 9],
+            [6, 9, 8, 6],
+            [2, 0, 7, 2],
+            [2, 0, 4, 9],
+            [6, 9, 8, 6]])
    #+END_EXAMPLE
    :END:
 
@@ -239,11 +264,11 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[162]:
+   # Out[45]:
    #+BEGIN_EXAMPLE
-     array([[4, 5, 8, 2, 4, 5, 8, 2],
-            [4, 7, 2, 4, 4, 7, 2, 4],
-            [7, 8, 6, 5, 7, 8, 6, 5]])
+     array([[2, 0, 7, 2, 2, 0, 7, 2],
+            [2, 0, 4, 9, 2, 0, 4, 9],
+            [6, 9, 8, 6, 6, 9, 8, 6]])
    #+END_EXAMPLE
    :END:
 
@@ -256,7 +281,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[165]:
+   # Out[46]:
    : [array([1, 2, 3]), array([99, 99]), array([3, 2, 1])]
    :END:
 
@@ -273,7 +298,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[205]:
+   # Out[47]:
    : array([  0.,  10.,  20.,  30.,  40.])
    :END:
 
@@ -288,7 +313,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[206]:
+   # Out[48]:
    : array([  1.,   0.,   2.,   0.,   4.,   0.,   8.,   0.,  16.,   0.])
    :END:
 
@@ -305,7 +330,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[207]:
+   # Out[49]:
    : 15
    :END:
 
@@ -317,7 +342,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[208]:
+   # Out[50]:
    : array([ 1,  3,  6, 10, 15], dtype=int32)
    :END:
 
@@ -336,7 +361,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[353]:
+   # Out[51]:
    : array([1, 2, 3, 4, 5])
    :END:
 
@@ -346,7 +371,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[354]:
+   # Out[52]:
    : array([1, 0, 3, 2, 4], dtype=int64)
    :END:
 
@@ -374,11 +399,74 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[3]:
+   # Out[53]:
    [[file:./obipy/dmv85B.png]]
    :END:
 
+* Pandas
+** Series
+   
+   Series is like strong typed dictionary.
 
+*** Constructing
+    
+    data can be a scalar, which is repeated to fill the specified index:
+    
+    #+BEGIN_SRC ipython
+    pd.Series(5, index=[100, 200, 300])
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[54]:
+    #+BEGIN_EXAMPLE
+      100    5
+      200    5
+      300    5
+      dtype: int64
+    #+END_EXAMPLE
+    :END:
+
+    data can be a dictionary:
+
+    #+BEGIN_SRC ipython
+    pd.Series({2:'a', 1:'b', 3:'c'})
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[55]:
+    #+BEGIN_EXAMPLE
+      1    b
+      2    a
+      3    c
+      dtype: object
+    #+END_EXAMPLE
+    :END:
+
+    Explicitly specify index:
+
+    #+BEGIN_SRC ipython
+    pd.Series({2:'a', 1:'b', 3:'c'}, index=[3, 2])
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[56]:
+    #+BEGIN_EXAMPLE
+      3    c
+      2    a
+      dtype: object
+    #+END_EXAMPLE
+    :END:
+
+    In above example, 'b' is dropped, as 1 is not in the index.
+
+** DataFrame
+
+   Similar to Series, but 2D, where both rows and columns have generalized
+   index.
+   
 * Org-mode tricks
 ** Inline LaTeX
    Equation:
@@ -423,6 +511,6 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[107]:
+   # Out[58]:
    [[file:./obipy/vZiLDk.png]]
    :END:
