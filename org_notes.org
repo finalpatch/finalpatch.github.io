@@ -20,7 +20,7 @@
   \end{align*}
 
 * Output LaTex from code blocks
-  #+BEGIN_SRC python :results output
+  #+BEGIN_SRC python :results output raw drawer :exports both
   from sympy import *
   x = Symbol("x")
   a = 1/((x+2)*(x+1))
