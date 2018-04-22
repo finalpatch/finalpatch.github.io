@@ -37,6 +37,27 @@
    if TERM in ['emacs']:
        get_ipython().hooks.show_in_pager = page_printer
    #+END_SRC
+** Format DataFrame as org table
+   
+   put this in ~${HOME}/.ipython/profile_default/startup/org-formatter.py~
+   
+   #+BEGIN_SRC ipython :session :results none :exports code
+   import IPython, sys
+   from tabulate import tabulate
+   class OrgFormatter(IPython.core.formatters.BaseFormatter):
+     def __call__(self, obj):
+         try:
+             if 'pandas' in sys.modules:
+                 import pandas as pd
+             else:
+                 return None
+             if (type(obj) == pd.core.frame.DataFrame):
+                 return tabulate(obj, headers='keys', tablefmt='orgtbl')
+         except:
+             return None
+   ip = get_ipython()
+   ip.display_formatter.formatters['text/org'] = OrgFormatter()
+   #+END_SRC
 
 ** Shell commands
    All shell commands can be used with ~!~ prefix.  Results can be assigned to
