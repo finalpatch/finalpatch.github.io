@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-04-23 Mon 01:24 -->
+<!-- 2018-05-05 Sat 12:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python Data Science Handbook Notes</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="http://thomasf.github.io/solarized-css/solarized-dark.min.css" />
-<style>pre.example {background: #001e26;}</style>
+<style>pre.example {background: #001e26;} table{margin: 0 auto;}</style>
 
 <script type="text/javascript" src="http://thomasf.github.io/solarized-css/org-info.min.js">
 /**
@@ -307,57 +307,64 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org86d79e7">1. IPython</a>
+<li><a href="#org43d1644">1. IPython</a>
 <ul>
-<li><a href="#org2fa2081">1.1. Emacs</a>
+<li><a href="#org360a065">1.1. Emacs</a>
 <ul>
-<li><a href="#org4b98411">1.1.1. Completion on Windows</a></li>
-<li><a href="#org1417265">1.1.2. Disable pager in Emacs</a></li>
-<li><a href="#org3e99301">1.1.3. Format DataFrame as org table</a></li>
+<li><a href="#orga8757de">1.1.1. Completion on Windows</a></li>
+<li><a href="#org33d5aff">1.1.2. Disable pager in Emacs</a></li>
+<li><a href="#org292c2ff">1.1.3. Format DataFrame as org table</a></li>
 </ul>
 </li>
-<li><a href="#orgb7b0a8e">1.2. Shell commands</a></li>
-<li><a href="#org02c31c6">1.3. Debugger</a></li>
-<li><a href="#org11c3d4b">1.4. Timing</a></li>
+<li><a href="#orga7e0825">1.2. Shell commands</a></li>
+<li><a href="#org3afc35a">1.3. Debugger</a></li>
+<li><a href="#orgbfdf621">1.4. Timing</a></li>
 </ul>
 </li>
-<li><a href="#org6c04e36">2. NumPy</a>
+<li><a href="#org3932e75">2. NumPy</a>
 <ul>
-<li><a href="#orga6b1764">2.1. Array creating functions</a></li>
-<li><a href="#org8d53e59">2.2. Array attributes</a></li>
-<li><a href="#orgecbb5c7">2.3. Array slicing</a></li>
-<li><a href="#org62cfdd1">2.4. Change dimension</a></li>
-<li><a href="#orgaff8735">2.5. Merging and splitting</a></li>
-<li><a href="#orge9786d3">2.6. Specify output container</a></li>
-<li><a href="#orgd267875">2.7. reduce() and accumulate()</a></li>
-<li><a href="#org38f0e0e">2.8. Sort and index sort</a></li>
-<li><a href="#orgd16ae8e">2.9. Example: k-Nearest Neighbors</a></li>
+<li><a href="#org3124d4f">2.1. Array creating functions</a></li>
+<li><a href="#orgbaea4d5">2.2. Array attributes</a></li>
+<li><a href="#orgd1ff290">2.3. Array slicing</a></li>
+<li><a href="#org2abc4ea">2.4. Change dimension</a></li>
+<li><a href="#orga737422">2.5. Merging and splitting</a></li>
+<li><a href="#org73a9d25">2.6. Specify output container</a></li>
+<li><a href="#orgf1179f8">2.7. reduce() and accumulate()</a></li>
+<li><a href="#org1b0900f">2.8. Sort and index sort</a></li>
+<li><a href="#orgb6047ea">2.9. Example: k-Nearest Neighbors</a></li>
 </ul>
 </li>
-<li><a href="#org5ec9d1f">3. Pandas</a>
+<li><a href="#orge20f7cf">3. Pandas</a>
 <ul>
-<li><a href="#org92ede10">3.1. Series</a>
+<li><a href="#orgf1e4143">3.1. Series</a>
 <ul>
-<li><a href="#org4d414d2">3.1.1. Constructing</a></li>
+<li><a href="#org4949929">3.1.1. Constructing</a></li>
 </ul>
 </li>
-<li><a href="#orga703202">3.2. DataFrame</a></li>
+<li><a href="#org2805494">3.2. DataFrame</a>
+<ul>
+<li><a href="#orga52da79">3.2.1. Indexing DataFrames</a></li>
+<li><a href="#orgacf1ac9">3.2.2. Operations</a></li>
+<li><a href="#org57ef522">3.2.3. Missing data</a></li>
+<li><a href="#org3cb4d03">3.2.4. Hierarchical Indexing</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org86d79e7" class="outline-2">
-<h2 id="org86d79e7"><span class="section-number-2">1</span> IPython</h2>
+<div id="outline-container-org43d1644" class="outline-2">
+<h2 id="org43d1644"><span class="section-number-2">1</span> IPython</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org2fa2081" class="outline-3">
-<h3 id="org2fa2081"><span class="section-number-3">1.1</span> Emacs</h3>
+<div id="outline-container-org360a065" class="outline-3">
+<h3 id="org360a065"><span class="section-number-3">1.1</span> Emacs</h3>
 <div class="outline-text-3" id="text-1-1">
 </div>
-<div id="outline-container-org4b98411" class="outline-4">
-<h4 id="org4b98411"><span class="section-number-4">1.1.1</span> Completion on Windows</h4>
+<div id="outline-container-orga8757de" class="outline-4">
+<h4 id="orga8757de"><span class="section-number-4">1.1.1</span> Completion on Windows</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 To get Emacs Python shell completion on Windows, install pyreadline. Then it
@@ -366,58 +373,59 @@ just works.
 </div>
 </div>
 
-<div id="outline-container-org1417265" class="outline-4">
-<h4 id="org1417265"><span class="section-number-4">1.1.2</span> Disable pager in Emacs</h4>
+<div id="outline-container-org33d5aff" class="outline-4">
+<h4 id="org33d5aff"><span class="section-number-4">1.1.2</span> Disable pager in Emacs</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
 put this in <code>${HOME}/.ipython/profile_default/startup/no-pager.py</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #ff79c6; font-weight: bold;">from</span> __future__ <span style="color: #ff79c6; font-weight: bold;">import</span> print_function
-<span style="color: #ff79c6; font-weight: bold;">def</span> <span style="color: #50fa7b; font-weight: bold;">page_printer</span>(data, start=0, screen_lines=0, pager_cmd=<span style="color: #8be9fd;">None</span>):
-    <span style="color: #ff79c6; font-weight: bold;">if</span> <span style="color: #ffb86c;">isinstance</span>(data, <span style="color: #ffb86c;">dict</span>):
-        <span style="font-weight: bold;">data</span> = data[<span style="color: #f1fa8c;">'text/plain'</span>]
-    <span style="color: #ff79c6; font-weight: bold;">print</span>(data)
-<span style="color: #ff79c6; font-weight: bold;">import</span> os
-<span style="font-weight: bold;">TERM</span> = os.environ.get(<span style="color: #f1fa8c;">'TERM'</span>, <span style="color: #f1fa8c;">'dumb'</span>)
-<span style="color: #ff79c6; font-weight: bold;">if</span> TERM <span style="color: #ff79c6; font-weight: bold;">in</span> [<span style="color: #f1fa8c;">'emacs'</span>, <span style="color: #f1fa8c;">'dumb'</span>, <span style="color: #f1fa8c;">'xterm-color'</span>]:
-    get_ipython()<span style="font-weight: bold;">.hooks.show_in_pager</span> = page_printer
+<pre class="src src-ipython"><span style="color: #C678DD;">from</span> __future__ <span style="color: #C678DD;">import</span> print_function
+<span style="color: #C678DD;">def</span> <span style="color: #61AFEF;">page_printer</span>(data, start=0, screen_lines=0, pager_cmd=<span style="color: #56B6C2;">None</span>):
+    <span style="color: #C678DD;">if</span> <span style="color: #56B6C2;">isinstance</span>(data, <span style="color: #56B6C2;">dict</span>):
+        <span style="color: #E06C75;">data</span> = data[<span style="color: #98C379;">'text/plain'</span>]
+    <span style="color: #C678DD;">print</span>(data)
+<span style="color: #C678DD;">import</span> os
+<span style="color: #E06C75;">TERM</span> = os.environ.get(<span style="color: #98C379;">'TERM'</span>, <span style="color: #98C379;">'unknown'</span>)
+<span style="color: #C678DD;">if</span> TERM <span style="color: #C678DD;">in</span> [<span style="color: #98C379;">'emacs'</span>, <span style="color: #98C379;">'dumb'</span>, <span style="color: #98C379;">'xterm-color'</span>]:
+    get_ipython()<span style="color: #E06C75;">.hooks.show_in_pager</span> = page_printer
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org3e99301" class="outline-4">
-<h4 id="org3e99301"><span class="section-number-4">1.1.3</span> Format DataFrame as org table</h4>
+
+<div id="outline-container-org292c2ff" class="outline-4">
+<h4 id="org292c2ff"><span class="section-number-4">1.1.3</span> Format DataFrame as org table</h4>
 <div class="outline-text-4" id="text-1-1-3">
 <p>
 put this in <code>${HOME}/.ipython/profile_default/startup/org-formatter.py</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #ff79c6; font-weight: bold;">import</span> IPython, sys
-<span style="color: #ff79c6; font-weight: bold;">from</span> tabulate <span style="color: #ff79c6; font-weight: bold;">import</span> tabulate
-<span style="color: #ff79c6; font-weight: bold;">class</span> <span style="color: #bd93f9;">OrgFormatter</span>(IPython.core.formatters.BaseFormatter):
-  <span style="color: #ff79c6; font-weight: bold;">def</span> <span style="color: #50fa7b; font-weight: bold;">__call__</span>(<span style="color: #ff79c6; font-weight: bold;">self</span>, obj):
-      <span style="color: #ff79c6; font-weight: bold;">try</span>:
-          <span style="color: #ff79c6; font-weight: bold;">if</span> <span style="color: #f1fa8c;">'pandas'</span> <span style="color: #ff79c6; font-weight: bold;">in</span> sys.modules:
-              <span style="color: #ff79c6; font-weight: bold;">import</span> pandas <span style="color: #ff79c6; font-weight: bold;">as</span> pd
-          <span style="color: #ff79c6; font-weight: bold;">else</span>:
-              <span style="color: #ff79c6; font-weight: bold;">return</span> <span style="color: #8be9fd;">None</span>
-          <span style="color: #ff79c6; font-weight: bold;">if</span> (<span style="color: #ffb86c;">type</span>(obj) == pd.core.frame.DataFrame):
-              <span style="color: #ff79c6; font-weight: bold;">return</span> tabulate(obj, headers=<span style="color: #f1fa8c;">'keys'</span>, tablefmt=<span style="color: #f1fa8c;">'orgtbl'</span>)
-      <span style="color: #ff79c6; font-weight: bold;">except</span>:
-          <span style="color: #ff79c6; font-weight: bold;">return</span> <span style="color: #8be9fd;">None</span>
-<span style="font-weight: bold;">ip</span> = get_ipython()
-<span style="font-weight: bold;">ip.display_formatter.formatters</span>[<span style="color: #f1fa8c;">'text/org'</span>] = OrgFormatter()
+<pre class="src src-ipython"><span style="color: #C678DD;">import</span> IPython, sys
+<span style="color: #C678DD;">from</span> tabulate <span style="color: #C678DD;">import</span> tabulate
+<span style="color: #C678DD;">class</span> <span style="color: #E5C07B;">OrgFormatter</span>(IPython.core.formatters.BaseFormatter):
+  <span style="color: #C678DD;">def</span> <span style="color: #61AFEF;">__call__</span>(<span style="color: #C678DD;">self</span>, obj):
+      <span style="color: #C678DD;">try</span>:
+          <span style="color: #C678DD;">if</span> <span style="color: #98C379;">'pandas'</span> <span style="color: #C678DD;">in</span> sys.modules:
+              <span style="color: #C678DD;">import</span> pandas <span style="color: #C678DD;">as</span> pd
+          <span style="color: #C678DD;">else</span>:
+              <span style="color: #C678DD;">return</span> <span style="color: #56B6C2;">None</span>
+          <span style="color: #C678DD;">if</span> (<span style="color: #56B6C2;">type</span>(obj) == pd.core.frame.DataFrame):
+              <span style="color: #C678DD;">return</span> tabulate(obj, headers=<span style="color: #98C379;">'keys'</span>, tablefmt=<span style="color: #98C379;">'orgtbl'</span>)
+      <span style="color: #C678DD;">except</span>:
+          <span style="color: #C678DD;">return</span> <span style="color: #56B6C2;">None</span>
+<span style="color: #E06C75;">ip</span> = get_ipython()
+<span style="color: #E06C75;">ip.display_formatter.formatters</span>[<span style="color: #98C379;">'text/org'</span>] = OrgFormatter()
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb7b0a8e" class="outline-3">
-<h3 id="orgb7b0a8e"><span class="section-number-3">1.2</span> Shell commands</h3>
+<div id="outline-container-orga7e0825" class="outline-3">
+<h3 id="orga7e0825"><span class="section-number-3">1.2</span> Shell commands</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 All shell commands can be used with <code>!</code> prefix.  Results can be assigned to
@@ -427,20 +435,20 @@ functions has permanent effect. Many <code>%</code> magic functions can be used 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="font-weight: bold;">files</span> = !ls
+<pre class="src src-ipython"><span style="color: #E06C75;">files</span> = !ls
 files
 </pre>
 </div>
 
 <pre class="example">
-['notes.html', 'notes.org', 'obipy']
-
+["'ls' is not recognized as an internal or external command,",
+ 'operable program or batch file.']
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org02c31c6" class="outline-3">
-<h3 id="org02c31c6"><span class="section-number-3">1.3</span> Debugger</h3>
+<div id="outline-container-org3afc35a" class="outline-3">
+<h3 id="org3afc35a"><span class="section-number-3">1.3</span> Debugger</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 <code>%debug</code> to enter debugger on last exception
@@ -448,8 +456,8 @@ files
 </div>
 </div>
 
-<div id="outline-container-org11c3d4b" class="outline-3">
-<h3 id="org11c3d4b"><span class="section-number-3">1.4</span> Timing</h3>
+<div id="outline-container-orgbfdf621" class="outline-3">
+<h3 id="orgbfdf621"><span class="section-number-3">1.4</span> Timing</h3>
 <div class="outline-text-3" id="text-1-4">
 <ul class="org-ul">
 <li><code>%timeit</code> - one line, may run multiple times for short functions</li>
@@ -462,12 +470,12 @@ files
 </div>
 </div>
 
-<div id="outline-container-org6c04e36" class="outline-2">
-<h2 id="org6c04e36"><span class="section-number-2">2</span> NumPy</h2>
+<div id="outline-container-org3932e75" class="outline-2">
+<h2 id="org3932e75"><span class="section-number-2">2</span> NumPy</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orga6b1764" class="outline-3">
-<h3 id="orga6b1764"><span class="section-number-3">2.1</span> Array creating functions</h3>
+<div id="outline-container-org3124d4f" class="outline-3">
+<h3 id="org3124d4f"><span class="section-number-3">2.1</span> Array creating functions</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li><code>np.zeros(10, dtype=int)</code></li>
@@ -483,17 +491,17 @@ files
 </ul>
 </div>
 </div>
-<div id="outline-container-org8d53e59" class="outline-3">
-<h3 id="org8d53e59"><span class="section-number-3">2.2</span> Array attributes</h3>
+<div id="outline-container-orgbaea4d5" class="outline-3">
+<h3 id="orgbaea4d5"><span class="section-number-3">2.2</span> Array attributes</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="font-weight: bold;">x3</span> = np.random.randint(10, size=(3, 4, 5))
-<span style="color: #ff79c6; font-weight: bold;">print</span>(<span style="color: #f1fa8c;">"x3 ndim"</span>, x3.ndim)         <span style="color: #6272a4;"># </span><span style="color: #6272a4;">dimension</span>
-<span style="color: #ff79c6; font-weight: bold;">print</span>(<span style="color: #f1fa8c;">"x3 shape"</span>, x3.shape)       <span style="color: #6272a4;"># </span><span style="color: #6272a4;">shape</span>
-<span style="color: #ff79c6; font-weight: bold;">print</span>(<span style="color: #f1fa8c;">"x3 size"</span>, x3.size)         <span style="color: #6272a4;"># </span><span style="color: #6272a4;">total elements</span>
-<span style="color: #ff79c6; font-weight: bold;">print</span>(<span style="color: #f1fa8c;">"x3 dtype"</span>, x3.dtype)       <span style="color: #6272a4;"># </span><span style="color: #6272a4;">array type</span>
-<span style="color: #ff79c6; font-weight: bold;">print</span>(<span style="color: #f1fa8c;">"x3 itemsize"</span>, x3.itemsize) <span style="color: #6272a4;"># </span><span style="color: #6272a4;">bytes per item</span>
-<span style="color: #ff79c6; font-weight: bold;">print</span>(<span style="color: #f1fa8c;">"x3 nbytes"</span>, x3.nbytes)     <span style="color: #6272a4;"># </span><span style="color: #6272a4;">total bytes</span>
+<pre class="src src-ipython"><span style="color: #E06C75;">x3</span> = np.random.randint(10, size=(3, 4, 5))
+<span style="color: #C678DD;">print</span>(<span style="color: #98C379;">"x3 ndim"</span>, x3.ndim)         <span style="color: #5C6370;"># </span><span style="color: #5C6370;">dimension</span>
+<span style="color: #C678DD;">print</span>(<span style="color: #98C379;">"x3 shape"</span>, x3.shape)       <span style="color: #5C6370;"># </span><span style="color: #5C6370;">shape</span>
+<span style="color: #C678DD;">print</span>(<span style="color: #98C379;">"x3 size"</span>, x3.size)         <span style="color: #5C6370;"># </span><span style="color: #5C6370;">total elements</span>
+<span style="color: #C678DD;">print</span>(<span style="color: #98C379;">"x3 dtype"</span>, x3.dtype)       <span style="color: #5C6370;"># </span><span style="color: #5C6370;">array type</span>
+<span style="color: #C678DD;">print</span>(<span style="color: #98C379;">"x3 itemsize"</span>, x3.itemsize) <span style="color: #5C6370;"># </span><span style="color: #5C6370;">bytes per item</span>
+<span style="color: #C678DD;">print</span>(<span style="color: #98C379;">"x3 nbytes"</span>, x3.nbytes)     <span style="color: #5C6370;"># </span><span style="color: #5C6370;">total bytes</span>
 </pre>
 </div>
 
@@ -509,23 +517,23 @@ x3 nbytes 240
 </div>
 </div>
 
-<div id="outline-container-orgecbb5c7" class="outline-3">
-<h3 id="orgecbb5c7"><span class="section-number-3">2.3</span> Array slicing</h3>
+<div id="outline-container-orgd1ff290" class="outline-3">
+<h3 id="orgd1ff290"><span class="section-number-3">2.3</span> Array slicing</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Slicing returns a <b>view</b> into the original. No copy is made.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="font-weight: bold;">x2</span> = np.random.randint(10, size=(3, 4))
+<pre class="src src-ipython"><span style="color: #E06C75;">x2</span> = np.random.randint(10, size=(3, 4))
 x2
 </pre>
 </div>
 
 <pre class="example">
-array([[9, 2, 3, 9],
-       [5, 5, 3, 6],
-       [1, 4, 9, 8]])
+array([[0, 2, 4, 2],
+       [0, 4, 9, 6],
+       [6, 8, 9, 9]])
 </pre>
 
 <p>
@@ -538,8 +546,8 @@ Extract 2x2
 </div>
 
 <pre class="example">
-array([[9, 2],
-       [5, 5]])
+array([[0, 2],
+       [0, 4]])
 </pre>
 
 <p>
@@ -551,9 +559,9 @@ Reverse
 </div>
 
 <pre class="example">
-array([[8, 9, 4, 1],
-       [6, 3, 5, 5],
-       [9, 3, 2, 9]])
+array([[9, 9, 8, 6],
+       [6, 9, 4, 0],
+       [2, 4, 2, 0]])
 </pre>
 
 <p>
@@ -565,7 +573,7 @@ Get column
 </div>
 
 <pre class="example">
-array([9, 5, 1])
+array([0, 0, 6])
 
 </pre>
 
@@ -578,7 +586,7 @@ Get row
 </div>
 
 <pre class="example">
-array([9, 2, 3, 9])
+array([0, 2, 4, 2])
 
 </pre>
 
@@ -591,22 +599,22 @@ To make a copy,  use .copy()
 </div>
 
 <pre class="example">
-array([[9, 2],
-       [5, 5]])
+array([[0, 2],
+       [0, 4]])
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org62cfdd1" class="outline-3">
-<h3 id="org62cfdd1"><span class="section-number-3">2.4</span> Change dimension</h3>
+<div id="outline-container-org2abc4ea" class="outline-3">
+<h3 id="org2abc4ea"><span class="section-number-3">2.4</span> Change dimension</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 With <code>.reshape()</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="font-weight: bold;">x</span> = np.array([1,2,3])
-x.reshape((1,3))  <span style="color: #6272a4;"># </span><span style="color: #6272a4;">make row vector</span>
+<pre class="src src-ipython"><span style="color: #E06C75;">x</span> = np.array([1,2,3])
+x.reshape((1,3))  <span style="color: #5C6370;"># </span><span style="color: #5C6370;">make row vector</span>
 </pre>
 </div>
 
@@ -616,7 +624,7 @@ array([[1, 2, 3]])
 </pre>
 
 <div class="org-src-container">
-<pre class="src src-ipython">x.reshape((3,1))  <span style="color: #6272a4;"># </span><span style="color: #6272a4;">make column vector</span>
+<pre class="src src-ipython">x.reshape((3,1))  <span style="color: #5C6370;"># </span><span style="color: #5C6370;">make column vector</span>
 </pre>
 </div>
 
@@ -653,36 +661,36 @@ array([[1],
 </div>
 </div>
 
-<div id="outline-container-orgaff8735" class="outline-3">
-<h3 id="orgaff8735"><span class="section-number-3">2.5</span> Merging and splitting</h3>
+<div id="outline-container-orga737422" class="outline-3">
+<h3 id="orga737422"><span class="section-number-3">2.5</span> Merging and splitting</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 Merging with <code>np.concatenate()</code>, <code>np.vstack()</code>, <code>np.hstack()</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython">np.concatenate([x2, x2]) <span style="color: #6272a4;"># </span><span style="color: #6272a4;">or np.vstack()</span>
+<pre class="src src-ipython">np.concatenate([x2, x2]) <span style="color: #5C6370;"># </span><span style="color: #5C6370;">or np.vstack()</span>
 </pre>
 </div>
 
 <pre class="example">
-array([[9, 2, 3, 9],
-       [5, 5, 3, 6],
-       [1, 4, 9, 8],
-       [9, 2, 3, 9],
-       [5, 5, 3, 6],
-       [1, 4, 9, 8]])
+array([[0, 2, 4, 2],
+       [0, 4, 9, 6],
+       [6, 8, 9, 9],
+       [0, 2, 4, 2],
+       [0, 4, 9, 6],
+       [6, 8, 9, 9]])
 </pre>
 
 <div class="org-src-container">
-<pre class="src src-ipython">np.concatenate([x2, x2], axis=1) <span style="color: #6272a4;"># </span><span style="color: #6272a4;">or np.hstack()</span>
+<pre class="src src-ipython">np.concatenate([x2, x2], axis=1) <span style="color: #5C6370;"># </span><span style="color: #5C6370;">or np.hstack()</span>
 </pre>
 </div>
 
 <pre class="example">
-array([[9, 2, 3, 9, 9, 2, 3, 9],
-       [5, 5, 3, 6, 5, 5, 3, 6],
-       [1, 4, 9, 8, 1, 4, 9, 8]])
+array([[0, 2, 4, 2, 0, 2, 4, 2],
+       [0, 4, 9, 6, 0, 4, 9, 6],
+       [6, 8, 9, 9, 6, 8, 9, 9]])
 </pre>
 
 <p>
@@ -690,8 +698,8 @@ Split with <code>np.split()</code> , <code>np.hsplit()</code> , <code>np.vsplit(
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="font-weight: bold;">x</span> = [1, 2, 3, 99, 99, 3, 2, 1]
-np.split(x, [3, 5]) <span style="color: #6272a4;"># </span><span style="color: #6272a4;">pass a list of split points</span>
+<pre class="src src-ipython"><span style="color: #E06C75;">x</span> = [1, 2, 3, 99, 99, 3, 2, 1]
+np.split(x, [3, 5]) <span style="color: #5C6370;"># </span><span style="color: #5C6370;">pass a list of split points</span>
 </pre>
 </div>
 
@@ -702,16 +710,16 @@ np.split(x, [3, 5]) <span style="color: #6272a4;"># </span><span style="color: #
 </div>
 </div>
 
-<div id="outline-container-orge9786d3" class="outline-3">
-<h3 id="orge9786d3"><span class="section-number-3">2.6</span> Specify output container</h3>
+<div id="outline-container-org73a9d25" class="outline-3">
+<h3 id="org73a9d25"><span class="section-number-3">2.6</span> Specify output container</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 To avoid creating temporaries.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="font-weight: bold;">x</span> = np.arange(5)
-<span style="font-weight: bold;">y</span> = np.empty(5)
+<pre class="src src-ipython"><span style="color: #E06C75;">x</span> = np.arange(5)
+<span style="color: #E06C75;">y</span> = np.empty(5)
 np.multiply(x, 10, out=y)
 y
 </pre>
@@ -728,7 +736,7 @@ of a computation to every other element of a specified array:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="font-weight: bold;">y</span> = np.zeros(10)
+<pre class="src src-ipython"><span style="color: #E06C75;">y</span> = np.zeros(10)
 np.power(2, x, out=y[::2])
 y
 </pre>
@@ -741,8 +749,8 @@ array([  1.,   0.,   2.,   0.,   4.,   0.,   8.,   0.,  16.,   0.])
 </div>
 </div>
 
-<div id="outline-container-orgd267875" class="outline-3">
-<h3 id="orgd267875"><span class="section-number-3">2.7</span> reduce() and accumulate()</h3>
+<div id="outline-container-orgf1179f8" class="outline-3">
+<h3 id="orgf1179f8"><span class="section-number-3">2.7</span> reduce() and accumulate()</h3>
 <div class="outline-text-3" id="text-2-7">
 <p>
 ufuncs supports <code>reduce()</code> and <code>accumulate()</code>
@@ -753,8 +761,8 @@ ufuncs supports <code>reduce()</code> and <code>accumulate()</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="font-weight: bold;">x</span> = np.arange(1, 6)
-np.add.<span style="color: #ffb86c;">reduce</span>(x)
+<pre class="src src-ipython"><span style="color: #E06C75;">x</span> = np.arange(1, 6)
+np.add.<span style="color: #56B6C2;">reduce</span>(x)
 </pre>
 </div>
 
@@ -779,8 +787,8 @@ array([ 1,  3,  6, 10, 15], dtype=int32)
 </div>
 </div>
 
-<div id="outline-container-org38f0e0e" class="outline-3">
-<h3 id="org38f0e0e"><span class="section-number-3">2.8</span> Sort and index sort</h3>
+<div id="outline-container-org1b0900f" class="outline-3">
+<h3 id="org1b0900f"><span class="section-number-3">2.8</span> Sort and index sort</h3>
 <div class="outline-text-3" id="text-2-8">
 <p>
 <code>np.sort()</code> returns new copy of sorted array.
@@ -795,7 +803,7 @@ array([ 1,  3,  6, 10, 15], dtype=int32)
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="font-weight: bold;">x</span> = np.array([2,1,4,3,5])
+<pre class="src src-ipython"><span style="color: #E06C75;">x</span> = np.array([2,1,4,3,5])
 np.sort(x)
 </pre>
 </div>
@@ -817,8 +825,8 @@ array([1, 0, 3, 2, 4], dtype=int64)
 </div>
 </div>
 
-<div id="outline-container-orgd16ae8e" class="outline-3">
-<h3 id="orgd16ae8e"><span class="section-number-3">2.9</span> Example: k-Nearest Neighbors</h3>
+<div id="outline-container-orgb6047ea" class="outline-3">
+<h3 id="orgb6047ea"><span class="section-number-3">2.9</span> Example: k-Nearest Neighbors</h3>
 <div class="outline-text-3" id="text-2-9">
 <p>
 <a href="https://jakevdp.github.io/PythonDataScienceHandbook/02.08-sorting.html">https://jakevdp.github.io/PythonDataScienceHandbook/02.08-sorting.html</a>
@@ -832,16 +840,16 @@ array([1, 0, 3, 2, 4], dtype=int64)
 
 <div class="org-src-container">
 <pre class="src src-ipython">np.random.seed(42)
-<span style="font-weight: bold;">X</span> = np.random.rand(10, 2)
-<span style="font-weight: bold;">dist_sq</span> = np.<span style="color: #ffb86c;">sum</span>((X[:, np.newaxis, :] - X[np.newaxis, :, :]) ** 2, axis=-1)
-<span style="font-weight: bold;">K</span> = 2
-<span style="font-weight: bold;">nearest_partition</span> = np.argpartition(dist_sq, K + 1, axis=1)
+<span style="color: #E06C75;">X</span> = np.random.rand(10, 2)
+<span style="color: #E06C75;">dist_sq</span> = np.<span style="color: #56B6C2;">sum</span>((X[:, np.newaxis, :] - X[np.newaxis, :, :]) ** 2, axis=-1)
+<span style="color: #E06C75;">K</span> = 2
+<span style="color: #E06C75;">nearest_partition</span> = np.argpartition(dist_sq, K + 1, axis=1)
 plt.scatter(X[:, 0], X[:, 1], s=100)
-<span style="color: #ff79c6; font-weight: bold;">for</span> i <span style="color: #ff79c6; font-weight: bold;">in</span> <span style="color: #ffb86c;">range</span>(X.shape[0]):
-    <span style="color: #ff79c6; font-weight: bold;">for</span> j <span style="color: #ff79c6; font-weight: bold;">in</span> nearest_partition[i, :K+1]:
-        <span style="color: #6272a4;"># </span><span style="color: #6272a4;">plot a line from X[i] to X[j]</span>
-        <span style="color: #6272a4;"># </span><span style="color: #6272a4;">use some zip magic to make it happen:</span>
-        plt.plot(*<span style="color: #ffb86c;">zip</span>(X[j], X[i]), color=<span style="color: #f1fa8c;">'black'</span>)
+<span style="color: #C678DD;">for</span> i <span style="color: #C678DD;">in</span> <span style="color: #56B6C2;">range</span>(X.shape[0]):
+    <span style="color: #C678DD;">for</span> j <span style="color: #C678DD;">in</span> nearest_partition[i, :K+1]:
+        <span style="color: #5C6370;"># </span><span style="color: #5C6370;">plot a line from X[i] to X[j]</span>
+        <span style="color: #5C6370;"># </span><span style="color: #5C6370;">use some zip magic to make it happen:</span>
+        plt.plot(*<span style="color: #56B6C2;">zip</span>(X[j], X[i]), color=<span style="color: #98C379;">'black'</span>)
 </pre>
 </div>
 
@@ -854,12 +862,12 @@ plt.scatter(X[:, 0], X[:, 1], s=100)
 </div>
 </div>
 
-<div id="outline-container-org5ec9d1f" class="outline-2">
-<h2 id="org5ec9d1f"><span class="section-number-2">3</span> Pandas</h2>
+<div id="outline-container-orge20f7cf" class="outline-2">
+<h2 id="orge20f7cf"><span class="section-number-2">3</span> Pandas</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org92ede10" class="outline-3">
-<h3 id="org92ede10"><span class="section-number-3">3.1</span> Series</h3>
+<div id="outline-container-orgf1e4143" class="outline-3">
+<h3 id="orgf1e4143"><span class="section-number-3">3.1</span> Series</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Series is like strong typed dictionary.
@@ -874,8 +882,8 @@ And checking presence with operator <code>in</code>: <code>'a' in data</code>
 </p>
 </div>
 
-<div id="outline-container-org4d414d2" class="outline-4">
-<h4 id="org4d414d2"><span class="section-number-4">3.1.1</span> Constructing</h4>
+<div id="outline-container-org4949929" class="outline-4">
+<h4 id="org4949929"><span class="section-number-4">3.1.1</span> Constructing</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 data can be a scalar, which is repeated to fill the specified index:
@@ -898,7 +906,7 @@ data can be a dictionary:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython">pd.Series({2:<span style="color: #f1fa8c;">'a'</span>, 1:<span style="color: #f1fa8c;">'b'</span>, 3:<span style="color: #f1fa8c;">'c'</span>})
+<pre class="src src-ipython">pd.Series({2:<span style="color: #98C379;">'a'</span>, 1:<span style="color: #98C379;">'b'</span>, 3:<span style="color: #98C379;">'c'</span>})
 </pre>
 </div>
 
@@ -914,7 +922,7 @@ Explicitly specify index:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ipython">pd.Series({2:<span style="color: #f1fa8c;">'a'</span>, 1:<span style="color: #f1fa8c;">'b'</span>, 3:<span style="color: #f1fa8c;">'c'</span>}, index=[3, 2])
+<pre class="src src-ipython">pd.Series({2:<span style="color: #98C379;">'a'</span>, 1:<span style="color: #98C379;">'b'</span>, 3:<span style="color: #98C379;">'c'</span>}, index=[3, 2])
 </pre>
 </div>
 
@@ -931,8 +939,8 @@ In above example, 'b' is dropped, as 1 is not in the index.
 </div>
 </div>
 
-<div id="outline-container-orga703202" class="outline-3">
-<h3 id="orga703202"><span class="section-number-3">3.2</span> DataFrame</h3>
+<div id="outline-container-org2805494" class="outline-3">
+<h3 id="org2805494"><span class="section-number-3">3.2</span> DataFrame</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Similar to Series, but 2D, where both rows and columns have generalized
@@ -942,12 +950,377 @@ index.
 <p>
 It can be seen as a dictionary of column names to series.
 </p>
+
+<p>
+Assume we have this DataFrame:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">area</span> = pd.Series({<span style="color: #98C379;">'California'</span>: 423967, <span style="color: #98C379;">'Texas'</span>: 695662,
+                  <span style="color: #98C379;">'New York'</span>: 141297, <span style="color: #98C379;">'Florida'</span>: 170312,
+                  <span style="color: #98C379;">'Illinois'</span>: 149995})
+<span style="color: #E06C75;">pop</span> = pd.Series({<span style="color: #98C379;">'California'</span>: 38332521, <span style="color: #98C379;">'Texas'</span>: 26448193,
+                 <span style="color: #98C379;">'New York'</span>: 19651127, <span style="color: #98C379;">'Florida'</span>: 19552860,
+                 <span style="color: #98C379;">'Illinois'</span>: 12882135})
+<span style="color: #E06C75;">data</span> = pd.DataFrame({<span style="color: #98C379;">'area'</span>:area, <span style="color: #98C379;">'pop'</span>:pop})
+data
+</pre>
+</div>
+
+<pre class="example">
+              area       pop
+California  423967  38332521
+Florida     170312  19552860
+Illinois    149995  12882135
+New York    141297  19651127
+Texas       695662  26448193
+</pre>
+
+<p>
+Access columns like dictionary:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">data[<span style="color: #98C379;">'area'</span>] <span style="color: #5C6370;"># </span><span style="color: #5C6370;">or just data.area</span>
+</pre>
+</div>
+
+<pre class="example">
+California    423967
+Florida       170312
+Illinois      149995
+New York      141297
+Texas         695662
+Name: area, dtype: int64
+</pre>
+
+<p>
+Never assign columns via attribute syntax. For example, use <code>data['pop'] = z</code>
+rather than <code>data.pop = z</code>. Otherwise it can overwrite method names.
+</p>
+
+<p>
+Adding new column:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">data</span>[<span style="color: #98C379;">'density'</span>] = data[<span style="color: #98C379;">'pop'</span>] / data[<span style="color: #98C379;">'area'</span>]
+data
+</pre>
+</div>
+
+<pre class="example">
+              area       pop     density
+California  423967  38332521   90.413926
+Florida     170312  19552860  114.806121
+Illinois    149995  12882135   85.883763
+New York    141297  19651127  139.076746
+Texas       695662  26448193   38.018740
+</pre>
+</div>
+
+<div id="outline-container-orga52da79" class="outline-4">
+<h4 id="orga52da79"><span class="section-number-4">3.2.1</span> Indexing DataFrames</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+Indexing as NumPy array:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">data.iloc[:3, :2]
+</pre>
+</div>
+
+<pre class="example">
+              area       pop
+California  423967  38332521
+Florida     170312  19552860
+Illinois    149995  12882135
+</pre>
+
+<p>
+Indexing with column and row names:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">data.loc[:<span style="color: #98C379;">'Illinois'</span>, :<span style="color: #98C379;">'pop'</span>]
+</pre>
+</div>
+
+<pre class="example">
+              area       pop
+California  423967  38332521
+Florida     170312  19552860
+Illinois    149995  12882135
+</pre>
+
+<p>
+<b>While indexing refers to columns, slicing refers to rows:</b>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">data[<span style="color: #98C379;">'Florida'</span>:<span style="color: #98C379;">'Illinois'</span>]
+</pre>
+</div>
+
+<pre class="example">
+            area       pop     density
+Florida   170312  19552860  114.806121
+Illinois  149995  12882135   85.883763
+</pre>
+
+<p>
+<b>Such slices can also refer to rows by number rather than by index::</b>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">data[1:3]
+</pre>
+</div>
+
+<pre class="example">
+            area       pop     density
+Florida   170312  19552860  114.806121
+Illinois  149995  12882135   85.883763
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgacf1ac9" class="outline-4">
+<h4 id="orgacf1ac9"><span class="section-number-4">3.2.2</span> Operations</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<p>
+All NumPy ufuncs work on Series and DataFrames, and indexes are preserved.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">df</span> = pd.DataFrame(np.random.randint(0, 10, (3, 4)),
+                  columns=[<span style="color: #98C379;">'A'</span>, <span style="color: #98C379;">'B'</span>, <span style="color: #98C379;">'C'</span>, <span style="color: #98C379;">'D'</span>])
+np.sin(df * np.pi / 4)
+</pre>
+</div>
+
+<pre class="example">
+              A             B             C         D
+0  7.071068e-01  1.000000e+00 -1.000000e+00  0.707107
+1 -2.449294e-16  1.000000e+00  1.224647e-16  1.000000
+2 -1.000000e+00  1.224647e-16 -2.449294e-16 -1.000000
+</pre>
+
+<p>
+<b>Pandas automatically aligns indexes, and fills missing data with NaN</b>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">area</span> = pd.Series({<span style="color: #98C379;">'Alaska'</span>: 1723337, <span style="color: #98C379;">'Texas'</span>: 695662,
+                  <span style="color: #98C379;">'California'</span>: 423967}, name=<span style="color: #98C379;">'area'</span>)
+<span style="color: #E06C75;">population</span> = pd.Series({<span style="color: #98C379;">'California'</span>: 38332521, <span style="color: #98C379;">'Texas'</span>: 26448193,
+                        <span style="color: #98C379;">'New York'</span>: 19651127}, name=<span style="color: #98C379;">'population'</span>)
+population / area
+</pre>
+</div>
+
+<pre class="example">
+Alaska              NaN
+California    90.413926
+New York            NaN
+Texas         38.018740
+dtype: float64
+</pre>
+
+<p>
+This works because the resulting array contains the union of the indices of
+the inputs:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">area.index | population.index
+</pre>
+</div>
+
+<pre class="example">
+Index(['Alaska', 'California', 'New York', 'Texas'], dtype='object')
+
+</pre>
+
+<p>
+We can change the fill value: <code>A.add(B, fill_value=0)</code>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Python Operator</th>
+<th scope="col" class="org-left">Pandas Method(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">+</td>
+<td class="org-left">add()</td>
+</tr>
+
+<tr>
+<td class="org-left">-</td>
+<td class="org-left">sub(), subtract()</td>
+</tr>
+
+<tr>
+<td class="org-left">*</td>
+<td class="org-left">mul(), multiply()</td>
+</tr>
+
+<tr>
+<td class="org-left">//</td>
+<td class="org-left">floordiv()</td>
+</tr>
+
+<tr>
+<td class="org-left">%</td>
+<td class="org-left">mod()</td>
+</tr>
+
+<tr>
+<td class="org-left">**</td>
+<td class="org-left">pow()</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Operations between DataFrame and Series are by default by rows. To make it
+work by columns, use the above functions and specify axis (0=column, 1= row)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">df</span> = pd.DataFrame(np.random.randint(10, size=(3, 4)), columns=<span style="color: #56B6C2;">list</span>(<span style="color: #98C379;">'QRST'</span>))
+<span style="color: #5C6370;">#</span><span style="color: #5C6370;">df - df.iloc[0] # first row becomes 0, other rows minus row0</span>
+<span style="color: #5C6370;">#</span><span style="color: #5C6370;">df - df.Q       # this is not what you think</span>
+df.subtract(df[<span style="color: #98C379;">'Q'</span>], axis=0)
+</pre>
+</div>
+
+<pre class="example">
+   Q  R  S  T
+0  0  2  7  0
+1  0 -1  0 -5
+2  0  2  5  6
+</pre>
+</div>
+</div>
+<div id="outline-container-org57ef522" class="outline-4">
+<h4 id="org57ef522"><span class="section-number-4">3.2.3</span> Missing data</h4>
+<div class="outline-text-4" id="text-3-2-3">
+<p>
+NaN is often used. NumPy has functions to work on them.
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">vals2</span> = np.array([1, np.nan, 3, 4])
+np.nansum(vals2), np.nanmin(vals2), np.nanmax(vals2)
+</pre>
+</div>
+
+<pre class="example">
+(8.0, 1.0, 4.0)
+
+</pre>
+
+<p>
+Pandas auto cast data to float when it needs to use NaN to represent missing
+data.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">x</span> = pd.Series(<span style="color: #56B6C2;">range</span>(2), dtype=<span style="color: #56B6C2;">int</span>)
+<span style="color: #E06C75;">x</span>[0] = <span style="color: #56B6C2;">None</span>
+x
+</pre>
+</div>
+
+<pre class="example">
+0    NaN
+1    1.0
+dtype: float64
+</pre>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Typeclass</th>
+<th scope="col" class="org-left">Conversion When Storing NAs</th>
+<th scope="col" class="org-left">NA Sentinel Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">floating</td>
+<td class="org-left">No change</td>
+<td class="org-left">np.nan</td>
+</tr>
+
+<tr>
+<td class="org-left">object</td>
+<td class="org-left">No change</td>
+<td class="org-left">None or np.nan</td>
+</tr>
+
+<tr>
+<td class="org-left">integer</td>
+<td class="org-left">Cast to float64</td>
+<td class="org-left">np.nan</td>
+</tr>
+
+<tr>
+<td class="org-left">boolean</td>
+<td class="org-left">Cast to object</td>
+<td class="org-left">None or np.nan</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Pandas functions for NaN (or None, they are interchangeable in Pandas)
+</p>
+
+<ul class="org-ul">
+<li><code>isnull()</code>: Generate a boolean mask indicating missing values</li>
+<li><code>notnull()</code>: Opposite of isnull()</li>
+<li><code>dropna()</code>: Return a filtered version of the data
+<ul class="org-ul">
+<li>Can drop entire row or column with 'axis'</li>
+<li>Can set threshold of dropping row or column with 'thresh'</li>
+</ul></li>
+<li><code>fillna()</code>: Return a copy of the data with missing values filled or imputed
+<ul class="org-ul">
+<li>Can forward fill with <code>method='ffill'</code> and back fill with <code>method='bfill'</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3cb4d03" class="outline-4">
+<h4 id="org3cb4d03"><span class="section-number-4">3.2.4</span> Hierarchical Indexing</h4>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2018-04-23 Mon 01:24</p>
+<p class="date">Created: 2018-05-05 Sat 12:45</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

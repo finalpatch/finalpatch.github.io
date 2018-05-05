@@ -5,8 +5,8 @@
 #+PROPERTY: header-args :session pyds :exports both :results raw drawer
 #+INFOJS_OPT: view:t toc:t ltoc:0 mouse:underline buttons:0 path:http://thomasf.github.io/solarized-css/org-info.min.js
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://thomasf.github.io/solarized-css/solarized-dark.min.css" />
-#+HTML_HEAD: <style>pre.example {background: #001e26;}</style>
-#+BEGIN_SRC ipython :exports none :results none
+#+HTML_HEAD: <style>pre.example {background: #001e26;} table{margin: 0 auto;}</style>
+#+BEGIN_SRC ipython :exports none :results silent
   from __future__ import print_function
   %matplotlib inline
   %config InlineBackend.rc={'figure.dpi': 120}
@@ -27,22 +27,23 @@
    
     put this in ~${HOME}/.ipython/profile_default/startup/no-pager.py~
 
-    #+BEGIN_SRC ipython :exports code :results none
+    #+BEGIN_SRC ipython :exports code :eval no
     from __future__ import print_function
     def page_printer(data, start=0, screen_lines=0, pager_cmd=None):
         if isinstance(data, dict):
             data = data['text/plain']
         print(data)
     import os
-    TERM = os.environ.get('TERM', 'dumb')
+    TERM = os.environ.get('TERM', 'unknown')
     if TERM in ['emacs', 'dumb', 'xterm-color']:
         get_ipython().hooks.show_in_pager = page_printer
     #+END_SRC
+
 *** Format DataFrame as org table
    
     put this in ~${HOME}/.ipython/profile_default/startup/org-formatter.py~
    
-    #+BEGIN_SRC ipython :exports code :results none
+    #+BEGIN_SRC ipython :exports code :eval no
     import IPython, sys
     from tabulate import tabulate
     class OrgFormatter(IPython.core.formatters.BaseFormatter):
@@ -73,7 +74,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[32]:
+   # Out[2]:
    : ['notes.html', 'notes.org', 'obipy']
    :END:
 
@@ -130,11 +131,11 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[34]:
+   # Out[4]:
    #+BEGIN_EXAMPLE
-     array([[2, 0, 7, 2],
-            [2, 0, 4, 9],
-            [6, 9, 8, 6]])
+     array([[8, 1, 2, 5],
+            [8, 1, 3, 8],
+            [9, 3, 1, 7]])
    #+END_EXAMPLE
    :END:
 
@@ -146,10 +147,10 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[35]:
+   # Out[5]:
    #+BEGIN_EXAMPLE
-     array([[2, 0],
-            [2, 0]])
+     array([[8, 1],
+            [8, 1]])
    #+END_EXAMPLE
    :END:
 
@@ -160,11 +161,11 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[36]:
+   # Out[6]:
    #+BEGIN_EXAMPLE
-     array([[6, 8, 9, 6],
-            [9, 4, 0, 2],
-            [2, 7, 0, 2]])
+     array([[7, 1, 3, 9],
+            [8, 3, 1, 8],
+            [5, 2, 1, 8]])
    #+END_EXAMPLE
    :END:
 
@@ -175,8 +176,8 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[37]:
-   : array([2, 2, 6])
+   # Out[7]:
+   : array([8, 8, 9])
    :END:
 
    Get row
@@ -186,8 +187,8 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[38]:
-   : array([2, 0, 7, 2])
+   # Out[8]:
+   : array([8, 1, 2, 5])
    :END:
 
    To make a copy,  use .copy()
@@ -197,10 +198,10 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[39]:
+   # Out[9]:
    #+BEGIN_EXAMPLE
-     array([[2, 0],
-            [2, 0]])
+     array([[8, 1],
+            [8, 1]])
    #+END_EXAMPLE
    :END:
 
@@ -215,7 +216,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[40]:
+   # Out[10]:
    : array([[1, 2, 3]])
    :END:
 
@@ -225,7 +226,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[41]:
+   # Out[11]:
    #+BEGIN_EXAMPLE
      array([[1],
             [2],
@@ -241,7 +242,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[42]:
+   # Out[12]:
    : array([[1, 2, 3]])
    :END:
 
@@ -251,7 +252,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[43]:
+   # Out[13]:
    #+BEGIN_EXAMPLE
      array([[1],
             [2],
@@ -269,14 +270,14 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[44]:
+   # Out[14]:
    #+BEGIN_EXAMPLE
-     array([[2, 0, 7, 2],
-            [2, 0, 4, 9],
-            [6, 9, 8, 6],
-            [2, 0, 7, 2],
-            [2, 0, 4, 9],
-            [6, 9, 8, 6]])
+     array([[8, 1, 2, 5],
+            [8, 1, 3, 8],
+            [9, 3, 1, 7],
+            [8, 1, 2, 5],
+            [8, 1, 3, 8],
+            [9, 3, 1, 7]])
    #+END_EXAMPLE
    :END:
 
@@ -286,11 +287,11 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[45]:
+   # Out[15]:
    #+BEGIN_EXAMPLE
-     array([[2, 0, 7, 2, 2, 0, 7, 2],
-            [2, 0, 4, 9, 2, 0, 4, 9],
-            [6, 9, 8, 6, 6, 9, 8, 6]])
+     array([[8, 1, 2, 5, 8, 1, 2, 5],
+            [8, 1, 3, 8, 8, 1, 3, 8],
+            [9, 3, 1, 7, 9, 3, 1, 7]])
    #+END_EXAMPLE
    :END:
 
@@ -303,7 +304,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[46]:
+   # Out[16]:
    : [array([1, 2, 3]), array([99, 99]), array([3, 2, 1])]
    :END:
 
@@ -320,7 +321,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[47]:
+   # Out[17]:
    : array([  0.,  10.,  20.,  30.,  40.])
    :END:
 
@@ -335,7 +336,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[48]:
+   # Out[18]:
    : array([  1.,   0.,   2.,   0.,   4.,   0.,   8.,   0.,  16.,   0.])
    :END:
 
@@ -352,7 +353,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[49]:
+   # Out[19]:
    : 15
    :END:
 
@@ -364,7 +365,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[50]:
+   # Out[20]:
    : array([ 1,  3,  6, 10, 15], dtype=int32)
    :END:
 
@@ -383,7 +384,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[51]:
+   # Out[21]:
    : array([1, 2, 3, 4, 5])
    :END:
 
@@ -393,7 +394,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[52]:
+   # Out[22]:
    : array([1, 0, 3, 2, 4], dtype=int64)
    :END:
 
@@ -421,7 +422,7 @@
 
    #+RESULTS:
    :RESULTS:
-   # Out[53]:
+   # Out[38]:
    [[file:./obipy/dmv85B.png]]
    :END:
 
@@ -444,7 +445,7 @@
 
     #+RESULTS:
     :RESULTS:
-    # Out[54]:
+    # Out[24]:
     #+BEGIN_EXAMPLE
       100    5
       200    5
@@ -461,7 +462,7 @@
 
     #+RESULTS:
     :RESULTS:
-    # Out[55]:
+    # Out[25]:
     #+BEGIN_EXAMPLE
       1    b
       2    a
@@ -478,7 +479,7 @@
 
     #+RESULTS:
     :RESULTS:
-    # Out[56]:
+    # Out[26]:
     #+BEGIN_EXAMPLE
       3    c
       2    a
@@ -494,3 +495,278 @@
    index.
 
    It can be seen as a dictionary of column names to series.
+
+   Assume we have this DataFrame:
+
+   #+BEGIN_SRC ipython
+     area = pd.Series({'California': 423967, 'Texas': 695662,
+                       'New York': 141297, 'Florida': 170312,
+                       'Illinois': 149995})
+     pop = pd.Series({'California': 38332521, 'Texas': 26448193,
+                      'New York': 19651127, 'Florida': 19552860,
+                      'Illinois': 12882135})
+     data = pd.DataFrame({'area':area, 'pop':pop})
+     data
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[89]:
+   #+BEGIN_EXAMPLE
+                   area       pop
+     California  423967  38332521
+     Florida     170312  19552860
+     Illinois    149995  12882135
+     New York    141297  19651127
+     Texas       695662  26448193
+   #+END_EXAMPLE
+   :END:
+
+   Access columns like dictionary:
+   
+   #+BEGIN_SRC ipython
+     data['area'] # or just data.area
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[28]:
+   #+BEGIN_EXAMPLE
+     California    423967
+     Florida       170312
+     Illinois      149995
+     New York      141297
+     Texas         695662
+     Name: area, dtype: int64
+   #+END_EXAMPLE
+   :END:
+
+   Never assign columns via attribute syntax. For example, use ~data['pop'] = z~
+   rather than ~data.pop = z~. Otherwise it can overwrite method names.
+
+   Adding new column:
+   
+   #+BEGIN_SRC ipython
+   data['density'] = data['pop'] / data['area']
+   data
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[29]:
+   #+BEGIN_EXAMPLE
+                   area       pop     density
+     California  423967  38332521   90.413926
+     Florida     170312  19552860  114.806121
+     Illinois    149995  12882135   85.883763
+     New York    141297  19651127  139.076746
+     Texas       695662  26448193   38.018740
+   #+END_EXAMPLE
+   :END:
+
+*** Indexing DataFrames
+    
+    Indexing as NumPy array:
+
+    #+BEGIN_SRC ipython
+    data.iloc[:3, :2]
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[30]:
+    #+BEGIN_EXAMPLE
+                    area       pop
+      California  423967  38332521
+      Florida     170312  19552860
+      Illinois    149995  12882135
+    #+END_EXAMPLE
+    :END:
+
+    Indexing with column and row names:
+
+    #+BEGIN_SRC ipython
+    data.loc[:'Illinois', :'pop']
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[31]:
+    #+BEGIN_EXAMPLE
+                    area       pop
+      California  423967  38332521
+      Florida     170312  19552860
+      Illinois    149995  12882135
+    #+END_EXAMPLE
+    :END:
+
+    *While indexing refers to columns, slicing refers to rows:*
+
+    #+BEGIN_SRC ipython
+    data['Florida':'Illinois']
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[32]:
+    #+BEGIN_EXAMPLE
+                  area       pop     density
+      Florida   170312  19552860  114.806121
+      Illinois  149995  12882135   85.883763
+    #+END_EXAMPLE
+    :END:
+
+    *Such slices can also refer to rows by number rather than by index::*
+
+    #+BEGIN_SRC ipython
+    data[1:3]
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[33]:
+    #+BEGIN_EXAMPLE
+                  area       pop     density
+      Florida   170312  19552860  114.806121
+      Illinois  149995  12882135   85.883763
+    #+END_EXAMPLE
+    :END:
+
+*** Operations
+
+    All NumPy ufuncs work on Series and DataFrames, and indexes are preserved.
+
+    #+BEGIN_SRC ipython
+      df = pd.DataFrame(np.random.randint(0, 10, (3, 4)),
+                        columns=['A', 'B', 'C', 'D'])
+      np.sin(df * np.pi / 4)
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[34]:
+    #+BEGIN_EXAMPLE
+                    A             B             C         D
+      0  7.071068e-01  1.000000e+00 -1.000000e+00  0.707107
+      1 -2.449294e-16  1.000000e+00  1.224647e-16  1.000000
+      2 -1.000000e+00  1.224647e-16 -2.449294e-16 -1.000000
+    #+END_EXAMPLE
+    :END:
+
+    *Pandas automatically aligns indexes, and fills missing data with NaN*
+
+    #+BEGIN_SRC ipython
+      area = pd.Series({'Alaska': 1723337, 'Texas': 695662,
+                        'California': 423967}, name='area')
+      population = pd.Series({'California': 38332521, 'Texas': 26448193,
+                              'New York': 19651127}, name='population')
+      population / area
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[35]:
+    #+BEGIN_EXAMPLE
+      Alaska              NaN
+      California    90.413926
+      New York            NaN
+      Texas         38.018740
+      dtype: float64
+    #+END_EXAMPLE
+    :END:
+
+    This works because the resulting array contains the union of the indices of
+    the inputs:
+
+    #+BEGIN_SRC ipython
+      area.index | population.index
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[36]:
+    : Index(['Alaska', 'California', 'New York', 'Texas'], dtype='object')
+    :END:
+
+    We can change the fill value: ~A.add(B, fill_value=0)~
+  
+    | Python Operator | Pandas Method(s)           |
+    |-----------------+----------------------------|
+    | +               | add()                      |
+    | -               | sub(), subtract()          |
+    | *               | mul(), multiply()          |
+    | /               | truediv(), div(), divide() |
+    | //              | floordiv()                 |
+    | %               | mod()                      |
+    | **              | pow()                      |
+
+    Operations between DataFrame and Series are by default by rows. To make it
+    work by columns, use the above functions and specify axis (0=column, 1= row)
+
+    #+BEGIN_SRC ipython
+    df = pd.DataFrame(np.random.randint(10, size=(3, 4)), columns=list('QRST'))
+    #df - df.iloc[0] # first row becomes 0, other rows minus row0
+    #df - df.Q       # this is not what you think
+    df.subtract(df['Q'], axis=0)
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[37]:
+    #+BEGIN_EXAMPLE
+         Q  R  S  T
+      0  0  2  7  0
+      1  0 -1  0 -5
+      2  0  2  5  6
+    #+END_EXAMPLE
+    :END:
+*** Missing data
+    NaN is often used. NumPy has functions to work on them.
+    #+BEGIN_SRC ipython
+    vals2 = np.array([1, np.nan, 3, 4])
+    np.nansum(vals2), np.nanmin(vals2), np.nanmax(vals2)
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[2]:
+    : (8.0, 1.0, 4.0)
+    :END:
+
+    Pandas auto cast data to float when it needs to use NaN to represent missing
+    data.
+
+    #+BEGIN_SRC ipython
+    x = pd.Series(range(2), dtype=int)
+    x[0] = None
+    x
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[5]:
+    #+BEGIN_EXAMPLE
+      0    NaN
+      1    1.0
+      dtype: float64
+    #+END_EXAMPLE
+    :END:
+
+    | Typeclass | Conversion When Storing NAs | NA Sentinel Value |
+    |-----------+-----------------------------+-------------------|
+    | floating  | No change                   | np.nan            |
+    | object    | No change                   | None or np.nan    |
+    | integer   | Cast to float64             | np.nan            |
+    | boolean   | Cast to object              | None or np.nan    |
+
+    Pandas functions for NaN (or None, they are interchangeable in Pandas)
+
+    * ~isnull()~: Generate a boolean mask indicating missing values
+    * ~notnull()~: Opposite of isnull()
+    * ~dropna()~: Return a filtered version of the data
+      - Can drop entire row or column with 'axis'
+      - Can set threshold of dropping row or column with 'thresh'
+    * ~fillna()~: Return a copy of the data with missing values filled or imputed
+      - Can forward fill with ~method='ffill'~ and back fill with ~method='bfill'~
+*** Hierarchical Indexing
+
