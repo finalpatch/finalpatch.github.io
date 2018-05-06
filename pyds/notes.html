@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-05-05 Sat 12:45 -->
+<!-- 2018-05-06 Sun 20:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python Data Science Handbook Notes</title>
@@ -307,64 +307,91 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org43d1644">1. IPython</a>
+<li><a href="#org0fdc69b">1. IPython</a>
 <ul>
-<li><a href="#org360a065">1.1. Emacs</a>
+<li><a href="#org7d0dd2a">1.1. Emacs</a>
 <ul>
-<li><a href="#orga8757de">1.1.1. Completion on Windows</a></li>
-<li><a href="#org33d5aff">1.1.2. Disable pager in Emacs</a></li>
-<li><a href="#org292c2ff">1.1.3. Format DataFrame as org table</a></li>
+<li><a href="#org518b042">1.1.1. Completion on Windows</a></li>
+<li><a href="#org840e5dc">1.1.2. Disable pager in Emacs</a></li>
+<li><a href="#org9f11dca">1.1.3. Format DataFrame as org table</a></li>
 </ul>
 </li>
-<li><a href="#orga7e0825">1.2. Shell commands</a></li>
-<li><a href="#org3afc35a">1.3. Debugger</a></li>
-<li><a href="#orgbfdf621">1.4. Timing</a></li>
+<li><a href="#orgcc9e121">1.2. Shell commands</a></li>
+<li><a href="#org21e90d8">1.3. Debugger</a></li>
+<li><a href="#orgab63135">1.4. Timing</a></li>
 </ul>
 </li>
-<li><a href="#org3932e75">2. NumPy</a>
+<li><a href="#org52680d8">2. NumPy</a>
 <ul>
-<li><a href="#org3124d4f">2.1. Array creating functions</a></li>
-<li><a href="#orgbaea4d5">2.2. Array attributes</a></li>
-<li><a href="#orgd1ff290">2.3. Array slicing</a></li>
-<li><a href="#org2abc4ea">2.4. Change dimension</a></li>
-<li><a href="#orga737422">2.5. Merging and splitting</a></li>
-<li><a href="#org73a9d25">2.6. Specify output container</a></li>
-<li><a href="#orgf1179f8">2.7. reduce() and accumulate()</a></li>
-<li><a href="#org1b0900f">2.8. Sort and index sort</a></li>
-<li><a href="#orgb6047ea">2.9. Example: k-Nearest Neighbors</a></li>
+<li><a href="#org24320c0">2.1. Array creating functions</a></li>
+<li><a href="#orgbb8cd5f">2.2. Array attributes</a></li>
+<li><a href="#org3fca189">2.3. Array slicing</a></li>
+<li><a href="#orgd741890">2.4. Change dimension</a></li>
+<li><a href="#org710ae19">2.5. Merging and splitting</a></li>
+<li><a href="#orge2ca6b8">2.6. Specify output container</a></li>
+<li><a href="#org2f875ab">2.7. reduce() and accumulate()</a></li>
+<li><a href="#orgf3bf0c2">2.8. Sort and index sort</a></li>
+<li><a href="#org0500076">2.9. Example: k-Nearest Neighbors</a></li>
 </ul>
 </li>
-<li><a href="#orge20f7cf">3. Pandas</a>
+<li><a href="#org34c6f5e">3. Pandas</a>
 <ul>
-<li><a href="#orgf1e4143">3.1. Series</a>
+<li><a href="#orgcffce67">3.1. Series</a>
 <ul>
-<li><a href="#org4949929">3.1.1. Constructing</a></li>
+<li><a href="#org483c365">3.1.1. Constructing</a></li>
 </ul>
 </li>
-<li><a href="#org2805494">3.2. DataFrame</a>
+<li><a href="#orge5d1f7c">3.2. DataFrame</a>
 <ul>
-<li><a href="#orga52da79">3.2.1. Indexing DataFrames</a></li>
-<li><a href="#orgacf1ac9">3.2.2. Operations</a></li>
-<li><a href="#org57ef522">3.2.3. Missing data</a></li>
-<li><a href="#org3cb4d03">3.2.4. Hierarchical Indexing</a></li>
+<li><a href="#orgd1b47f4">3.2.1. Indexing DataFrames</a></li>
+<li><a href="#org02cddad">3.2.2. Operations</a></li>
 </ul>
 </li>
+<li><a href="#orgc4d0f22">3.3. Missing data</a></li>
+<li><a href="#orga76400f">3.4. Hierarchical Indexing</a></li>
+<li><a href="#orgfcc1a93">3.5. Merge and join</a>
+<ul>
+<li><a href="#orgcd13c88">3.5.1. Specifying Set Arithmetic for Joins</a></li>
+</ul>
+</li>
+<li><a href="#org6b29ac7">3.6. Aggregation and grouping</a>
+<ul>
+<li><a href="#org4bbf910">3.6.1. GroupBy</a></li>
+<li><a href="#orgd84110b">3.6.2. Pivot tables</a></li>
+</ul>
+</li>
+<li><a href="#org399ef1a">3.7. <span class="todo TODO">TODO</span> Working with time (reread this)</a></li>
+</ul>
+</li>
+<li><a href="#org25a0b07">4. Matplotlib</a>
+<ul>
+<li><a href="#orga9adee8">4.1. MATLAB-style interface</a></li>
+<li><a href="#orgf8392f1">4.2. Object-oriented interface</a></li>
+<li><a href="#org41a1d54">4.3. Line plot</a></li>
+<li><a href="#org7573933">4.4. Scatter plots</a></li>
+<li><a href="#org8b1c111">4.5. Visualizing errors</a></li>
+<li><a href="#org09010b2">4.6. Visualizing three-dimensional function with <code>contour()</code> and <code>imshow()</code></a></li>
+<li><a href="#org9462303">4.7. Histograms, Binnings, and Density</a></li>
+<li><a href="#org3b641fc">4.8. Subplots arrangement</a></li>
+<li><a href="#orge2be02e">4.9. Arrows and annotation</a></li>
+<li><a href="#org4885dc6">4.10. 3D plots</a></li>
+<li><a href="#orgba18c66">4.11. <span class="todo TODO">TODO</span> Geographics data with Basemap</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org43d1644" class="outline-2">
-<h2 id="org43d1644"><span class="section-number-2">1</span> IPython</h2>
+<div id="outline-container-org0fdc69b" class="outline-2">
+<h2 id="org0fdc69b"><span class="section-number-2">1</span> IPython</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org360a065" class="outline-3">
-<h3 id="org360a065"><span class="section-number-3">1.1</span> Emacs</h3>
+<div id="outline-container-org7d0dd2a" class="outline-3">
+<h3 id="org7d0dd2a"><span class="section-number-3">1.1</span> Emacs</h3>
 <div class="outline-text-3" id="text-1-1">
 </div>
-<div id="outline-container-orga8757de" class="outline-4">
-<h4 id="orga8757de"><span class="section-number-4">1.1.1</span> Completion on Windows</h4>
+<div id="outline-container-org518b042" class="outline-4">
+<h4 id="org518b042"><span class="section-number-4">1.1.1</span> Completion on Windows</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 To get Emacs Python shell completion on Windows, install pyreadline. Then it
@@ -373,8 +400,8 @@ just works.
 </div>
 </div>
 
-<div id="outline-container-org33d5aff" class="outline-4">
-<h4 id="org33d5aff"><span class="section-number-4">1.1.2</span> Disable pager in Emacs</h4>
+<div id="outline-container-org840e5dc" class="outline-4">
+<h4 id="org840e5dc"><span class="section-number-4">1.1.2</span> Disable pager in Emacs</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
 put this in <code>${HOME}/.ipython/profile_default/startup/no-pager.py</code>
@@ -395,8 +422,8 @@ put this in <code>${HOME}/.ipython/profile_default/startup/no-pager.py</code>
 </div>
 </div>
 
-<div id="outline-container-org292c2ff" class="outline-4">
-<h4 id="org292c2ff"><span class="section-number-4">1.1.3</span> Format DataFrame as org table</h4>
+<div id="outline-container-org9f11dca" class="outline-4">
+<h4 id="org9f11dca"><span class="section-number-4">1.1.3</span> Format DataFrame as org table</h4>
 <div class="outline-text-4" id="text-1-1-3">
 <p>
 put this in <code>${HOME}/.ipython/profile_default/startup/org-formatter.py</code>
@@ -424,8 +451,8 @@ put this in <code>${HOME}/.ipython/profile_default/startup/org-formatter.py</cod
 </div>
 </div>
 
-<div id="outline-container-orga7e0825" class="outline-3">
-<h3 id="orga7e0825"><span class="section-number-3">1.2</span> Shell commands</h3>
+<div id="outline-container-orgcc9e121" class="outline-3">
+<h3 id="orgcc9e121"><span class="section-number-3">1.2</span> Shell commands</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 All shell commands can be used with <code>!</code> prefix.  Results can be assigned to
@@ -441,14 +468,14 @@ files
 </div>
 
 <pre class="example">
-["'ls' is not recognized as an internal or external command,",
- 'operable program or batch file.']
+['gistemp250.nc', 'notes.html', 'notes.org', 'obipy']
+
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org3afc35a" class="outline-3">
-<h3 id="org3afc35a"><span class="section-number-3">1.3</span> Debugger</h3>
+<div id="outline-container-org21e90d8" class="outline-3">
+<h3 id="org21e90d8"><span class="section-number-3">1.3</span> Debugger</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 <code>%debug</code> to enter debugger on last exception
@@ -456,8 +483,8 @@ files
 </div>
 </div>
 
-<div id="outline-container-orgbfdf621" class="outline-3">
-<h3 id="orgbfdf621"><span class="section-number-3">1.4</span> Timing</h3>
+<div id="outline-container-orgab63135" class="outline-3">
+<h3 id="orgab63135"><span class="section-number-3">1.4</span> Timing</h3>
 <div class="outline-text-3" id="text-1-4">
 <ul class="org-ul">
 <li><code>%timeit</code> - one line, may run multiple times for short functions</li>
@@ -470,12 +497,12 @@ files
 </div>
 </div>
 
-<div id="outline-container-org3932e75" class="outline-2">
-<h2 id="org3932e75"><span class="section-number-2">2</span> NumPy</h2>
+<div id="outline-container-org52680d8" class="outline-2">
+<h2 id="org52680d8"><span class="section-number-2">2</span> NumPy</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org3124d4f" class="outline-3">
-<h3 id="org3124d4f"><span class="section-number-3">2.1</span> Array creating functions</h3>
+<div id="outline-container-org24320c0" class="outline-3">
+<h3 id="org24320c0"><span class="section-number-3">2.1</span> Array creating functions</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li><code>np.zeros(10, dtype=int)</code></li>
@@ -491,8 +518,8 @@ files
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbaea4d5" class="outline-3">
-<h3 id="orgbaea4d5"><span class="section-number-3">2.2</span> Array attributes</h3>
+<div id="outline-container-orgbb8cd5f" class="outline-3">
+<h3 id="orgbb8cd5f"><span class="section-number-3">2.2</span> Array attributes</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-ipython"><span style="color: #E06C75;">x3</span> = np.random.randint(10, size=(3, 4, 5))
@@ -517,8 +544,8 @@ x3 nbytes 240
 </div>
 </div>
 
-<div id="outline-container-orgd1ff290" class="outline-3">
-<h3 id="orgd1ff290"><span class="section-number-3">2.3</span> Array slicing</h3>
+<div id="outline-container-org3fca189" class="outline-3">
+<h3 id="org3fca189"><span class="section-number-3">2.3</span> Array slicing</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Slicing returns a <b>view</b> into the original. No copy is made.
@@ -531,9 +558,9 @@ x2
 </div>
 
 <pre class="example">
-array([[0, 2, 4, 2],
-       [0, 4, 9, 6],
-       [6, 8, 9, 9]])
+array([[7, 4, 4, 2],
+       [5, 9, 2, 1],
+       [6, 9, 2, 3]])
 </pre>
 
 <p>
@@ -546,8 +573,8 @@ Extract 2x2
 </div>
 
 <pre class="example">
-array([[0, 2],
-       [0, 4]])
+array([[7, 4],
+       [5, 9]])
 </pre>
 
 <p>
@@ -559,9 +586,9 @@ Reverse
 </div>
 
 <pre class="example">
-array([[9, 9, 8, 6],
-       [6, 9, 4, 0],
-       [2, 4, 2, 0]])
+array([[3, 2, 9, 6],
+       [1, 2, 9, 5],
+       [2, 4, 4, 7]])
 </pre>
 
 <p>
@@ -573,7 +600,7 @@ Get column
 </div>
 
 <pre class="example">
-array([0, 0, 6])
+array([7, 5, 6])
 
 </pre>
 
@@ -586,7 +613,7 @@ Get row
 </div>
 
 <pre class="example">
-array([0, 2, 4, 2])
+array([7, 4, 4, 2])
 
 </pre>
 
@@ -599,14 +626,14 @@ To make a copy,  use .copy()
 </div>
 
 <pre class="example">
-array([[0, 2],
-       [0, 4]])
+array([[7, 4],
+       [5, 9]])
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org2abc4ea" class="outline-3">
-<h3 id="org2abc4ea"><span class="section-number-3">2.4</span> Change dimension</h3>
+<div id="outline-container-orgd741890" class="outline-3">
+<h3 id="orgd741890"><span class="section-number-3">2.4</span> Change dimension</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 With <code>.reshape()</code>
@@ -661,8 +688,8 @@ array([[1],
 </div>
 </div>
 
-<div id="outline-container-orga737422" class="outline-3">
-<h3 id="orga737422"><span class="section-number-3">2.5</span> Merging and splitting</h3>
+<div id="outline-container-org710ae19" class="outline-3">
+<h3 id="org710ae19"><span class="section-number-3">2.5</span> Merging and splitting</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 Merging with <code>np.concatenate()</code>, <code>np.vstack()</code>, <code>np.hstack()</code>
@@ -674,12 +701,12 @@ Merging with <code>np.concatenate()</code>, <code>np.vstack()</code>, <code>np.h
 </div>
 
 <pre class="example">
-array([[0, 2, 4, 2],
-       [0, 4, 9, 6],
-       [6, 8, 9, 9],
-       [0, 2, 4, 2],
-       [0, 4, 9, 6],
-       [6, 8, 9, 9]])
+array([[7, 4, 4, 2],
+       [5, 9, 2, 1],
+       [6, 9, 2, 3],
+       [7, 4, 4, 2],
+       [5, 9, 2, 1],
+       [6, 9, 2, 3]])
 </pre>
 
 <div class="org-src-container">
@@ -688,9 +715,9 @@ array([[0, 2, 4, 2],
 </div>
 
 <pre class="example">
-array([[0, 2, 4, 2, 0, 2, 4, 2],
-       [0, 4, 9, 6, 0, 4, 9, 6],
-       [6, 8, 9, 9, 6, 8, 9, 9]])
+array([[7, 4, 4, 2, 7, 4, 4, 2],
+       [5, 9, 2, 1, 5, 9, 2, 1],
+       [6, 9, 2, 3, 6, 9, 2, 3]])
 </pre>
 
 <p>
@@ -710,8 +737,8 @@ np.split(x, [3, 5]) <span style="color: #5C6370;"># </span><span style="color: #
 </div>
 </div>
 
-<div id="outline-container-org73a9d25" class="outline-3">
-<h3 id="org73a9d25"><span class="section-number-3">2.6</span> Specify output container</h3>
+<div id="outline-container-orge2ca6b8" class="outline-3">
+<h3 id="orge2ca6b8"><span class="section-number-3">2.6</span> Specify output container</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 To avoid creating temporaries.
@@ -749,8 +776,8 @@ array([  1.,   0.,   2.,   0.,   4.,   0.,   8.,   0.,  16.,   0.])
 </div>
 </div>
 
-<div id="outline-container-orgf1179f8" class="outline-3">
-<h3 id="orgf1179f8"><span class="section-number-3">2.7</span> reduce() and accumulate()</h3>
+<div id="outline-container-org2f875ab" class="outline-3">
+<h3 id="org2f875ab"><span class="section-number-3">2.7</span> reduce() and accumulate()</h3>
 <div class="outline-text-3" id="text-2-7">
 <p>
 ufuncs supports <code>reduce()</code> and <code>accumulate()</code>
@@ -787,8 +814,8 @@ array([ 1,  3,  6, 10, 15], dtype=int32)
 </div>
 </div>
 
-<div id="outline-container-org1b0900f" class="outline-3">
-<h3 id="org1b0900f"><span class="section-number-3">2.8</span> Sort and index sort</h3>
+<div id="outline-container-orgf3bf0c2" class="outline-3">
+<h3 id="orgf3bf0c2"><span class="section-number-3">2.8</span> Sort and index sort</h3>
 <div class="outline-text-3" id="text-2-8">
 <p>
 <code>np.sort()</code> returns new copy of sorted array.
@@ -825,8 +852,8 @@ array([1, 0, 3, 2, 4], dtype=int64)
 </div>
 </div>
 
-<div id="outline-container-orgb6047ea" class="outline-3">
-<h3 id="orgb6047ea"><span class="section-number-3">2.9</span> Example: k-Nearest Neighbors</h3>
+<div id="outline-container-org0500076" class="outline-3">
+<h3 id="org0500076"><span class="section-number-3">2.9</span> Example: k-Nearest Neighbors</h3>
 <div class="outline-text-3" id="text-2-9">
 <p>
 <a href="https://jakevdp.github.io/PythonDataScienceHandbook/02.08-sorting.html">https://jakevdp.github.io/PythonDataScienceHandbook/02.08-sorting.html</a>
@@ -862,12 +889,12 @@ plt.scatter(X[:, 0], X[:, 1], s=100)
 </div>
 </div>
 
-<div id="outline-container-orge20f7cf" class="outline-2">
-<h2 id="orge20f7cf"><span class="section-number-2">3</span> Pandas</h2>
+<div id="outline-container-org34c6f5e" class="outline-2">
+<h2 id="org34c6f5e"><span class="section-number-2">3</span> Pandas</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgf1e4143" class="outline-3">
-<h3 id="orgf1e4143"><span class="section-number-3">3.1</span> Series</h3>
+<div id="outline-container-orgcffce67" class="outline-3">
+<h3 id="orgcffce67"><span class="section-number-3">3.1</span> Series</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Series is like strong typed dictionary.
@@ -882,8 +909,8 @@ And checking presence with operator <code>in</code>: <code>'a' in data</code>
 </p>
 </div>
 
-<div id="outline-container-org4949929" class="outline-4">
-<h4 id="org4949929"><span class="section-number-4">3.1.1</span> Constructing</h4>
+<div id="outline-container-org483c365" class="outline-4">
+<h4 id="org483c365"><span class="section-number-4">3.1.1</span> Constructing</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 data can be a scalar, which is repeated to fill the specified index:
@@ -939,8 +966,8 @@ In above example, 'b' is dropped, as 1 is not in the index.
 </div>
 </div>
 
-<div id="outline-container-org2805494" class="outline-3">
-<h3 id="org2805494"><span class="section-number-3">3.2</span> DataFrame</h3>
+<div id="outline-container-orge5d1f7c" class="outline-3">
+<h3 id="orge5d1f7c"><span class="section-number-3">3.2</span> DataFrame</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Similar to Series, but 2D, where both rows and columns have generalized
@@ -1019,8 +1046,8 @@ Texas       695662  26448193   38.018740
 </pre>
 </div>
 
-<div id="outline-container-orga52da79" class="outline-4">
-<h4 id="orga52da79"><span class="section-number-4">3.2.1</span> Indexing DataFrames</h4>
+<div id="outline-container-orgd1b47f4" class="outline-4">
+<h4 id="orgd1b47f4"><span class="section-number-4">3.2.1</span> Indexing DataFrames</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 Indexing as NumPy array:
@@ -1086,8 +1113,8 @@ Illinois  149995  12882135   85.883763
 </div>
 </div>
 
-<div id="outline-container-orgacf1ac9" class="outline-4">
-<h4 id="orgacf1ac9"><span class="section-number-4">3.2.2</span> Operations</h4>
+<div id="outline-container-org02cddad" class="outline-4">
+<h4 id="org02cddad"><span class="section-number-4">3.2.2</span> Operations</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <p>
 All NumPy ufuncs work on Series and DataFrames, and indexes are preserved.
@@ -1215,9 +1242,10 @@ df.subtract(df[<span style="color: #98C379;">'Q'</span>], axis=0)
 </pre>
 </div>
 </div>
-<div id="outline-container-org57ef522" class="outline-4">
-<h4 id="org57ef522"><span class="section-number-4">3.2.3</span> Missing data</h4>
-<div class="outline-text-4" id="text-3-2-3">
+</div>
+<div id="outline-container-orgc4d0f22" class="outline-3">
+<h3 id="orgc4d0f22"><span class="section-number-3">3.3</span> Missing data</h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 NaN is often used. NumPy has functions to work on them.
 </p>
@@ -1313,14 +1341,1261 @@ Pandas functions for NaN (or None, they are interchangeable in Pandas)
 </ul>
 </div>
 </div>
-<div id="outline-container-org3cb4d03" class="outline-4">
-<h4 id="org3cb4d03"><span class="section-number-4">3.2.4</span> Hierarchical Indexing</h4>
+<div id="outline-container-orga76400f" class="outline-3">
+<h3 id="orga76400f"><span class="section-number-3">3.4</span> Hierarchical Indexing</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">index</span> = [(<span style="color: #98C379;">'California'</span>, 2000),
+         (<span style="color: #98C379;">'California'</span>, 2010),
+         (<span style="color: #98C379;">'New York'</span>, 2000),
+         (<span style="color: #98C379;">'New York'</span>, 2010),
+         (<span style="color: #98C379;">'Texas'</span>, 2000),
+         (<span style="color: #98C379;">'Texas'</span>, 2010)]
+<span style="color: #E06C75;">populations</span> = [33871648, 37253956,
+               18976457, 19378102,
+               20851820, 25145561]
+<span style="color: #E06C75;">pop</span> = pd.Series(populations, index=index)
+<span style="color: #E06C75;">index</span> = pd.MultiIndex.from_tuples(index)
+<span style="color: #E06C75;">pop</span> = pop.reindex(index)
+pop
+</pre>
+</div>
+
+<pre class="example">
+California  2000    33871648
+            2010    37253956
+New York    2000    18976457
+            2010    19378102
+Texas       2000    20851820
+            2010    25145561
+dtype: int64
+</pre>
+
+<p>
+Unstack the last index column to create a new dimension
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">pop_df</span> = pop.unstack()
+pop_df
+</pre>
+</div>
+
+<pre class="example">
+                2000      2010
+California  33871648  37253956
+New York    18976457  19378102
+Texas       20851820  25145561
+</pre>
+
+<p>
+<b>Each extra level in a multi-index represents an extra dimension of data</b>
+</p>
+
+<p>
+This allows us to easily and quickly manipulate and explore even
+high-dimensional data.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">pop_df</span> = pd.DataFrame({<span style="color: #98C379;">'total'</span>: pop,
+                   <span style="color: #98C379;">'under18'</span>: [9267089, 9284094,
+                               4687374, 4318033,
+                               5906301, 6879014]})
+<span style="color: #E06C75;">f_u18</span> = pop_df[<span style="color: #98C379;">'under18'</span>] / pop_df[<span style="color: #98C379;">'total'</span>]
+f_u18.unstack()
+</pre>
+</div>
+
+<pre class="example">
+                2000      2010
+California  0.273594  0.249211
+New York    0.247010  0.222831
+Texas       0.283251  0.273568
+</pre>
+
+<p>
+Multi index levels can have names
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">pop.index.names</span> = [<span style="color: #98C379;">'state'</span>, <span style="color: #98C379;">'year'</span>]
+pop
+</pre>
+</div>
+
+<pre class="example">
+state       year
+California  2000    33871648
+            2010    37253956
+New York    2000    18976457
+            2010    19378102
+Texas       2000    20851820
+            2010    25145561
+dtype: int64
+</pre>
+
+<p>
+Columns can have multiindex too
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">
+
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">hierarchical indices and columns</span>
+<span style="color: #E06C75;">index</span> = pd.MultiIndex.from_product([[2013, 2014], [1, 2]],
+                                   names=[<span style="color: #98C379;">'year'</span>, <span style="color: #98C379;">'visit'</span>])
+<span style="color: #E06C75;">columns</span> = pd.MultiIndex.from_product([[<span style="color: #98C379;">'Bob'</span>, <span style="color: #98C379;">'Guido'</span>, <span style="color: #98C379;">'Sue'</span>], [<span style="color: #98C379;">'HR'</span>, <span style="color: #98C379;">'Temp'</span>]],
+                                     names=[<span style="color: #98C379;">'subject'</span>, <span style="color: #98C379;">'type'</span>])
+
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">mock some data</span>
+<span style="color: #E06C75;">data</span> = np.<span style="color: #56B6C2;">round</span>(np.random.randn(4, 6), 1)
+<span style="color: #E06C75;">data</span>[:, ::2] *= 10
+<span style="color: #E06C75;">data</span> += 37
+
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">create the DataFrame</span>
+<span style="color: #E06C75;">health_data</span> = pd.DataFrame(data, index=index, columns=columns)
+health_data
+</pre>
+</div>
+
+<pre class="example">
+subject      Bob       Guido         Sue
+type          HR  Temp    HR  Temp    HR  Temp
+year visit
+2013 1      45.0  35.8  39.0  35.0  24.0  37.2
+     2      44.0  37.2  36.0  36.7  22.0  36.3
+2014 1      32.0  38.1  40.0  35.2  40.0  36.6
+     2      30.0  37.6  47.0  37.9  29.0  36.7
+</pre>
+
+<p>
+This is fundamentally four-dimensional data.
+</p>
+
+<p>
+The screen is 2D, Pandas can only present data in 2D on the screen.
+</p>
+
+<p>
+stack() and unstack() essentially moves index between row and column, to
+project the data to 2D in different ways.
+</p>
+
+<p>
+Multiindex levels can be used for data aggregation.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">health_data.mean(level=<span style="color: #98C379;">'visit'</span>)
+</pre>
+</div>
+
+<pre class="example">
+subject   Bob        Guido         Sue
+type       HR   Temp    HR  Temp    HR  Temp
+visit
+1        38.5  36.95  39.5  35.1  32.0  36.9
+2        37.0  37.40  41.5  37.3  25.5  36.5
+</pre>
+
+<p>
+Also by column:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">health_data.mean(axis=1, level=<span style="color: #98C379;">'type'</span>)
+</pre>
+</div>
+
+<pre class="example">
+type               HR       Temp
+year visit
+2013 1      36.000000  36.000000
+     2      34.000000  36.733333
+2014 1      37.333333  36.633333
+     2      35.333333  37.400000
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgfcc1a93" class="outline-3">
+<h3 id="orgfcc1a93"><span class="section-number-3">3.5</span> Merge and join</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+Pandas automatically recognize overlapping columns
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">df1</span> = pd.DataFrame({<span style="color: #98C379;">'employee'</span>: [<span style="color: #98C379;">'Bob'</span>, <span style="color: #98C379;">'Jake'</span>, <span style="color: #98C379;">'Lisa'</span>, <span style="color: #98C379;">'Sue'</span>],
+                    <span style="color: #98C379;">'group'</span>: [<span style="color: #98C379;">'Accounting'</span>, <span style="color: #98C379;">'Engineering'</span>, <span style="color: #98C379;">'Engineering'</span>, <span style="color: #98C379;">'HR'</span>]})
+<span style="color: #E06C75;">df2</span> = pd.DataFrame({<span style="color: #98C379;">'employee'</span>: [<span style="color: #98C379;">'Lisa'</span>, <span style="color: #98C379;">'Bob'</span>, <span style="color: #98C379;">'Jake'</span>, <span style="color: #98C379;">'Sue'</span>],
+                    <span style="color: #98C379;">'hire_date'</span>: [2004, 2008, 2012, 2014]})
+pd.merge(df1, df2)
+</pre>
+</div>
+
+<pre class="example">
+  employee        group  hire_date
+0      Bob   Accounting       2008
+1     Jake  Engineering       2012
+2     Lisa  Engineering       2004
+3      Sue           HR       2014
+</pre>
+
+<p>
+Merge key can be explicitly specified:
+</p>
+
+<p>
+<code>pd.merge(df1, df2, on='employee')</code>
+</p>
+
+<p>
+If column names differ, use <code>left_on</code> and <code>right_on</code> to specify the columns.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">df3</span> = pd.DataFrame({<span style="color: #98C379;">'name'</span>: [<span style="color: #98C379;">'Bob'</span>, <span style="color: #98C379;">'Jake'</span>, <span style="color: #98C379;">'Lisa'</span>, <span style="color: #98C379;">'Sue'</span>],
+                    <span style="color: #98C379;">'salary'</span>: [70000, 80000, 120000, 90000]})
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">drop() to remove the duplicated column</span>
+pd.merge(df1, df3, left_on=<span style="color: #98C379;">"employee"</span>, right_on=<span style="color: #98C379;">"name"</span>).drop(<span style="color: #98C379;">"name"</span>, axis=1)
+</pre>
+</div>
+
+<pre class="example">
+  employee        group  salary
+0      Bob   Accounting   70000
+1     Jake  Engineering   80000
+2     Lisa  Engineering  120000
+3      Sue           HR   90000
+</pre>
+
+<p>
+merge() can use indices too:
+<code>pd.merge(df1, df2, left_index=True, right_index=True)</code>
+</p>
+
+<p>
+But for convenience, use join(), which performs merge that defaults to
+joining on indices.
+</p>
+</div>
+
+<div id="outline-container-orgcd13c88" class="outline-4">
+<h4 id="orgcd13c88"><span class="section-number-4">3.5.1</span> Specifying Set Arithmetic for Joins</h4>
+<div class="outline-text-4" id="text-3-5-1">
+<p>
+By default, merge produces <b>intersection</b> of the inputs(inner join)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">df6</span> = pd.DataFrame({<span style="color: #98C379;">'name'</span>: [<span style="color: #98C379;">'Peter'</span>, <span style="color: #98C379;">'Paul'</span>, <span style="color: #98C379;">'Mary'</span>],
+                    <span style="color: #98C379;">'food'</span>: [<span style="color: #98C379;">'fish'</span>, <span style="color: #98C379;">'beans'</span>, <span style="color: #98C379;">'bread'</span>]},
+                   columns=[<span style="color: #98C379;">'name'</span>, <span style="color: #98C379;">'food'</span>])
+<span style="color: #E06C75;">df7</span> = pd.DataFrame({<span style="color: #98C379;">'name'</span>: [<span style="color: #98C379;">'Mary'</span>, <span style="color: #98C379;">'Joseph'</span>],
+                    <span style="color: #98C379;">'drink'</span>: [<span style="color: #98C379;">'wine'</span>, <span style="color: #98C379;">'beer'</span>]},
+                   columns=[<span style="color: #98C379;">'name'</span>, <span style="color: #98C379;">'drink'</span>])
+pd.merge(df6, df7)
+</pre>
+</div>
+
+<pre class="example">
+   name   food drink
+0  Mary  bread  wine
+</pre>
+
+
+<p>
+To make a outer join, use the <code>how</code> keyword (how can also be <code>left</code> or
+<code>right</code>):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">pd.merge(df6, df7, how=<span style="color: #98C379;">'outer'</span>)
+</pre>
+</div>
+
+<pre class="example">
+     name   food drink
+0   Peter   fish   NaN
+1    Paul  beans   NaN
+2    Mary  bread  wine
+3  Joseph    NaN  beer
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6b29ac7" class="outline-3">
+<h3 id="org6b29ac7"><span class="section-number-3">3.6</span> Aggregation and grouping</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+Use the seaborn planets dataset as example
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #C678DD;">import</span> seaborn <span style="color: #C678DD;">as</span> sns
+<span style="color: #E06C75;">planets</span> = sns.load_dataset(<span style="color: #98C379;">'planets'</span>)
+planets.shape
+</pre>
+</div>
+
+<pre class="example">
+(1035, 6)
+
+</pre>
+
+<p>
+DataFrame has convenience method <code>describe()</code>, that computes several common
+aggregates for each column.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">planets.dropna().describe()
+</pre>
+</div>
+
+<pre class="example">
+          number  orbital_period        mass    distance         year
+count  498.00000      498.000000  498.000000  498.000000   498.000000
+mean     1.73494      835.778671    2.509320   52.068213  2007.377510
+std      1.17572     1469.128259    3.636274   46.596041     4.167284
+min      1.00000        1.328300    0.003600    1.350000  1989.000000
+25%      1.00000       38.272250    0.212500   24.497500  2005.000000
+50%      1.00000      357.000000    1.245000   39.940000  2009.000000
+75%      2.00000      999.600000    2.867500   59.332500  2011.000000
+max      6.00000    17337.500000   25.000000  354.000000  2014.000000
+</pre>
+
+<p>
+Other built-in Pandas aggregations:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Aggregation</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">count()</td>
+<td class="org-left">Total number of items</td>
+</tr>
+
+<tr>
+<td class="org-left">first(), last()</td>
+<td class="org-left">First and last item</td>
+</tr>
+
+<tr>
+<td class="org-left">mean(), median()</td>
+<td class="org-left">Mean and median</td>
+</tr>
+
+<tr>
+<td class="org-left">min(), max()</td>
+<td class="org-left">Minimum and maximum</td>
+</tr>
+
+<tr>
+<td class="org-left">std(), var()</td>
+<td class="org-left">Standard deviation and variance</td>
+</tr>
+
+<tr>
+<td class="org-left">mad()</td>
+<td class="org-left">Mean absolute deviation</td>
+</tr>
+
+<tr>
+<td class="org-left">prod()</td>
+<td class="org-left">Product of all items</td>
+</tr>
+
+<tr>
+<td class="org-left">sum()</td>
+<td class="org-left">Sum of all items</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org4bbf910" class="outline-4">
+<h4 id="org4bbf910"><span class="section-number-4">3.6.1</span> GroupBy</h4>
+<div class="outline-text-4" id="text-3-6-1">
+<p>
+The <code>GroupBy</code> object can be seen as a collection of ~DataFrame~s
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">planets.groupby(<span style="color: #98C379;">'method'</span>)[<span style="color: #98C379;">'orbital_period'</span>].median()
+</pre>
+</div>
+
+<pre class="example">
+method
+Astrometry                         631.180000
+Eclipse Timing Variations         4343.500000
+Imaging                          27500.000000
+Microlensing                      3300.000000
+Orbital Brightness Modulation        0.342887
+Pulsar Timing                       66.541900
+Pulsation Timing Variations       1170.000000
+Radial Velocity                    360.200000
+Transit                              5.714932
+Transit Timing Variations           57.011000
+Name: orbital_period, dtype: float64
+</pre>
+
+<p>
+The <code>GroupBy</code> object supports iteration over groups:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #C678DD;">for</span> (method, group) <span style="color: #C678DD;">in</span> planets.groupby(<span style="color: #98C379;">'method'</span>):
+    <span style="color: #C678DD;">print</span>(<span style="color: #98C379;">"{0:30s} shape={1}"</span>.<span style="color: #56B6C2;">format</span>(method, group.shape))
+</pre>
+</div>
+
+<p>
+Astrometry                     shape=(2, 6)
+Eclipse Timing Variations      shape=(9, 6)
+Imaging                        shape=(38, 6)
+Microlensing                   shape=(23, 6)
+Orbital Brightness Modulation  shape=(3, 6)
+Pulsar Timing                  shape=(5, 6)
+Pulsation Timing Variations    shape=(1, 6)
+Radial Velocity                shape=(553, 6)
+Transit                        shape=(397, 6)
+Transit Timing Variations      shape=(4, 6)
+</p>
+
+<p>
+The <code>GroupBy</code> object pass through methods to its groups:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">planets.groupby(<span style="color: #98C379;">'method'</span>)[<span style="color: #98C379;">'year'</span>].describe()
+</pre>
+</div>
+
+<pre class="example">
+                               count         mean       std     min      25%  \
+method
+Astrometry                       2.0  2011.500000  2.121320  2010.0  2010.75
+Eclipse Timing Variations        9.0  2010.000000  1.414214  2008.0  2009.00
+Imaging                         38.0  2009.131579  2.781901  2004.0  2008.00
+Microlensing                    23.0  2009.782609  2.859697  2004.0  2008.00
+Orbital Brightness Modulation    3.0  2011.666667  1.154701  2011.0  2011.00
+Pulsar Timing                    5.0  1998.400000  8.384510  1992.0  1992.00
+Pulsation Timing Variations      1.0  2007.000000       NaN  2007.0  2007.00
+Radial Velocity                553.0  2007.518987  4.249052  1989.0  2005.00
+Transit                        397.0  2011.236776  2.077867  2002.0  2010.00
+Transit Timing Variations        4.0  2012.500000  1.290994  2011.0  2011.75
+
+                                  50%      75%     max
+method
+Astrometry                     2011.5  2012.25  2013.0
+Eclipse Timing Variations      2010.0  2011.00  2012.0
+Imaging                        2009.0  2011.00  2013.0
+Microlensing                   2010.0  2012.00  2013.0
+Orbital Brightness Modulation  2011.0  2012.00  2013.0
+Pulsar Timing                  1994.0  2003.00  2011.0
+Pulsation Timing Variations    2007.0  2007.00  2007.0
+Radial Velocity                2009.0  2011.00  2014.0
+Transit                        2012.0  2013.00  2014.0
+Transit Timing Variations      2012.5  2013.25  2014.0
+</pre>
+
+<p>
+Filter out groups with <code>filter()</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">df</span> = pd.DataFrame({<span style="color: #98C379;">'A'</span> : [<span style="color: #98C379;">'foo'</span>, <span style="color: #98C379;">'bar'</span>, <span style="color: #98C379;">'foo'</span>, <span style="color: #98C379;">'bar'</span>,
+                          <span style="color: #98C379;">'foo'</span>, <span style="color: #98C379;">'bar'</span>],
+                   <span style="color: #98C379;">'B'</span> : [1, 2, 3, 4, 5, 6],
+                   <span style="color: #98C379;">'C'</span> : [2.0, 5., 8., 1., 2., 9.]})
+df.groupby(<span style="color: #98C379;">'A'</span>).<span style="color: #56B6C2;">filter</span>(<span style="color: #C678DD;">lambda</span> x: x[<span style="color: #98C379;">'B'</span>].mean() &gt; 3.)
+</pre>
+</div>
+
+<pre class="example">
+     A  B    C
+1  bar  2  5.0
+3  bar  4  1.0
+5  bar  6  9.0
+</pre>
+
+<p>
+Or more complex things with <code>transform()</code> and <code>apply()</code>.
+</p>
+
+<p>
+<code>groupby()</code> also accepts dictionary and python functions.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd84110b" class="outline-4">
+<h4 id="orgd84110b"><span class="section-number-4">3.6.2</span> Pivot tables</h4>
+<div class="outline-text-4" id="text-3-6-2">
+<p>
+Use titanic data set:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">titanic</span> = sns.load_dataset(<span style="color: #98C379;">'titanic'</span>)
+titanic.head()
+</pre>
+</div>
+
+<pre class="example">
+   survived  pclass     sex   age  sibsp  parch     fare embarked  class  \
+0         0       3    male  22.0      1      0   7.2500        S  Third
+1         1       1  female  38.0      1      0  71.2833        C  First
+2         1       3  female  26.0      0      0   7.9250        S  Third
+3         1       1  female  35.0      1      0  53.1000        S  First
+4         0       3    male  35.0      0      0   8.0500        S  Third
+
+     who  adult_male deck  embark_town alive  alone
+0    man        True  NaN  Southampton    no  False
+1  woman       False    C    Cherbourg   yes  False
+2  woman       False  NaN  Southampton   yes   True
+3  woman       False    C  Southampton   yes  False
+4    man        True  NaN  Southampton    no   True
+</pre>
+
+<p>
+Pivot table the manual way, two column <code>groupby()</code> then <code>unstack()</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">titanic.groupby([<span style="color: #98C379;">'sex'</span>, <span style="color: #98C379;">'class'</span>])[<span style="color: #98C379;">'survived'</span>].mean().unstack()
+</pre>
+</div>
+
+<pre class="example">
+class      First    Second     Third
+sex
+female  0.968085  0.921053  0.500000
+male    0.368852  0.157407  0.135447
+</pre>
+
+<p>
+Pivot table syntax:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">titanic.pivot_table(<span style="color: #98C379;">'survived'</span>, index=<span style="color: #98C379;">'sex'</span>, columns=<span style="color: #98C379;">'class'</span>)
+</pre>
+</div>
+
+<pre class="example">
+class      First    Second     Third
+sex
+female  0.968085  0.921053  0.500000
+male    0.368852  0.157407  0.135447
+</pre>
+
+<p>
+Multi-level pivot tables:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">age</span> = pd.cut(titanic[<span style="color: #98C379;">'age'</span>], [0, 18, 80])
+titanic.pivot_table(<span style="color: #98C379;">'survived'</span>, [<span style="color: #98C379;">'sex'</span>, age], <span style="color: #98C379;">'class'</span>)
+</pre>
+</div>
+
+<pre class="example">
+class               First    Second     Third
+sex    age
+female (0, 18]   0.909091  1.000000  0.511628
+       (18, 80]  0.972973  0.900000  0.423729
+male   (0, 18]   0.800000  0.600000  0.215686
+       (18, 80]  0.375000  0.071429  0.133663
+</pre>
+
+<p>
+Multi-level column index:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">fare</span> = pd.qcut(titanic[<span style="color: #98C379;">'fare'</span>], 2)
+titanic.pivot_table(<span style="color: #98C379;">'survived'</span>, [<span style="color: #98C379;">'sex'</span>, age], [fare, <span style="color: #98C379;">'class'</span>])
+</pre>
+</div>
+
+<pre class="example">
+fare            (-0.001, 14.454]                     (14.454, 512.329]  \
+class                      First    Second     Third             First
+sex    age
+female (0, 18]               NaN  1.000000  0.714286          0.909091
+       (18, 80]              NaN  0.880000  0.444444          0.972973
+male   (0, 18]               NaN  0.000000  0.260870          0.800000
+       (18, 80]              0.0  0.098039  0.125000          0.391304
+
+fare
+class              Second     Third
+sex    age
+female (0, 18]   1.000000  0.318182
+       (18, 80]  0.914286  0.391304
+male   (0, 18]   0.818182  0.178571
+       (18, 80]  0.030303  0.192308
+</pre>
+
+<p>
+Include totals in <code>pivot_table()</code> with <code>margins</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">titanic.pivot_table(<span style="color: #98C379;">'survived'</span>, index=<span style="color: #98C379;">'sex'</span>, columns=<span style="color: #98C379;">'class'</span>, margins=<span style="color: #56B6C2;">True</span>)
+</pre>
+</div>
+
+<pre class="example">
+class      First    Second     Third       All
+sex
+female  0.968085  0.921053  0.500000  0.742038
+male    0.368852  0.157407  0.135447  0.188908
+All     0.629630  0.472826  0.242363  0.383838
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org399ef1a" class="outline-3">
+<h3 id="org399ef1a"><span class="section-number-3">3.7</span> <span class="todo TODO">TODO</span> Working with time (reread this)</h3>
+</div>
+</div>
+
+<div id="outline-container-org25a0b07" class="outline-2">
+<h2 id="org25a0b07"><span class="section-number-2">4</span> Matplotlib</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Matplotlib has two interfaces
+</p>
+
+<ul class="org-ul">
+<li>A MATLIB-style state-based interface</li>
+<li>And a more powerful object-oriented interface</li>
+</ul>
+
+<p>
+Figure is a container of all objects (axes, graphics, text, labels)
+</p>
+
+<p>
+Axes is a bounding box with ticks and labels, which will eventually contain
+the plot elements.
+</p>
+</div>
+
+<div id="outline-container-orga9adee8" class="outline-3">
+<h3 id="orga9adee8"><span class="section-number-3">4.1</span> MATLAB-style interface</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+The MATLAB-style tools are contained in the pyplot interface.
+</p>
+
+<p>
+This interface is <b>stateful</b>: it keeps track of the "current" figure and
+axes. These can be acquired from <code>plt.gcf()</code> (current figure) and <code>plt.gca()</code>
+(current axes)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">x</span> = np.linspace(0, 10, 100)
+
+plt.figure()  <span style="color: #5C6370;"># </span><span style="color: #5C6370;">create a plot figure</span>
+
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">create the first of two panels and set current axis</span>
+plt.subplot(2, 1, 1) <span style="color: #5C6370;"># </span><span style="color: #5C6370;">(rows, columns, panel number)</span>
+plt.plot(x, np.sin(x))
+
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">create the second panel and set current axis</span>
+plt.subplot(2, 1, 2)
+plt.plot(x, np.cos(x));
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/mjjOPg.png" alt="mjjOPg.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf8392f1" class="outline-3">
+<h3 id="orgf8392f1"><span class="section-number-3">4.2</span> Object-oriented interface</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Plotting functions are methods of explicit <code>Figure</code> and <code>Axes</code> objects.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #5C6370;"># </span><span style="color: #5C6370;">First create a grid of plots</span>
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">ax will be an array of two Axes objects</span>
+<span style="color: #E06C75;">fig</span>, <span style="color: #E06C75;">ax</span> = plt.subplots(2)
+
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">Call plot() method on the appropriate object</span>
+ax[0].plot(x, np.sin(x))
+ax[1].plot(x, np.cos(x));
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/sjEL3B.png" alt="sjEL3B.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org41a1d54" class="outline-3">
+<h3 id="org41a1d54"><span class="section-number-3">4.3</span> Line plot</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+line style and color can be combined into a single non-keyword argument to
+<code>plt.plot()</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.plot(x, x + 0, <span style="color: #98C379;">'-g'</span>)  <span style="color: #5C6370;"># </span><span style="color: #5C6370;">solid green</span>
+plt.plot(x, x + 1, <span style="color: #98C379;">'--c'</span>) <span style="color: #5C6370;"># </span><span style="color: #5C6370;">dashed cyan</span>
+plt.plot(x, x + 2, <span style="color: #98C379;">'-.k'</span>) <span style="color: #5C6370;"># </span><span style="color: #5C6370;">dashdot black</span>
+plt.plot(x, x + 3, <span style="color: #98C379;">':r'</span>);  <span style="color: #5C6370;"># </span><span style="color: #5C6370;">dotted red</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/zxSlik.png" alt="zxSlik.png" />
+</p>
+</div>
+
+<p>
+plot limits can be set with <code>xlim()</code> and <code>ylim()</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.plot(x, np.sin(x))
+plt.xlim(-1, 11)
+plt.ylim(-1.5, 1.5);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/QdTPfG.png" alt="QdTPfG.png" />
+</p>
+</div>
+
+<p>
+Reversing the order of the arguments makes axis to be displayed in reverse
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.plot(x, np.sin(x))
+plt.xlim(10, 0)
+plt.ylim(1.2, -1.2);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/aNQD0K.png" alt="aNQD0K.png" />
+</p>
+</div>
+
+<p>
+<code>x</code> and <code>y</code> limits can also be set with a single call <code>plt.axis()</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.plot(x, np.sin(x))
+plt.axis([-1, 11, -1.5, 1.5]);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/Og0MKs.png" alt="Og0MKs.png" />
+</p>
+</div>
+
+<p>
+<code>axis()</code> can ensure 1:1 aspect ratio (one unit of <code>x</code> is equal to one unit of
+<code>y</code> on screen) :
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.plot(x, np.sin(x))
+plt.axis(<span style="color: #98C379;">'equal'</span>);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/gDVhhU.png" alt="gDVhhU.png" />
+</p>
+</div>
+
+<p>
+Add title with <code>plt.title()</code>
+</p>
+
+<p>
+Add axis labels with <code>plt.xlabel()</code> and <code>plt.ylabel()</code>
+</p>
+
+<p>
+Add legend by specifying label of each line with the <code>label</code> keyword, then
+call <code>plt.legend()</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.plot(x, np.sin(x), <span style="color: #98C379;">'-g'</span>, label=<span style="color: #98C379;">'sin(x)'</span>)
+plt.plot(x, np.cos(x), <span style="color: #98C379;">':b'</span>, label=<span style="color: #98C379;">'cos(x)'</span>)
+plt.legend();
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/UzYz3Z.png" alt="UzYz3Z.png" />
+</p>
+</div>
+
+<p>
+most <code>plt</code> functions translate directly to <code>ax</code> methods. But some are not for
+MATLAB compatibility:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">plt.xlabel()</td>
+<td class="org-left">ax.set<sub>xlabel</sub>()</td>
+</tr>
+
+<tr>
+<td class="org-left">plt.ylabel()</td>
+<td class="org-left">ax.set<sub>ylabel</sub>()</td>
+</tr>
+
+<tr>
+<td class="org-left">plt.xlim()</td>
+<td class="org-left">ax.set<sub>xlim</sub>()</td>
+</tr>
+
+<tr>
+<td class="org-left">plt.ylim()</td>
+<td class="org-left">ax.set<sub>ylim</sub>()</td>
+</tr>
+
+<tr>
+<td class="org-left">plt.title()</td>
+<td class="org-left">ax.set<sub>title</sub>()</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+But it's usually more convenient to use <code>ax.set()</code> to set all properties at once:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">ax</span> = plt.axes()
+ax.plot(x, np.sin(x))
+ax.<span style="color: #56B6C2;">set</span>(xlim=(0, 10), ylim=(-2, 2),
+       xlabel=<span style="color: #98C379;">'x'</span>, ylabel=<span style="color: #98C379;">'sin(x)'</span>,
+       title=<span style="color: #98C379;">'A Simple Plot'</span>);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/ZmTq3Q.png" alt="ZmTq3Q.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7573933" class="outline-3">
+<h3 id="org7573933"><span class="section-number-3">4.4</span> Scatter plots</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+Similar to line plot. Instead of points being joined by line segments, here
+the points are represented individually with dots.
+</p>
+
+<p>
+There are many different markers to choose from:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">rng</span> = np.random.RandomState(0)
+<span style="color: #C678DD;">for</span> marker <span style="color: #C678DD;">in</span> [<span style="color: #98C379;">'o'</span>, <span style="color: #98C379;">'.'</span>, <span style="color: #98C379;">','</span>, <span style="color: #98C379;">'x'</span>, <span style="color: #98C379;">'+'</span>, <span style="color: #98C379;">'v'</span>, <span style="color: #98C379;">'^'</span>, <span style="color: #98C379;">'&lt;'</span>, <span style="color: #98C379;">'&gt;'</span>, <span style="color: #98C379;">'s'</span>, <span style="color: #98C379;">'d'</span>, <span style="color: #98C379;">'p'</span>, <span style="color: #98C379;">'h'</span>]:
+    plt.plot(rng.rand(5), rng.rand(5), marker,
+             label=<span style="color: #98C379;">"marker='{0}'"</span>.<span style="color: #56B6C2;">format</span>(marker))
+plt.legend(numpoints=1)
+plt.xlim(0, 1.8);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/S6FXbL.png" alt="S6FXbL.png" />
+</p>
+</div>
+
+<p>
+dots and lines can be combined:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">x</span> = np.linspace(0, 10, 30)
+<span style="color: #E06C75;">y</span> = np.sin(x)
+plt.plot(x, y, <span style="color: #98C379;">'-o'</span>);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/80EdWz.png" alt="80EdWz.png" />
+</p>
+</div>
+
+<p>
+A more powerful method of creating scatter plots is <code>plt.scatter()</code>. It can
+be used to create scatter plots where the properties of each point (size,
+face color, edge color, etc.) can be individually controlled or mapped to
+data.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">rng</span> = np.random.RandomState(0)
+<span style="color: #E06C75;">x</span> = rng.randn(100)
+<span style="color: #E06C75;">y</span> = rng.randn(100)
+<span style="color: #E06C75;">colors</span> = rng.rand(100)
+<span style="color: #E06C75;">sizes</span> = 1000 * rng.rand(100)
+plt.scatter(x, y, c=colors, s=sizes, alpha=0.3,
+            cmap=<span style="color: #98C379;">'viridis'</span>)
+plt.colorbar();  <span style="color: #5C6370;"># </span><span style="color: #5C6370;">show color scale</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/0l54T4.png" alt="0l54T4.png" />
+</p>
+</div>
+
+<p>
+Color and size combined with X-Y let us explore four different dimension of
+the data at the same time:
+</p>
+
+<p>
+For large datasets, <code>plot()</code> is more efficient than <code>scatter()</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8b1c111" class="outline-3">
+<h3 id="org8b1c111"><span class="section-number-3">4.5</span> Visualizing errors</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+Draw errorbars graph with <code>plt.errorbar</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">x</span> = np.linspace(0, 10, 50)
+<span style="color: #E06C75;">dy</span> = 0.8
+<span style="color: #E06C75;">y</span> = np.sin(x) + dy * np.random.randn(50)
+plt.errorbar(x, y, yerr=dy, fmt=<span style="color: #98C379;">'.'</span>);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/Di5Yea.png" alt="Di5Yea.png" />
+</p>
+</div>
+
+<p>
+Show continues error with <code>fill_between()</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">y</span> = np.sin(x) + dy * np.random.randn(50)
+plt.plot(x, y, <span style="color: #98C379;">'-o'</span>);
+plt.fill_between(x, y - 0.8, y+0.8, color=<span style="color: #98C379;">'gray'</span>, alpha=0.2);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/bIPQCT.png" alt="bIPQCT.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org09010b2" class="outline-3">
+<h3 id="org09010b2"><span class="section-number-3">4.6</span> Visualizing three-dimensional function with <code>contour()</code> and <code>imshow()</code></h3>
+<div class="outline-text-3" id="text-4-6">
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #C678DD;">def</span> <span style="color: #61AFEF;">f</span>(x, y):
+    <span style="color: #C678DD;">return</span> np.sin(x) ** 10 + np.cos(10 + y * x) * np.cos(x)
+<span style="color: #E06C75;">x</span> = np.linspace(0, 5, 50)
+<span style="color: #E06C75;">y</span> = np.linspace(0, 5, 40)
+<span style="color: #E06C75;">X</span>, <span style="color: #E06C75;">Y</span> = np.meshgrid(x, y)
+<span style="color: #E06C75;">Z</span> = f(X, Y)
+plt.contour(X, Y, Z, colors=<span style="color: #98C379;">'black'</span>);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/988afX.png" alt="988afX.png" />
+</p>
+</div>
+
+<p>
+Or fill with color:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.contourf(X, Y, Z, 10);      <span style="color: #5C6370;"># </span><span style="color: #5C6370;">10 steps</span>
+plt.colorbar();                 <span style="color: #5C6370;"># </span><span style="color: #5C6370;">add legend</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/K1HLsm.png" alt="K1HLsm.png" />
+</p>
+</div>
+
+<p>
+To get smooth image, use <code>imshow()</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.imshow(Z, extent=[0, 5, 0, 5], origin=<span style="color: #98C379;">'lower'</span>)
+plt.colorbar();
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/ayIobi.png" alt="ayIobi.png" />
+</p>
+</div>
+
+<p>
+Combine contour and image, and add labels
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.imshow(Z, extent=[0, 5, 0, 5], origin=<span style="color: #98C379;">'lower'</span>, alpha=0.7)
+<span style="color: #E06C75;">contours</span> = plt.contour(X, Y, Z, 3, colors=<span style="color: #98C379;">'black'</span>)
+plt.clabel(contours, inline=<span style="color: #56B6C2;">True</span>, fontsize=8)
+plt.colorbar();
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/rbSyz5.png" alt="rbSyz5.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9462303" class="outline-3">
+<h3 id="org9462303"><span class="section-number-3">4.7</span> Histograms, Binnings, and Density</h3>
+<div class="outline-text-3" id="text-4-7">
+<p>
+<code>histtype='stepfilled'</code> with some transparency <code>alpha</code> very useful when
+comparing several histograms
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">x1</span> = np.random.normal(0, 0.8, 1000)
+<span style="color: #E06C75;">x2</span> = np.random.normal(-2, 1, 1000)
+<span style="color: #E06C75;">x3</span> = np.random.normal(3, 2, 1000)
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">density=True shows probability density (the area or integral under the</span>
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">histogram will sum to 1.)</span>
+<span style="color: #E06C75;">kwargs</span> = <span style="color: #56B6C2;">dict</span>(histtype=<span style="color: #98C379;">'stepfilled'</span>, alpha=0.3, density=<span style="color: #56B6C2;">True</span>, bins=20)
+plt.hist(x1, **kwargs)
+plt.hist(x2, **kwargs)
+plt.hist(x3, **kwargs);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/qdKvXJ.png" alt="qdKvXJ.png" />
+</p>
+</div>
+
+<p>
+Two-dimensional histogram with <code>plt.hist2d()</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">mean</span> = [0, 0]
+<span style="color: #E06C75;">cov</span> = [[1, 1], [1, 2]]
+<span style="color: #E06C75;">x</span>, <span style="color: #E06C75;">y</span> = np.random.multivariate_normal(mean, cov, 10000).transpose()
+plt.hist2d(x, y, bins=30, cmap=<span style="color: #98C379;">'Blues'</span>)
+<span style="color: #E06C75;">cb</span> = plt.colorbar()
+cb.set_label(<span style="color: #98C379;">'counts in bin'</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/qtPhdT.png" alt="qtPhdT.png" />
+</p>
+</div>
+
+<p>
+Hexagonal binnings
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.hexbin(x, y, gridsize=30, cmap=<span style="color: #98C379;">'Blues'</span>)
+<span style="color: #E06C75;">cb</span> = plt.colorbar(label=<span style="color: #98C379;">'count in bin'</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/qrcEUJ.png" alt="qrcEUJ.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3b641fc" class="outline-3">
+<h3 id="org3b641fc"><span class="section-number-3">4.8</span> Subplots arrangement</h3>
+<div class="outline-text-3" id="text-4-8">
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">grid</span> = plt.GridSpec(2, 3, wspace=0.4, hspace=0.3)
+plt.subplot(grid[0, 0])
+plt.subplot(grid[0, 1:])
+plt.subplot(grid[1, :2])
+plt.subplot(grid[1, 2]);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/xBXM6z.png" alt="xBXM6z.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge2be02e" class="outline-3">
+<h3 id="orge2be02e"><span class="section-number-3">4.9</span> Arrows and annotation</h3>
+<div class="outline-text-3" id="text-4-9">
+<p>
+Use <code>plt.annotate()</code> to add an arrow and some text
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #E06C75;">fig</span>, <span style="color: #E06C75;">ax</span> = plt.subplots()
+<span style="color: #E06C75;">x</span> = np.linspace(0, 20, 1000)
+ax.plot(x, np.cos(x))
+ax.axis(<span style="color: #98C379;">'equal'</span>)
+ax.annotate(<span style="color: #98C379;">'local maximum'</span>, xy=(6.28, 1), xytext=(10, 4),
+            arrowprops=<span style="color: #56B6C2;">dict</span>(facecolor=<span style="color: #98C379;">'black'</span>, shrink=0.05))
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">angel3 draws a quadratic bezier curve. It casts a ray from starting point in</span>
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">the direction of angleA, and another ray from the end point in the direction</span>
+<span style="color: #5C6370;"># </span><span style="color: #5C6370;">of angleB. The control point is at the intersection of the 2 rays.</span>
+ax.annotate(<span style="color: #98C379;">'local minimum'</span>, xy=(5 * np.pi, -1), xytext=(2, -6),
+            arrowprops=<span style="color: #56B6C2;">dict</span>(arrowstyle=<span style="color: #98C379;">"-&gt;"</span>, edgecolor=<span style="color: #98C379;">'black'</span>,
+            connectionstyle=<span style="color: #98C379;">"angle3,angleA=0,angleB=-60"</span>));
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/kMItIO.png" alt="kMItIO.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4885dc6" class="outline-3">
+<h3 id="org4885dc6"><span class="section-number-3">4.10</span> 3D plots</h3>
+<div class="outline-text-3" id="text-4-10">
+<p>
+<code>from mpl_toolkits import mplot3d</code>
+</p>
+
+<p>
+Once this module is imported, 3d axes can be created by passing
+<code>projection='3d'</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #C678DD;">from</span> mpl_toolkits <span style="color: #C678DD;">import</span> mplot3d
+<span style="color: #E06C75;">rng</span> = np.random.RandomState(0)
+<span style="color: #E06C75;">x</span> = rng.randn(100)
+<span style="color: #E06C75;">y</span> = rng.randn(100)
+<span style="color: #E06C75;">z</span> = rng.randn(100)
+<span style="color: #E06C75;">colors</span> = rng.rand(100)
+<span style="color: #E06C75;">ax</span> = plt.axes(projection=<span style="color: #98C379;">'3d'</span>)
+ax.scatter3D(x, y, z, c=colors, cmap=<span style="color: #98C379;">'viridis'</span>);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./obipy/yN9LYv.png" alt="yN9LYv.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgba18c66" class="outline-3">
+<h3 id="orgba18c66"><span class="section-number-3">4.11</span> <span class="todo TODO">TODO</span> Geographics data with Basemap</h3>
+<div class="outline-text-3" id="text-4-11">
+<p>
+Basemap is difficult to install. Retry this chapter on a computer with
+Anaconda.
+</p>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2018-05-05 Sat 12:45</p>
+<p class="date">Created: 2018-05-06 Sun 20:11</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

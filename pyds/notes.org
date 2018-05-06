@@ -720,53 +720,1072 @@
       2  0  2  5  6
     #+END_EXAMPLE
     :END:
-*** Missing data
-    NaN is often used. NumPy has functions to work on them.
+** Missing data
+   NaN is often used. NumPy has functions to work on them.
+   #+BEGIN_SRC ipython
+   vals2 = np.array([1, np.nan, 3, 4])
+   np.nansum(vals2), np.nanmin(vals2), np.nanmax(vals2)
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[2]:
+   : (8.0, 1.0, 4.0)
+   :END:
+
+   Pandas auto cast data to float when it needs to use NaN to represent missing
+   data.
+    
+   #+BEGIN_SRC ipython
+   x = pd.Series(range(2), dtype=int)
+   x[0] = None
+   x
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[5]:
+   #+BEGIN_EXAMPLE
+     0    NaN
+     1    1.0
+     dtype: float64
+   #+END_EXAMPLE
+   :END:
+
+   | Typeclass | Conversion When Storing NAs | NA Sentinel Value |
+   |-----------+-----------------------------+-------------------|
+   | floating  | No change                   | np.nan            |
+   | object    | No change                   | None or np.nan    |
+   | integer   | Cast to float64             | np.nan            |
+   | boolean   | Cast to object              | None or np.nan    |
+
+   Pandas functions for NaN (or None, they are interchangeable in Pandas)
+
+   * ~isnull()~: Generate a boolean mask indicating missing values
+   * ~notnull()~: Opposite of isnull()
+   * ~dropna()~: Return a filtered version of the data
+     - Can drop entire row or column with 'axis'
+     - Can set threshold of dropping row or column with 'thresh'
+   * ~fillna()~: Return a copy of the data with missing values filled or imputed
+     - Can forward fill with ~method='ffill'~ and back fill with ~method='bfill'~
+** Hierarchical Indexing
+
+   #+BEGIN_SRC ipython
+     index = [('California', 2000),
+              ('California', 2010),
+              ('New York', 2000),
+              ('New York', 2010),
+              ('Texas', 2000),
+              ('Texas', 2010)]
+     populations = [33871648, 37253956,
+                    18976457, 19378102,
+                    20851820, 25145561]
+     pop = pd.Series(populations, index=index)
+     index = pd.MultiIndex.from_tuples(index)
+     pop = pop.reindex(index)
+     pop
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[13]:
+   #+BEGIN_EXAMPLE
+     California  2000    33871648
+                 2010    37253956
+     New York    2000    18976457
+                 2010    19378102
+     Texas       2000    20851820
+                 2010    25145561
+     dtype: int64
+   #+END_EXAMPLE
+   :END:
+    
+   Unstack the last index column to create a new dimension
+
+   #+BEGIN_SRC ipython
+     pop_df = pop.unstack()
+     pop_df
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[14]:
+   #+BEGIN_EXAMPLE
+                     2000      2010
+     California  33871648  37253956
+     New York    18976457  19378102
+     Texas       20851820  25145561
+   #+END_EXAMPLE
+   :END:
+
+   *Each extra level in a multi-index represents an extra dimension of data*
+
+   This allows us to easily and quickly manipulate and explore even
+   high-dimensional data.
+
+   #+BEGIN_SRC ipython
+     pop_df = pd.DataFrame({'total': pop,
+                        'under18': [9267089, 9284094,
+                                    4687374, 4318033,
+                                    5906301, 6879014]})
+     f_u18 = pop_df['under18'] / pop_df['total']
+     f_u18.unstack()
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[20]:
+   #+BEGIN_EXAMPLE
+                     2000      2010
+     California  0.273594  0.249211
+     New York    0.247010  0.222831
+     Texas       0.283251  0.273568
+   #+END_EXAMPLE
+   :END:
+
+   Multi index levels can have names
+
+   #+BEGIN_SRC ipython
+     pop.index.names = ['state', 'year']
+     pop
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[25]:
+   #+BEGIN_EXAMPLE
+     state       year
+     California  2000    33871648
+                 2010    37253956
+     New York    2000    18976457
+                 2010    19378102
+     Texas       2000    20851820
+                 2010    25145561
+     dtype: int64
+   #+END_EXAMPLE
+   :END:
+
+   Columns can have multiindex too
+
+   #+BEGIN_SRC ipython
+
+
+     # hierarchical indices and columns
+     index = pd.MultiIndex.from_product([[2013, 2014], [1, 2]],
+                                        names=['year', 'visit'])
+     columns = pd.MultiIndex.from_product([['Bob', 'Guido', 'Sue'], ['HR', 'Temp']],
+                                          names=['subject', 'type'])
+
+     # mock some data
+     data = np.round(np.random.randn(4, 6), 1)
+     data[:, ::2] *= 10
+     data += 37
+
+     # create the DataFrame
+     health_data = pd.DataFrame(data, index=index, columns=columns)
+     health_data
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[28]:
+   #+BEGIN_EXAMPLE
+     subject      Bob       Guido         Sue
+     type          HR  Temp    HR  Temp    HR  Temp
+     year visit
+     2013 1      32.0  34.6  30.0  35.8  40.0  38.0
+          2      49.0  37.2  38.0  36.1  43.0  37.7
+     2014 1      36.0  34.3  34.0  37.2  33.0  38.9
+          2      31.0  37.9  57.0  38.7  21.0  37.4
+   #+END_EXAMPLE
+   :END:
+
+   This is fundamentally four-dimensional data.
+
+   The screen is 2D, Pandas can only present data in 2D on the screen.
+    
+   stack() and unstack() essentially moves index between row and column, to
+   project the data to 2D in different ways.
+    
+   Multiindex levels can be used for data aggregation.
+
+   #+BEGIN_SRC ipython
+     health_data.mean(level='visit')
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[43]:
+   #+BEGIN_EXAMPLE
+     subject   Bob        Guido         Sue
+     type       HR   Temp    HR  Temp    HR   Temp
+     visit
+     1        34.0  34.45  32.0  36.5  36.5  38.45
+     2        40.0  37.55  47.5  37.4  32.0  37.55
+   #+END_EXAMPLE
+   :END:
+
+   Also by column:
+
+   #+BEGIN_SRC ipython
+     health_data.mean(axis=1, level='type')
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[44]:
+   #+BEGIN_EXAMPLE
+     type               HR       Temp
+     year visit
+     2013 1      34.000000  36.133333
+          2      43.333333  37.000000
+     2014 1      34.333333  36.800000
+          2      36.333333  38.000000
+   #+END_EXAMPLE
+   :END:
+
+** Merge and join
+
+   Pandas automatically recognize overlapping columns
+
+   #+BEGIN_SRC ipython
+     df1 = pd.DataFrame({'employee': ['Bob', 'Jake', 'Lisa', 'Sue'],
+                         'group': ['Accounting', 'Engineering', 'Engineering', 'HR']})
+     df2 = pd.DataFrame({'employee': ['Lisa', 'Bob', 'Jake', 'Sue'],
+                         'hire_date': [2004, 2008, 2012, 2014]})
+     pd.merge(df1, df2)
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[45]:
+   #+BEGIN_EXAMPLE
+       employee        group  hire_date
+     0      Bob   Accounting       2008
+     1     Jake  Engineering       2012
+     2     Lisa  Engineering       2004
+     3      Sue           HR       2014
+   #+END_EXAMPLE
+   :END:
+    
+   Merge key can be explicitly specified:
+
+   ~pd.merge(df1, df2, on='employee')~
+
+   If column names differ, use ~left_on~ and ~right_on~ to specify the columns.
+
+   #+BEGIN_SRC ipython
+     df3 = pd.DataFrame({'name': ['Bob', 'Jake', 'Lisa', 'Sue'],
+                         'salary': [70000, 80000, 120000, 90000]})
+     # drop() to remove the duplicated column
+     pd.merge(df1, df3, left_on="employee", right_on="name").drop("name", axis=1)
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[48]:
+   #+BEGIN_EXAMPLE
+       employee        group  salary
+     0      Bob   Accounting   70000
+     1     Jake  Engineering   80000
+     2     Lisa  Engineering  120000
+     3      Sue           HR   90000
+   #+END_EXAMPLE
+   :END:
+
+   merge() can use indices too:
+   ~pd.merge(df1, df2, left_index=True, right_index=True)~
+
+   But for convenience, use join(), which performs merge that defaults to
+   joining on indices.
+
+*** Specifying Set Arithmetic for Joins
+     
+    By default, merge produces *intersection* of the inputs(inner join)
+
     #+BEGIN_SRC ipython
-    vals2 = np.array([1, np.nan, 3, 4])
-    np.nansum(vals2), np.nanmin(vals2), np.nanmax(vals2)
+      df6 = pd.DataFrame({'name': ['Peter', 'Paul', 'Mary'],
+                          'food': ['fish', 'beans', 'bread']},
+                         columns=['name', 'food'])
+      df7 = pd.DataFrame({'name': ['Mary', 'Joseph'],
+                          'drink': ['wine', 'beer']},
+                         columns=['name', 'drink'])
+      pd.merge(df6, df7)
     #+END_SRC
 
     #+RESULTS:
     :RESULTS:
-    # Out[2]:
-    : (8.0, 1.0, 4.0)
-    :END:
-
-    Pandas auto cast data to float when it needs to use NaN to represent missing
-    data.
-
-    #+BEGIN_SRC ipython
-    x = pd.Series(range(2), dtype=int)
-    x[0] = None
-    x
-    #+END_SRC
-
-    #+RESULTS:
-    :RESULTS:
-    # Out[5]:
+    # Out[50]:
     #+BEGIN_EXAMPLE
-      0    NaN
-      1    1.0
-      dtype: float64
+         name   food drink
+      0  Mary  bread  wine
     #+END_EXAMPLE
     :END:
 
-    | Typeclass | Conversion When Storing NAs | NA Sentinel Value |
-    |-----------+-----------------------------+-------------------|
-    | floating  | No change                   | np.nan            |
-    | object    | No change                   | None or np.nan    |
-    | integer   | Cast to float64             | np.nan            |
-    | boolean   | Cast to object              | None or np.nan    |
 
-    Pandas functions for NaN (or None, they are interchangeable in Pandas)
+    To make a outer join, use the ~how~ keyword (how can also be ~left~ or
+    ~right~):
 
-    * ~isnull()~: Generate a boolean mask indicating missing values
-    * ~notnull()~: Opposite of isnull()
-    * ~dropna()~: Return a filtered version of the data
-      - Can drop entire row or column with 'axis'
-      - Can set threshold of dropping row or column with 'thresh'
-    * ~fillna()~: Return a copy of the data with missing values filled or imputed
-      - Can forward fill with ~method='ffill'~ and back fill with ~method='bfill'~
-*** Hierarchical Indexing
+    #+BEGIN_SRC ipython
+      pd.merge(df6, df7, how='outer')
+    #+END_SRC
 
+    #+RESULTS:
+    :RESULTS:
+    # Out[51]:
+    #+BEGIN_EXAMPLE
+           name   food drink
+      0   Peter   fish   NaN
+      1    Paul  beans   NaN
+      2    Mary  bread  wine
+      3  Joseph    NaN  beer
+    #+END_EXAMPLE
+    :END:
+
+** Aggregation and grouping
+
+   Use the seaborn planets dataset as example
+
+   #+BEGIN_SRC ipython
+   import seaborn as sns
+   planets = sns.load_dataset('planets')
+   planets.shape
+   #+END_SRC
+
+   DataFrame has convenience method ~describe()~, that computes several common
+   aggregates for each column.
+
+   #+BEGIN_SRC ipython
+   planets.dropna().describe()
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[66]:
+   #+BEGIN_EXAMPLE
+               number  orbital_period        mass    distance         year
+     count  498.00000      498.000000  498.000000  498.000000   498.000000
+     mean     1.73494      835.778671    2.509320   52.068213  2007.377510
+     std      1.17572     1469.128259    3.636274   46.596041     4.167284
+     min      1.00000        1.328300    0.003600    1.350000  1989.000000
+     25%      1.00000       38.272250    0.212500   24.497500  2005.000000
+     50%      1.00000      357.000000    1.245000   39.940000  2009.000000
+     75%      2.00000      999.600000    2.867500   59.332500  2011.000000
+     max      6.00000    17337.500000   25.000000  354.000000  2014.000000
+   #+END_EXAMPLE
+   :END:
+
+   Other built-in Pandas aggregations:
+   
+   | Aggregation      | Description                     |
+   |------------------+---------------------------------|
+   | count()          | Total number of items           |
+   | first(), last()  | First and last item             |
+   | mean(), median() | Mean and median                 |
+   | min(), max()     | Minimum and maximum             |
+   | std(), var()     | Standard deviation and variance |
+   | mad()            | Mean absolute deviation         |
+   | prod()           | Product of all items            |
+   | sum()            | Sum of all items                |
+
+*** GroupBy
+    
+    The ~GroupBy~ object can be seen as a collection of ~DataFrame~s
+    
+    #+BEGIN_SRC ipython
+      planets.groupby('method')['orbital_period'].median()
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[68]:
+    #+BEGIN_EXAMPLE
+      method
+      Astrometry                         631.180000
+      Eclipse Timing Variations         4343.500000
+      Imaging                          27500.000000
+      Microlensing                      3300.000000
+      Orbital Brightness Modulation        0.342887
+      Pulsar Timing                       66.541900
+      Pulsation Timing Variations       1170.000000
+      Radial Velocity                    360.200000
+      Transit                              5.714932
+      Transit Timing Variations           57.011000
+      Name: orbital_period, dtype: float64
+    #+END_EXAMPLE
+    :END:
+
+    The ~GroupBy~ object supports iteration over groups:
+
+    #+BEGIN_SRC ipython :results output
+      for (method, group) in planets.groupby('method'):
+          print("{0:30s} shape={1}".format(method, group.shape))
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    Astrometry                     shape=(2, 6)
+    Eclipse Timing Variations      shape=(9, 6)
+    Imaging                        shape=(38, 6)
+    Microlensing                   shape=(23, 6)
+    Orbital Brightness Modulation  shape=(3, 6)
+    Pulsar Timing                  shape=(5, 6)
+    Pulsation Timing Variations    shape=(1, 6)
+    Radial Velocity                shape=(553, 6)
+    Transit                        shape=(397, 6)
+    Transit Timing Variations      shape=(4, 6)
+    :END:
+
+    The ~GroupBy~ object pass through methods to its groups:
+
+    #+BEGIN_SRC ipython
+    planets.groupby('method')['year'].describe()
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[77]:
+    #+BEGIN_EXAMPLE
+                                     count         mean       std     min      25%  \
+      method
+      Astrometry                       2.0  2011.500000  2.121320  2010.0  2010.75
+      Eclipse Timing Variations        9.0  2010.000000  1.414214  2008.0  2009.00
+      Imaging                         38.0  2009.131579  2.781901  2004.0  2008.00
+      Microlensing                    23.0  2009.782609  2.859697  2004.0  2008.00
+      Orbital Brightness Modulation    3.0  2011.666667  1.154701  2011.0  2011.00
+      Pulsar Timing                    5.0  1998.400000  8.384510  1992.0  1992.00
+      Pulsation Timing Variations      1.0  2007.000000       NaN  2007.0  2007.00
+      Radial Velocity                553.0  2007.518987  4.249052  1989.0  2005.00
+      Transit                        397.0  2011.236776  2.077867  2002.0  2010.00
+      Transit Timing Variations        4.0  2012.500000  1.290994  2011.0  2011.75
+
+                                        50%      75%     max
+      method
+      Astrometry                     2011.5  2012.25  2013.0
+      Eclipse Timing Variations      2010.0  2011.00  2012.0
+      Imaging                        2009.0  2011.00  2013.0
+      Microlensing                   2010.0  2012.00  2013.0
+      Orbital Brightness Modulation  2011.0  2012.00  2013.0
+      Pulsar Timing                  1994.0  2003.00  2011.0
+      Pulsation Timing Variations    2007.0  2007.00  2007.0
+      Radial Velocity                2009.0  2011.00  2014.0
+      Transit                        2012.0  2013.00  2014.0
+      Transit Timing Variations      2012.5  2013.25  2014.0
+    #+END_EXAMPLE
+    :END:
+
+    Filter out groups with ~filter()~
+
+    #+BEGIN_SRC ipython
+      df = pd.DataFrame({'A' : ['foo', 'bar', 'foo', 'bar',
+                                'foo', 'bar'],
+                         'B' : [1, 2, 3, 4, 5, 6],
+                         'C' : [2.0, 5., 8., 1., 2., 9.]})
+      df.groupby('A').filter(lambda x: x['B'].mean() > 3.)
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[80]:
+    #+BEGIN_EXAMPLE
+           A  B    C
+      1  bar  2  5.0
+      3  bar  4  1.0
+      5  bar  6  9.0
+    #+END_EXAMPLE
+    :END:
+
+    Or more complex things with ~transform()~ and ~apply()~.
+
+    ~groupby()~ also accepts dictionary and python functions.
+
+*** Pivot tables
+
+    Use titanic data set:
+
+    #+BEGIN_SRC ipython
+    titanic = sns.load_dataset('titanic')
+    titanic.head()
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[81]:
+    #+BEGIN_EXAMPLE
+         survived  pclass     sex   age  sibsp  parch     fare embarked  class  \
+      0         0       3    male  22.0      1      0   7.2500        S  Third
+      1         1       1  female  38.0      1      0  71.2833        C  First
+      2         1       3  female  26.0      0      0   7.9250        S  Third
+      3         1       1  female  35.0      1      0  53.1000        S  First
+      4         0       3    male  35.0      0      0   8.0500        S  Third
+
+           who  adult_male deck  embark_town alive  alone
+      0    man        True  NaN  Southampton    no  False
+      1  woman       False    C    Cherbourg   yes  False
+      2  woman       False  NaN  Southampton   yes   True
+      3  woman       False    C  Southampton   yes  False
+      4    man        True  NaN  Southampton    no   True
+    #+END_EXAMPLE
+    :END:
+
+    Pivot table the manual way, two column ~groupby()~ then ~unstack()~:
+
+    #+BEGIN_SRC ipython
+    titanic.groupby(['sex', 'class'])['survived'].mean().unstack()
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[83]:
+    #+BEGIN_EXAMPLE
+      class      First    Second     Third
+      sex
+      female  0.968085  0.921053  0.500000
+      male    0.368852  0.157407  0.135447
+    #+END_EXAMPLE
+    :END:
+
+    Pivot table syntax:
+
+    #+BEGIN_SRC ipython
+    titanic.pivot_table('survived', index='sex', columns='class')
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[84]:
+    #+BEGIN_EXAMPLE
+      class      First    Second     Third
+      sex
+      female  0.968085  0.921053  0.500000
+      male    0.368852  0.157407  0.135447
+    #+END_EXAMPLE
+    :END:
+
+    Multi-level pivot tables:
+
+    #+BEGIN_SRC ipython
+    age = pd.cut(titanic['age'], [0, 18, 80])
+    titanic.pivot_table('survived', ['sex', age], 'class')
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[86]:
+    #+BEGIN_EXAMPLE
+      class               First    Second     Third
+      sex    age
+      female (0, 18]   0.909091  1.000000  0.511628
+             (18, 80]  0.972973  0.900000  0.423729
+      male   (0, 18]   0.800000  0.600000  0.215686
+             (18, 80]  0.375000  0.071429  0.133663
+    #+END_EXAMPLE
+    :END:
+
+    Multi-level column index:
+
+    #+BEGIN_SRC ipython
+    fare = pd.qcut(titanic['fare'], 2)
+    titanic.pivot_table('survived', ['sex', age], [fare, 'class'])
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[89]:
+    #+BEGIN_EXAMPLE
+      fare            (-0.001, 14.454]                     (14.454, 512.329]  \
+      class                      First    Second     Third             First
+      sex    age
+      female (0, 18]               NaN  1.000000  0.714286          0.909091
+             (18, 80]              NaN  0.880000  0.444444          0.972973
+      male   (0, 18]               NaN  0.000000  0.260870          0.800000
+             (18, 80]              0.0  0.098039  0.125000          0.391304
+
+      fare
+      class              Second     Third
+      sex    age
+      female (0, 18]   1.000000  0.318182
+             (18, 80]  0.914286  0.391304
+      male   (0, 18]   0.818182  0.178571
+             (18, 80]  0.030303  0.192308
+    #+END_EXAMPLE
+    :END:
+
+    Include totals in ~pivot_table()~ with ~margins~
+
+    #+BEGIN_SRC ipython
+    titanic.pivot_table('survived', index='sex', columns='class', margins=True)
+    #+END_SRC
+
+    #+RESULTS:
+    :RESULTS:
+    # Out[95]:
+    #+BEGIN_EXAMPLE
+      class      First    Second     Third       All
+      sex
+      female  0.968085  0.921053  0.500000  0.742038
+      male    0.368852  0.157407  0.135447  0.188908
+      All     0.629630  0.472826  0.242363  0.383838
+    #+END_EXAMPLE
+    :END:
+
+** TODO Working with time (reread this)
+   
+* Matplotlib
+
+  Matplotlib has two interfaces
+
+  - A MATLIB-style state-based interface
+  - And a more powerful object-oriented interface
+
+  Figure is a container of all objects (axes, graphics, text, labels)
+
+  Axes is a bounding box with ticks and labels, which will eventually contain
+  the plot elements.
+
+** MATLAB-style interface
+
+   The MATLAB-style tools are contained in the pyplot interface.
+
+   This interface is *stateful*: it keeps track of the "current" figure and
+   axes. These can be acquired from ~plt.gcf()~ (current figure) and ~plt.gca()~
+   (current axes)
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/mjjOPg.png
+     x = np.linspace(0, 10, 100)
+
+     plt.figure()  # create a plot figure
+
+     # create the first of two panels and set current axis
+     plt.subplot(2, 1, 1) # (rows, columns, panel number)
+     plt.plot(x, np.sin(x))
+
+     # create the second panel and set current axis
+     plt.subplot(2, 1, 2)
+     plt.plot(x, np.cos(x));
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[64]:
+   [[file:./obipy/mjjOPg.png]]
+   :END:
+
+
+** Object-oriented interface
+
+   Plotting functions are methods of explicit ~Figure~ and ~Axes~ objects.
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/sjEL3B.png
+     # First create a grid of plots
+     # ax will be an array of two Axes objects
+     fig, ax = plt.subplots(2)
+
+     # Call plot() method on the appropriate object
+     ax[0].plot(x, np.sin(x))
+     ax[1].plot(x, np.cos(x));
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[65]:
+   [[file:./obipy/sjEL3B.png]]
+   :END:
+
+** Line plot
+
+   line style and color can be combined into a single non-keyword argument to
+   ~plt.plot()~
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/zxSlik.png
+   plt.plot(x, x + 0, '-g')  # solid green
+   plt.plot(x, x + 1, '--c') # dashed cyan
+   plt.plot(x, x + 2, '-.k') # dashdot black
+   plt.plot(x, x + 3, ':r');  # dotted red
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[67]:
+   [[file:./obipy/zxSlik.png]]
+   :END:
+
+   plot limits can be set with ~xlim()~ and ~ylim()~
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/QdTPfG.png
+   plt.plot(x, np.sin(x))
+   plt.xlim(-1, 11)
+   plt.ylim(-1.5, 1.5);
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[197]:
+   [[file:./obipy/QdTPfG.png]]
+   :END:
+
+   Reversing the order of the arguments makes axis to be displayed in reverse
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/aNQD0K.png
+   plt.plot(x, np.sin(x))
+   plt.xlim(10, 0)
+   plt.ylim(1.2, -1.2);
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[69]:
+   [[file:./obipy/aNQD0K.png]]
+   :END:
+
+   ~x~ and ~y~ limits can also be set with a single call ~plt.axis()~
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/Og0MKs.png
+   plt.plot(x, np.sin(x))
+   plt.axis([-1, 11, -1.5, 1.5]);
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[70]:
+   [[file:./obipy/Og0MKs.png]]
+   :END:
+
+   ~axis()~ can ensure 1:1 aspect ratio (one unit of ~x~ is equal to one unit of
+   ~y~ on screen) :
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/gDVhhU.png
+   plt.plot(x, np.sin(x))
+   plt.axis('equal');
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[71]:
+   : (-0.5, 10.5, -1.0993384025373631, 1.0996461858110391)
+   [[file:./obipy/gDVhhU.png]]
+   :END:
+
+   Add title with ~plt.title()~
+
+   Add axis labels with ~plt.xlabel()~ and ~plt.ylabel()~
+
+   Add legend by specifying label of each line with the ~label~ keyword, then
+   call ~plt.legend()~
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/UzYz3Z.png
+   plt.plot(x, np.sin(x), '-g', label='sin(x)')
+   plt.plot(x, np.cos(x), ':b', label='cos(x)')
+   plt.legend();
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[72]:
+   [[file:./obipy/UzYz3Z.png]]
+   :END:
+
+   most ~plt~ functions translate directly to ~ax~ methods. But some are not for
+   MATLAB compatibility:
+
+   | plt.xlabel() | ax.set_xlabel() |
+   | plt.ylabel() | ax.set_ylabel() |
+   | plt.xlim()   | ax.set_xlim()   |
+   | plt.ylim()   | ax.set_ylim()   |
+   | plt.title()  | ax.set_title()  |
+
+   But it's usually more convenient to use ~ax.set()~ to set all properties at once:
+   
+   #+BEGIN_SRC ipython :ipyfile ./obipy/ZmTq3Q.png
+     ax = plt.axes()
+     ax.plot(x, np.sin(x))
+     ax.set(xlim=(0, 10), ylim=(-2, 2),
+            xlabel='x', ylabel='sin(x)',
+            title='A Simple Plot');
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[73]:
+   [[file:./obipy/ZmTq3Q.png]]
+   :END:
+
+** Scatter plots
+
+   Similar to line plot. Instead of points being joined by line segments, here
+   the points are represented individually with dots.
+
+   There are many different markers to choose from:
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/S6FXbL.png
+     rng = np.random.RandomState(0)
+     for marker in ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd', 'p', 'h']:
+         plt.plot(rng.rand(5), rng.rand(5), marker,
+                  label="marker='{0}'".format(marker))
+     plt.legend(numpoints=1)
+     plt.xlim(0, 1.8);
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[84]:
+   [[file:./obipy/S6FXbL.png]]
+   :END:
+
+   dots and lines can be combined:
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/80EdWz.png
+   x = np.linspace(0, 10, 30)
+   y = np.sin(x)
+   plt.plot(x, y, '-o');
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[82]:
+   : [<matplotlib.lines.Line2D at 0x1be819152b0>]
+   [[file:./obipy/80EdWz.png]]
+   :END:
+
+   A more powerful method of creating scatter plots is ~plt.scatter()~. It can
+   be used to create scatter plots where the properties of each point (size,
+   face color, edge color, etc.) can be individually controlled or mapped to
+   data.
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/0l54T4.png
+     rng = np.random.RandomState(0)
+     x = rng.randn(100)
+     y = rng.randn(100)
+     colors = rng.rand(100)
+     sizes = 1000 * rng.rand(100)
+     plt.scatter(x, y, c=colors, s=sizes, alpha=0.3,
+                 cmap='viridis')
+     plt.colorbar();  # show color scale
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[85]:
+   [[file:./obipy/0l54T4.png]]
+   :END:
+
+   Color and size combined with X-Y let us explore four different dimension of
+   the data at the same time:
+
+   For large datasets, ~plot()~ is more efficient than ~scatter()~
+
+** Visualizing errors
+   
+   Draw errorbars graph with ~plt.errorbar~
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/Di5Yea.png
+   x = np.linspace(0, 10, 50)
+   dy = 0.8
+   y = np.sin(x) + dy * np.random.randn(50)
+   plt.errorbar(x, y, yerr=dy, fmt='.');
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[170]:
+   [[file:./obipy/Di5Yea.png]]
+   :END:
+
+   Show continues error with ~fill_between()~
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/bIPQCT.png
+   y = np.sin(x) + dy * np.random.randn(50)
+   plt.plot(x, y, '-o');
+   plt.fill_between(x, y - 0.8, y+0.8, color='gray', alpha=0.2);
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[175]:
+   : <matplotlib.collections.PolyCollection at 0x1be81755400>
+   [[file:./obipy/bIPQCT.png]]
+   :END:
+
+** Visualizing three-dimensional function with ~contour()~ and ~imshow()~
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/988afX.png
+   def f(x, y):
+       return np.sin(x) ** 10 + np.cos(10 + y * x) * np.cos(x)
+   x = np.linspace(0, 5, 50)
+   y = np.linspace(0, 5, 40)
+   X, Y = np.meshgrid(x, y)
+   Z = f(X, Y)
+   plt.contour(X, Y, Z, colors='black');
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[178]:
+   [[file:./obipy/988afX.png]]
+   :END:
+
+   Or fill with color:
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/K1HLsm.png
+     plt.contourf(X, Y, Z, 10);      # 10 steps
+     plt.colorbar();                 # add legend
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[200]:
+   : <matplotlib.colorbar.Colorbar at 0x1be8443f048>
+   [[file:./obipy/K1HLsm.png]]
+   :END:
+
+   To get smooth image, use ~imshow()~
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/ayIobi.png
+     plt.imshow(Z, extent=[0, 5, 0, 5], origin='lower')
+     plt.colorbar();
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[202]:
+   : <matplotlib.colorbar.Colorbar at 0x1be848690b8>
+   [[file:./obipy/ayIobi.png]]
+   :END:
+
+   Combine contour and image, and add labels
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/rbSyz5.png
+   plt.imshow(Z, extent=[0, 5, 0, 5], origin='lower', alpha=0.7)
+   contours = plt.contour(X, Y, Z, 3, colors='black')
+   plt.clabel(contours, inline=True, fontsize=8)
+   plt.colorbar();
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[207]:
+   [[file:./obipy/rbSyz5.png]]
+   :END:
+
+** Histograms, Binnings, and Density
+
+   ~histtype='stepfilled'~ with some transparency ~alpha~ very useful when
+   comparing several histograms
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/qdKvXJ.png
+     x1 = np.random.normal(0, 0.8, 1000)
+     x2 = np.random.normal(-2, 1, 1000)
+     x3 = np.random.normal(3, 2, 1000)
+     # density=True shows probability density (the area or integral under the
+     # histogram will sum to 1.)
+     kwargs = dict(histtype='stepfilled', alpha=0.3, density=True, bins=20)
+     plt.hist(x1, **kwargs)
+     plt.hist(x2, **kwargs)
+     plt.hist(x3, **kwargs);
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[221]:
+   [[file:./obipy/qdKvXJ.png]]
+   :END:
+
+   Two-dimensional histogram with ~plt.hist2d()~
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/qtPhdT.png
+     mean = [0, 0]
+     cov = [[1, 1], [1, 2]]
+     x, y = np.random.multivariate_normal(mean, cov, 10000).transpose()
+     plt.hist2d(x, y, bins=30, cmap='Blues')
+     cb = plt.colorbar()
+     cb.set_label('counts in bin')
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[231]:
+   [[file:./obipy/qtPhdT.png]]
+   :END:
+
+   Hexagonal binnings
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/qrcEUJ.png
+   plt.hexbin(x, y, gridsize=30, cmap='Blues')
+   cb = plt.colorbar(label='count in bin')
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[232]:
+   [[file:./obipy/qrcEUJ.png]]
+   :END:
+
+** Subplots arrangement
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/xBXM6z.png
+     grid = plt.GridSpec(2, 3, wspace=0.4, hspace=0.3)
+     plt.subplot(grid[0, 0])
+     plt.subplot(grid[0, 1:])
+     plt.subplot(grid[1, :2])
+     plt.subplot(grid[1, 2]);
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[238]:
+   [[file:./obipy/xBXM6z.png]]
+   :END:
+
+** Arrows and annotation
+
+   Use ~plt.annotate()~ to add an arrow and some text
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/kMItIO.png
+     fig, ax = plt.subplots()
+     x = np.linspace(0, 20, 1000)
+     ax.plot(x, np.cos(x))
+     ax.axis('equal')
+     ax.annotate('local maximum', xy=(6.28, 1), xytext=(10, 4),
+                 arrowprops=dict(facecolor='black', shrink=0.05))
+     # angel3 draws a quadratic bezier curve. It casts a ray from starting point in
+     # the direction of angleA, and another ray from the end point in the direction
+     # of angleB. The control point is at the intersection of the 2 rays.
+     ax.annotate('local minimum', xy=(5 * np.pi, -1), xytext=(2, -6),
+                 arrowprops=dict(arrowstyle="->", edgecolor='black',
+                 connectionstyle="angle3,angleA=0,angleB=-60"));
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[100]:
+   [[file:./obipy/kMItIO.png]]
+   :END:
+
+** 3D plots
+
+   ~from mpl_toolkits import mplot3d~
+   
+   Once this module is imported, 3d axes can be created by passing
+   ~projection='3d'~
+
+   #+BEGIN_SRC ipython :ipyfile ./obipy/yN9LYv.png
+     from mpl_toolkits import mplot3d
+     rng = np.random.RandomState(0)
+     x = rng.randn(100)
+     y = rng.randn(100)
+     z = rng.randn(100)
+     colors = rng.rand(100)
+     ax = plt.axes(projection='3d')
+     ax.scatter3D(x, y, z, c=colors, cmap='viridis');
+   #+END_SRC
+
+   #+RESULTS:
+   :RESULTS:
+   # Out[87]:
+   [[file:./obipy/yN9LYv.png]]
+   :END:
+
+** TODO Geographics data with Basemap
+
+   Basemap is difficult to install. Retry this chapter on a computer with
+   Anaconda.
