@@ -2,11 +2,11 @@
 
 :SETUP:
 #+STARTUP: showall inlineimages
-#+PROPERTY: header-args :session pyds :exports both :results raw drawer
+#+PROPERTY: header-args :session pyds :exports both :pandoc t
 #+INFOJS_OPT: view:t toc:t ltoc:0 mouse:underline buttons:0 path:http://thomasf.github.io/solarized-css/org-info.min.js
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://thomasf.github.io/solarized-css/solarized-dark.min.css" />
 #+HTML_HEAD: <style>pre.example {background: #001e26;} table{margin: 0 auto;}</style>
-#+BEGIN_SRC ipython :exports none :results silent
+#+BEGIN_SRC jupyter-python :exports none :results silent
   from __future__ import print_function
   %matplotlib inline
   %config InlineBackend.rc={'figure.dpi': 120}
@@ -18,65 +18,16 @@
 :END:
 
 * IPython
-** Emacs
-*** Completion on Windows
-    To get Emacs Python shell completion on Windows, install pyreadline. Then it
-    just works.
-
-*** Disable pager in Emacs
-   
-    put this in ~${HOME}/.ipython/profile_default/startup/no-pager.py~
-
-    #+BEGIN_SRC ipython :exports code :eval no
-    from __future__ import print_function
-    def page_printer(data, start=0, screen_lines=0, pager_cmd=None):
-        if isinstance(data, dict):
-            data = data['text/plain']
-        print(data)
-    import os
-    TERM = os.environ.get('TERM', 'unknown')
-    if TERM in ['emacs', 'dumb', 'xterm-color']:
-        get_ipython().hooks.show_in_pager = page_printer
-    #+END_SRC
-
-*** Format DataFrame as org table
-   
-    put this in ~${HOME}/.ipython/profile_default/startup/org-formatter.py~
-   
-    #+BEGIN_SRC ipython :exports code :eval no
-    import IPython, sys
-    from tabulate import tabulate
-    class OrgFormatter(IPython.core.formatters.BaseFormatter):
-      def __call__(self, obj):
-          try:
-              if 'pandas' in sys.modules:
-                  import pandas as pd
-              else:
-                  return None
-              if (type(obj) == pd.core.frame.DataFrame):
-                  return tabulate(obj, headers='keys', tablefmt='orgtbl')
-          except:
-              return None
-    ip = get_ipython()
-    ip.display_formatter.formatters['text/org'] = OrgFormatter()
-    #+END_SRC
-
 ** Shell commands
    All shell commands can be used with ~!~ prefix.  Results can be assigned to
    python variables.  ~!~ functions run in temporary shell.  ~%~ *magic*
    functions has permanent effect. Many ~%~ magic functions can be used without
    ~%~, these are called *automagic* functions.
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    files = !ls
    files
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[2]:
-   : ['notes.html', 'notes.org', 'obipy']
-   :END:
 
 ** Debugger
    ~%debug~ to enter debugger on last exception
@@ -102,7 +53,7 @@
    - ~np.empty(3)~ uninitialized array
 ** Array attributes
    
-   #+BEGIN_SRC ipython :results output pp
+   #+BEGIN_SRC jupyter-python
    x3 = np.random.randint(10, size=(3, 4, 5))
    print("x3 ndim", x3.ndim)         # dimension
    print("x3 shape", x3.shape)       # shape
@@ -112,233 +63,102 @@
    print("x3 nbytes", x3.nbytes)     # total bytes
    #+END_SRC
 
-   #+RESULTS:
-   : x3 ndim 3
-   : x3 shape (3, 4, 5)
-   : x3 size 60
-   : x3 dtype int32
-   : x3 itemsize 4
-   : x3 nbytes 240
-
 ** Array slicing
    
    Slicing returns a *view* into the original. No copy is made.
 
-   #+BEGIN_SRC ipython :results raw drawer
+   #+BEGIN_SRC jupyter-python
    x2 = np.random.randint(10, size=(3, 4))
    x2
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[4]:
-   #+BEGIN_EXAMPLE
-     array([[8, 1, 2, 5],
-            [8, 1, 3, 8],
-            [9, 3, 1, 7]])
-   #+END_EXAMPLE
-   :END:
-
    Extract 2x2
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
     x2[:2, :2]
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[5]:
-   #+BEGIN_EXAMPLE
-     array([[8, 1],
-            [8, 1]])
-   #+END_EXAMPLE
-   :END:
-
    Reverse
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
     x2[::-1, ::-1]
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[6]:
-   #+BEGIN_EXAMPLE
-     array([[7, 1, 3, 9],
-            [8, 3, 1, 8],
-            [5, 2, 1, 8]])
-   #+END_EXAMPLE
-   :END:
-
    Get column
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
     x2[:, 0]
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[7]:
-   : array([8, 8, 9])
-   :END:
-
    Get row
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
     x2[0, :]
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[8]:
-   : array([8, 1, 2, 5])
-   :END:
-
    To make a copy,  use .copy()
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    x2[:2, :2].copy()
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[9]:
-   #+BEGIN_EXAMPLE
-     array([[8, 1],
-            [8, 1]])
-   #+END_EXAMPLE
-   :END:
 
 ** Change dimension
    
    With ~.reshape()~
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    x = np.array([1,2,3])
    x.reshape((1,3))  # make row vector
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[10]:
-   : array([[1, 2, 3]])
-   :END:
-
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    x.reshape((3,1))  # make column vector
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[11]:
-   #+BEGIN_EXAMPLE
-     array([[1],
-            [2],
-            [3]])
-   #+END_EXAMPLE
-   :END:
-
    Or with ~np.newaxis~
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    x[np.newaxis, :]
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[12]:
-   : array([[1, 2, 3]])
-   :END:
-
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    x[:, np.newaxis]
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[13]:
-   #+BEGIN_EXAMPLE
-     array([[1],
-            [2],
-            [3]])
-   #+END_EXAMPLE
-   :END:
 
 ** Merging and splitting
 
    Merging with ~np.concatenate()~, ~np.vstack()~, ~np.hstack()~
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    np.concatenate([x2, x2]) # or np.vstack()
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[14]:
-   #+BEGIN_EXAMPLE
-     array([[8, 1, 2, 5],
-            [8, 1, 3, 8],
-            [9, 3, 1, 7],
-            [8, 1, 2, 5],
-            [8, 1, 3, 8],
-            [9, 3, 1, 7]])
-   #+END_EXAMPLE
-   :END:
-
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    np.concatenate([x2, x2], axis=1) # or np.hstack()
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[15]:
-   #+BEGIN_EXAMPLE
-     array([[8, 1, 2, 5, 8, 1, 2, 5],
-            [8, 1, 3, 8, 8, 1, 3, 8],
-            [9, 3, 1, 7, 9, 3, 1, 7]])
-   #+END_EXAMPLE
-   :END:
-
    Split with ~np.split()~ , ~np.hsplit()~ , ~np.vsplit()~
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    x = [1, 2, 3, 99, 99, 3, 2, 1]
    np.split(x, [3, 5]) # pass a list of split points
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[16]:
-   : [array([1, 2, 3]), array([99, 99]), array([3, 2, 1])]
-   :END:
 
 ** Specify output container
 
    To avoid creating temporaries.
    
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    x = np.arange(5)
    y = np.empty(5)
    np.multiply(x, 10, out=y)
    y
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[17]:
-   : array([  0.,  10.,  20.,  30.,  40.])
-   :END:
-
    This can even be used with array views. For example, we can write the results
    of a computation to every other element of a specified array:
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    y = np.zeros(10)
    np.power(2, x, out=y[::2])
    y
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[18]:
-   : array([  1.,   0.,   2.,   0.,   4.,   0.,   8.,   0.,  16.,   0.])
-   :END:
 
 ** reduce() and accumulate()
    
@@ -346,28 +166,16 @@
 
    ~reduce()~ computes a final result.
    
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    x = np.arange(1, 6)
    np.add.reduce(x)
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[19]:
-   : 15
-   :END:
-
    ~accumulate()~ saves all intermediate results.
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    np.add.accumulate(x)
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[20]:
-   : array([ 1,  3,  6, 10, 15], dtype=int32)
-   :END:
 
 ** Sort and index sort
 
@@ -377,26 +185,14 @@
 
    ~np.argsort()~ returns sorted index array.
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    x = np.array([2,1,4,3,5])
    np.sort(x)
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[21]:
-   : array([1, 2, 3, 4, 5])
-   :END:
-
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    np.argsort(x)
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[22]:
-   : array([1, 0, 3, 2, 4], dtype=int64)
-   :END:
 
 ** Example: k-Nearest Neighbors
 
@@ -406,7 +202,7 @@
    - Compute the distance between each pair of points.
    - Take the 2 left most columns.
    
-   #+BEGIN_SRC ipython :ipyfile ./obipy/dmv85B.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/dmv85B.png
    np.random.seed(42)
    X = np.random.rand(10, 2)
    dist_sq = np.sum((X[:, np.newaxis, :] - X[np.newaxis, :, :]) ** 2, axis=-1)
@@ -419,12 +215,6 @@
            # use some zip magic to make it happen:
            plt.plot(*zip(X[j], X[i]), color='black')
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[38]:
-   [[file:./obipy/dmv85B.png]]
-   :END:
 
 * Pandas
 ** Series
@@ -439,53 +229,21 @@
     
     data can be a scalar, which is repeated to fill the specified index:
     
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
     pd.Series(5, index=[100, 200, 300])
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[24]:
-    #+BEGIN_EXAMPLE
-      100    5
-      200    5
-      300    5
-      dtype: int64
-    #+END_EXAMPLE
-    :END:
-
     data can be a dictionary:
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
     pd.Series({2:'a', 1:'b', 3:'c'})
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[25]:
-    #+BEGIN_EXAMPLE
-      1    b
-      2    a
-      3    c
-      dtype: object
-    #+END_EXAMPLE
-    :END:
-
     Explicitly specify index:
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
     pd.Series({2:'a', 1:'b', 3:'c'}, index=[3, 2])
     #+END_SRC
-
-    #+RESULTS:
-    :RESULTS:
-    # Out[26]:
-    #+BEGIN_EXAMPLE
-      3    c
-      2    a
-      dtype: object
-    #+END_EXAMPLE
-    :END:
 
     In above example, 'b' is dropped, as 1 is not in the index.
 
@@ -498,7 +256,7 @@
 
    Assume we have this DataFrame:
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
      area = pd.Series({'California': 423967, 'Texas': 695662,
                        'New York': 141297, 'Florida': 170312,
                        'Illinois': 149995})
@@ -509,153 +267,61 @@
      data
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[89]:
-   #+BEGIN_EXAMPLE
-                   area       pop
-     California  423967  38332521
-     Florida     170312  19552860
-     Illinois    149995  12882135
-     New York    141297  19651127
-     Texas       695662  26448193
-   #+END_EXAMPLE
-   :END:
-
    Access columns like dictionary:
    
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
      data['area'] # or just data.area
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[28]:
-   #+BEGIN_EXAMPLE
-     California    423967
-     Florida       170312
-     Illinois      149995
-     New York      141297
-     Texas         695662
-     Name: area, dtype: int64
-   #+END_EXAMPLE
-   :END:
 
    Never assign columns via attribute syntax. For example, use ~data['pop'] = z~
    rather than ~data.pop = z~. Otherwise it can overwrite method names.
 
    Adding new column:
    
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    data['density'] = data['pop'] / data['area']
    data
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[29]:
-   #+BEGIN_EXAMPLE
-                   area       pop     density
-     California  423967  38332521   90.413926
-     Florida     170312  19552860  114.806121
-     Illinois    149995  12882135   85.883763
-     New York    141297  19651127  139.076746
-     Texas       695662  26448193   38.018740
-   #+END_EXAMPLE
-   :END:
 
 *** Indexing DataFrames
     
     Indexing as NumPy array:
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
     data.iloc[:3, :2]
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[30]:
-    #+BEGIN_EXAMPLE
-                    area       pop
-      California  423967  38332521
-      Florida     170312  19552860
-      Illinois    149995  12882135
-    #+END_EXAMPLE
-    :END:
-
     Indexing with column and row names:
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
     data.loc[:'Illinois', :'pop']
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[31]:
-    #+BEGIN_EXAMPLE
-                    area       pop
-      California  423967  38332521
-      Florida     170312  19552860
-      Illinois    149995  12882135
-    #+END_EXAMPLE
-    :END:
-
     *While indexing refers to columns, slicing refers to rows:*
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
     data['Florida':'Illinois']
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[32]:
-    #+BEGIN_EXAMPLE
-                  area       pop     density
-      Florida   170312  19552860  114.806121
-      Illinois  149995  12882135   85.883763
-    #+END_EXAMPLE
-    :END:
-
     *Such slices can also refer to rows by number rather than by index::*
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
     data[1:3]
     #+END_SRC
-
-    #+RESULTS:
-    :RESULTS:
-    # Out[33]:
-    #+BEGIN_EXAMPLE
-                  area       pop     density
-      Florida   170312  19552860  114.806121
-      Illinois  149995  12882135   85.883763
-    #+END_EXAMPLE
-    :END:
 
 *** Operations
 
     All NumPy ufuncs work on Series and DataFrames, and indexes are preserved.
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
       df = pd.DataFrame(np.random.randint(0, 10, (3, 4)),
                         columns=['A', 'B', 'C', 'D'])
       np.sin(df * np.pi / 4)
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[34]:
-    #+BEGIN_EXAMPLE
-                    A             B             C         D
-      0  7.071068e-01  1.000000e+00 -1.000000e+00  0.707107
-      1 -2.449294e-16  1.000000e+00  1.224647e-16  1.000000
-      2 -1.000000e+00  1.224647e-16 -2.449294e-16 -1.000000
-    #+END_EXAMPLE
-    :END:
-
     *Pandas automatically aligns indexes, and fills missing data with NaN*
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
       area = pd.Series({'Alaska': 1723337, 'Texas': 695662,
                         'California': 423967}, name='area')
       population = pd.Series({'California': 38332521, 'Texas': 26448193,
@@ -663,30 +329,12 @@
       population / area
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[35]:
-    #+BEGIN_EXAMPLE
-      Alaska              NaN
-      California    90.413926
-      New York            NaN
-      Texas         38.018740
-      dtype: float64
-    #+END_EXAMPLE
-    :END:
-
     This works because the resulting array contains the union of the indices of
     the inputs:
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
       area.index | population.index
     #+END_SRC
-
-    #+RESULTS:
-    :RESULTS:
-    # Out[36]:
-    : Index(['Alaska', 'California', 'New York', 'Texas'], dtype='object')
-    :END:
 
     We can change the fill value: ~A.add(B, fill_value=0)~
   
@@ -703,54 +351,27 @@
     Operations between DataFrame and Series are by default by rows. To make it
     work by columns, use the above functions and specify axis (0=column, 1= row)
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
     df = pd.DataFrame(np.random.randint(10, size=(3, 4)), columns=list('QRST'))
     #df - df.iloc[0] # first row becomes 0, other rows minus row0
     #df - df.Q       # this is not what you think
     df.subtract(df['Q'], axis=0)
     #+END_SRC
-
-    #+RESULTS:
-    :RESULTS:
-    # Out[37]:
-    #+BEGIN_EXAMPLE
-         Q  R  S  T
-      0  0  2  7  0
-      1  0 -1  0 -5
-      2  0  2  5  6
-    #+END_EXAMPLE
-    :END:
 ** Missing data
    NaN is often used. NumPy has functions to work on them.
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    vals2 = np.array([1, np.nan, 3, 4])
    np.nansum(vals2), np.nanmin(vals2), np.nanmax(vals2)
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[2]:
-   : (8.0, 1.0, 4.0)
-   :END:
-
    Pandas auto cast data to float when it needs to use NaN to represent missing
    data.
     
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    x = pd.Series(range(2), dtype=int)
    x[0] = None
    x
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[5]:
-   #+BEGIN_EXAMPLE
-     0    NaN
-     1    1.0
-     dtype: float64
-   #+END_EXAMPLE
-   :END:
 
    | Typeclass | Conversion When Storing NAs | NA Sentinel Value |
    |-----------+-----------------------------+-------------------|
@@ -770,7 +391,7 @@
      - Can forward fill with ~method='ffill'~ and back fill with ~method='bfill'~
 ** Hierarchical Indexing
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
      index = [('California', 2000),
               ('California', 2010),
               ('New York', 2000),
@@ -785,45 +406,20 @@
      pop = pop.reindex(index)
      pop
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[13]:
-   #+BEGIN_EXAMPLE
-     California  2000    33871648
-                 2010    37253956
-     New York    2000    18976457
-                 2010    19378102
-     Texas       2000    20851820
-                 2010    25145561
-     dtype: int64
-   #+END_EXAMPLE
-   :END:
     
    Unstack the last index column to create a new dimension
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
      pop_df = pop.unstack()
      pop_df
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[14]:
-   #+BEGIN_EXAMPLE
-                     2000      2010
-     California  33871648  37253956
-     New York    18976457  19378102
-     Texas       20851820  25145561
-   #+END_EXAMPLE
-   :END:
 
    *Each extra level in a multi-index represents an extra dimension of data*
 
    This allows us to easily and quickly manipulate and explore even
    high-dimensional data.
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
      pop_df = pd.DataFrame({'total': pop,
                         'under18': [9267089, 9284094,
                                     4687374, 4318033,
@@ -832,44 +428,16 @@
      f_u18.unstack()
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[20]:
-   #+BEGIN_EXAMPLE
-                     2000      2010
-     California  0.273594  0.249211
-     New York    0.247010  0.222831
-     Texas       0.283251  0.273568
-   #+END_EXAMPLE
-   :END:
-
    Multi index levels can have names
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
      pop.index.names = ['state', 'year']
      pop
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[25]:
-   #+BEGIN_EXAMPLE
-     state       year
-     California  2000    33871648
-                 2010    37253956
-     New York    2000    18976457
-                 2010    19378102
-     Texas       2000    20851820
-                 2010    25145561
-     dtype: int64
-   #+END_EXAMPLE
-   :END:
-
    Columns can have multiindex too
 
-   #+BEGIN_SRC ipython
-
-
+   #+BEGIN_SRC jupyter-python :display plain
      # hierarchical indices and columns
      index = pd.MultiIndex.from_product([[2013, 2014], [1, 2]],
                                         names=['year', 'visit'])
@@ -886,20 +454,6 @@
      health_data
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[28]:
-   #+BEGIN_EXAMPLE
-     subject      Bob       Guido         Sue
-     type          HR  Temp    HR  Temp    HR  Temp
-     year visit
-     2013 1      32.0  34.6  30.0  35.8  40.0  38.0
-          2      49.0  37.2  38.0  36.1  43.0  37.7
-     2014 1      36.0  34.3  34.0  37.2  33.0  38.9
-          2      31.0  37.9  57.0  38.7  21.0  37.4
-   #+END_EXAMPLE
-   :END:
-
    This is fundamentally four-dimensional data.
 
    The screen is 2D, Pandas can only present data in 2D on the screen.
@@ -909,64 +463,27 @@
     
    Multiindex levels can be used for data aggregation.
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python :display plain
      health_data.mean(level='visit')
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[43]:
-   #+BEGIN_EXAMPLE
-     subject   Bob        Guido         Sue
-     type       HR   Temp    HR  Temp    HR   Temp
-     visit
-     1        34.0  34.45  32.0  36.5  36.5  38.45
-     2        40.0  37.55  47.5  37.4  32.0  37.55
-   #+END_EXAMPLE
-   :END:
-
    Also by column:
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python :display plain
      health_data.mean(axis=1, level='type')
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[44]:
-   #+BEGIN_EXAMPLE
-     type               HR       Temp
-     year visit
-     2013 1      34.000000  36.133333
-          2      43.333333  37.000000
-     2014 1      34.333333  36.800000
-          2      36.333333  38.000000
-   #+END_EXAMPLE
-   :END:
 
 ** Merge and join
 
    Pandas automatically recognize overlapping columns
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
      df1 = pd.DataFrame({'employee': ['Bob', 'Jake', 'Lisa', 'Sue'],
                          'group': ['Accounting', 'Engineering', 'Engineering', 'HR']})
      df2 = pd.DataFrame({'employee': ['Lisa', 'Bob', 'Jake', 'Sue'],
                          'hire_date': [2004, 2008, 2012, 2014]})
      pd.merge(df1, df2)
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[45]:
-   #+BEGIN_EXAMPLE
-       employee        group  hire_date
-     0      Bob   Accounting       2008
-     1     Jake  Engineering       2012
-     2     Lisa  Engineering       2004
-     3      Sue           HR       2014
-   #+END_EXAMPLE
-   :END:
     
    Merge key can be explicitly specified:
 
@@ -974,24 +491,12 @@
 
    If column names differ, use ~left_on~ and ~right_on~ to specify the columns.
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
      df3 = pd.DataFrame({'name': ['Bob', 'Jake', 'Lisa', 'Sue'],
                          'salary': [70000, 80000, 120000, 90000]})
      # drop() to remove the duplicated column
      pd.merge(df1, df3, left_on="employee", right_on="name").drop("name", axis=1)
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[48]:
-   #+BEGIN_EXAMPLE
-       employee        group  salary
-     0      Bob   Accounting   70000
-     1     Jake  Engineering   80000
-     2     Lisa  Engineering  120000
-     3      Sue           HR   90000
-   #+END_EXAMPLE
-   :END:
 
    merge() can use indices too:
    ~pd.merge(df1, df2, left_index=True, right_index=True)~
@@ -1003,7 +508,7 @@
      
     By default, merge produces *intersection* of the inputs(inner join)
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
       df6 = pd.DataFrame({'name': ['Peter', 'Paul', 'Mary'],
                           'food': ['fish', 'beans', 'bread']},
                          columns=['name', 'food'])
@@ -1013,40 +518,19 @@
       pd.merge(df6, df7)
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[50]:
-    #+BEGIN_EXAMPLE
-         name   food drink
-      0  Mary  bread  wine
-    #+END_EXAMPLE
-    :END:
-
 
     To make a outer join, use the ~how~ keyword (how can also be ~left~ or
     ~right~):
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
       pd.merge(df6, df7, how='outer')
     #+END_SRC
-
-    #+RESULTS:
-    :RESULTS:
-    # Out[51]:
-    #+BEGIN_EXAMPLE
-           name   food drink
-      0   Peter   fish   NaN
-      1    Paul  beans   NaN
-      2    Mary  bread  wine
-      3  Joseph    NaN  beer
-    #+END_EXAMPLE
-    :END:
 
 ** Aggregation and grouping
 
    Use the seaborn planets dataset as example
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    import seaborn as sns
    planets = sns.load_dataset('planets')
    planets.shape
@@ -1055,25 +539,9 @@
    DataFrame has convenience method ~describe()~, that computes several common
    aggregates for each column.
 
-   #+BEGIN_SRC ipython
+   #+BEGIN_SRC jupyter-python
    planets.dropna().describe()
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[66]:
-   #+BEGIN_EXAMPLE
-               number  orbital_period        mass    distance         year
-     count  498.00000      498.000000  498.000000  498.000000   498.000000
-     mean     1.73494      835.778671    2.509320   52.068213  2007.377510
-     std      1.17572     1469.128259    3.636274   46.596041     4.167284
-     min      1.00000        1.328300    0.003600    1.350000  1989.000000
-     25%      1.00000       38.272250    0.212500   24.497500  2005.000000
-     50%      1.00000      357.000000    1.245000   39.940000  2009.000000
-     75%      2.00000      999.600000    2.867500   59.332500  2011.000000
-     max      6.00000    17337.500000   25.000000  354.000000  2014.000000
-   #+END_EXAMPLE
-   :END:
 
    Other built-in Pandas aggregations:
    
@@ -1092,108 +560,32 @@
     
     The ~GroupBy~ object can be seen as a collection of ~DataFrame~s
     
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python :display plain
       planets.groupby('method')['orbital_period'].median()
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[68]:
-    #+BEGIN_EXAMPLE
-      method
-      Astrometry                         631.180000
-      Eclipse Timing Variations         4343.500000
-      Imaging                          27500.000000
-      Microlensing                      3300.000000
-      Orbital Brightness Modulation        0.342887
-      Pulsar Timing                       66.541900
-      Pulsation Timing Variations       1170.000000
-      Radial Velocity                    360.200000
-      Transit                              5.714932
-      Transit Timing Variations           57.011000
-      Name: orbital_period, dtype: float64
-    #+END_EXAMPLE
-    :END:
-
     The ~GroupBy~ object supports iteration over groups:
 
-    #+BEGIN_SRC ipython :results output
+    #+BEGIN_SRC jupyter-python :results output
       for (method, group) in planets.groupby('method'):
           print("{0:30s} shape={1}".format(method, group.shape))
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    Astrometry                     shape=(2, 6)
-    Eclipse Timing Variations      shape=(9, 6)
-    Imaging                        shape=(38, 6)
-    Microlensing                   shape=(23, 6)
-    Orbital Brightness Modulation  shape=(3, 6)
-    Pulsar Timing                  shape=(5, 6)
-    Pulsation Timing Variations    shape=(1, 6)
-    Radial Velocity                shape=(553, 6)
-    Transit                        shape=(397, 6)
-    Transit Timing Variations      shape=(4, 6)
-    :END:
-
     The ~GroupBy~ object pass through methods to its groups:
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python :display plain
     planets.groupby('method')['year'].describe()
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[77]:
-    #+BEGIN_EXAMPLE
-                                     count         mean       std     min      25%  \
-      method
-      Astrometry                       2.0  2011.500000  2.121320  2010.0  2010.75
-      Eclipse Timing Variations        9.0  2010.000000  1.414214  2008.0  2009.00
-      Imaging                         38.0  2009.131579  2.781901  2004.0  2008.00
-      Microlensing                    23.0  2009.782609  2.859697  2004.0  2008.00
-      Orbital Brightness Modulation    3.0  2011.666667  1.154701  2011.0  2011.00
-      Pulsar Timing                    5.0  1998.400000  8.384510  1992.0  1992.00
-      Pulsation Timing Variations      1.0  2007.000000       NaN  2007.0  2007.00
-      Radial Velocity                553.0  2007.518987  4.249052  1989.0  2005.00
-      Transit                        397.0  2011.236776  2.077867  2002.0  2010.00
-      Transit Timing Variations        4.0  2012.500000  1.290994  2011.0  2011.75
-
-                                        50%      75%     max
-      method
-      Astrometry                     2011.5  2012.25  2013.0
-      Eclipse Timing Variations      2010.0  2011.00  2012.0
-      Imaging                        2009.0  2011.00  2013.0
-      Microlensing                   2010.0  2012.00  2013.0
-      Orbital Brightness Modulation  2011.0  2012.00  2013.0
-      Pulsar Timing                  1994.0  2003.00  2011.0
-      Pulsation Timing Variations    2007.0  2007.00  2007.0
-      Radial Velocity                2009.0  2011.00  2014.0
-      Transit                        2012.0  2013.00  2014.0
-      Transit Timing Variations      2012.5  2013.25  2014.0
-    #+END_EXAMPLE
-    :END:
-
     Filter out groups with ~filter()~
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
       df = pd.DataFrame({'A' : ['foo', 'bar', 'foo', 'bar',
                                 'foo', 'bar'],
                          'B' : [1, 2, 3, 4, 5, 6],
                          'C' : [2.0, 5., 8., 1., 2., 9.]})
       df.groupby('A').filter(lambda x: x['B'].mean() > 3.)
     #+END_SRC
-
-    #+RESULTS:
-    :RESULTS:
-    # Out[80]:
-    #+BEGIN_EXAMPLE
-           A  B    C
-      1  bar  2  5.0
-      3  bar  4  1.0
-      5  bar  6  9.0
-    #+END_EXAMPLE
-    :END:
 
     Or more complex things with ~transform()~ and ~apply()~.
 
@@ -1203,131 +595,42 @@
 
     Use titanic data set:
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python
     titanic = sns.load_dataset('titanic')
     titanic.head()
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[81]:
-    #+BEGIN_EXAMPLE
-         survived  pclass     sex   age  sibsp  parch     fare embarked  class  \
-      0         0       3    male  22.0      1      0   7.2500        S  Third
-      1         1       1  female  38.0      1      0  71.2833        C  First
-      2         1       3  female  26.0      0      0   7.9250        S  Third
-      3         1       1  female  35.0      1      0  53.1000        S  First
-      4         0       3    male  35.0      0      0   8.0500        S  Third
-
-           who  adult_male deck  embark_town alive  alone
-      0    man        True  NaN  Southampton    no  False
-      1  woman       False    C    Cherbourg   yes  False
-      2  woman       False  NaN  Southampton   yes   True
-      3  woman       False    C  Southampton   yes  False
-      4    man        True  NaN  Southampton    no   True
-    #+END_EXAMPLE
-    :END:
-
     Pivot table the manual way, two column ~groupby()~ then ~unstack()~:
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python :display plain
     titanic.groupby(['sex', 'class'])['survived'].mean().unstack()
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[83]:
-    #+BEGIN_EXAMPLE
-      class      First    Second     Third
-      sex
-      female  0.968085  0.921053  0.500000
-      male    0.368852  0.157407  0.135447
-    #+END_EXAMPLE
-    :END:
-
     Pivot table syntax:
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python :display plain
     titanic.pivot_table('survived', index='sex', columns='class')
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[84]:
-    #+BEGIN_EXAMPLE
-      class      First    Second     Third
-      sex
-      female  0.968085  0.921053  0.500000
-      male    0.368852  0.157407  0.135447
-    #+END_EXAMPLE
-    :END:
-
     Multi-level pivot tables:
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python :display plain
     age = pd.cut(titanic['age'], [0, 18, 80])
     titanic.pivot_table('survived', ['sex', age], 'class')
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[86]:
-    #+BEGIN_EXAMPLE
-      class               First    Second     Third
-      sex    age
-      female (0, 18]   0.909091  1.000000  0.511628
-             (18, 80]  0.972973  0.900000  0.423729
-      male   (0, 18]   0.800000  0.600000  0.215686
-             (18, 80]  0.375000  0.071429  0.133663
-    #+END_EXAMPLE
-    :END:
-
     Multi-level column index:
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python :display plain
     fare = pd.qcut(titanic['fare'], 2)
     titanic.pivot_table('survived', ['sex', age], [fare, 'class'])
     #+END_SRC
 
-    #+RESULTS:
-    :RESULTS:
-    # Out[89]:
-    #+BEGIN_EXAMPLE
-      fare            (-0.001, 14.454]                     (14.454, 512.329]  \
-      class                      First    Second     Third             First
-      sex    age
-      female (0, 18]               NaN  1.000000  0.714286          0.909091
-             (18, 80]              NaN  0.880000  0.444444          0.972973
-      male   (0, 18]               NaN  0.000000  0.260870          0.800000
-             (18, 80]              0.0  0.098039  0.125000          0.391304
-
-      fare
-      class              Second     Third
-      sex    age
-      female (0, 18]   1.000000  0.318182
-             (18, 80]  0.914286  0.391304
-      male   (0, 18]   0.818182  0.178571
-             (18, 80]  0.030303  0.192308
-    #+END_EXAMPLE
-    :END:
-
     Include totals in ~pivot_table()~ with ~margins~
 
-    #+BEGIN_SRC ipython
+    #+BEGIN_SRC jupyter-python :display plain
     titanic.pivot_table('survived', index='sex', columns='class', margins=True)
     #+END_SRC
-
-    #+RESULTS:
-    :RESULTS:
-    # Out[95]:
-    #+BEGIN_EXAMPLE
-      class      First    Second     Third       All
-      sex
-      female  0.968085  0.921053  0.500000  0.742038
-      male    0.368852  0.157407  0.135447  0.188908
-      All     0.629630  0.472826  0.242363  0.383838
-    #+END_EXAMPLE
-    :END:
 
 ** TODO Working with time (reread this)
    
@@ -1351,7 +654,7 @@
    axes. These can be acquired from ~plt.gcf()~ (current figure) and ~plt.gca()~
    (current axes)
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/mjjOPg.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/mjjOPg.png
      x = np.linspace(0, 10, 100)
 
      plt.figure()  # create a plot figure
@@ -1365,18 +668,12 @@
      plt.plot(x, np.cos(x));
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[64]:
-   [[file:./obipy/mjjOPg.png]]
-   :END:
-
 
 ** Object-oriented interface
 
    Plotting functions are methods of explicit ~Figure~ and ~Axes~ objects.
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/sjEL3B.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/sjEL3B.png
      # First create a grid of plots
      # ax will be an array of two Axes objects
      fig, ax = plt.subplots(2)
@@ -1386,85 +683,48 @@
      ax[1].plot(x, np.cos(x));
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[65]:
-   [[file:./obipy/sjEL3B.png]]
-   :END:
-
 ** Line plot
 
    line style and color can be combined into a single non-keyword argument to
    ~plt.plot()~
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/zxSlik.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/zxSlik.png
    plt.plot(x, x + 0, '-g')  # solid green
    plt.plot(x, x + 1, '--c') # dashed cyan
    plt.plot(x, x + 2, '-.k') # dashdot black
    plt.plot(x, x + 3, ':r');  # dotted red
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[67]:
-   [[file:./obipy/zxSlik.png]]
-   :END:
-
    plot limits can be set with ~xlim()~ and ~ylim()~
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/QdTPfG.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/QdTPfG.png
    plt.plot(x, np.sin(x))
    plt.xlim(-1, 11)
    plt.ylim(-1.5, 1.5);
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[197]:
-   [[file:./obipy/QdTPfG.png]]
-   :END:
-
    Reversing the order of the arguments makes axis to be displayed in reverse
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/aNQD0K.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/aNQD0K.png
    plt.plot(x, np.sin(x))
    plt.xlim(10, 0)
    plt.ylim(1.2, -1.2);
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[69]:
-   [[file:./obipy/aNQD0K.png]]
-   :END:
-
    ~x~ and ~y~ limits can also be set with a single call ~plt.axis()~
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/Og0MKs.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/Og0MKs.png
    plt.plot(x, np.sin(x))
    plt.axis([-1, 11, -1.5, 1.5]);
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[70]:
-   [[file:./obipy/Og0MKs.png]]
-   :END:
-
    ~axis()~ can ensure 1:1 aspect ratio (one unit of ~x~ is equal to one unit of
    ~y~ on screen) :
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/gDVhhU.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/gDVhhU.png
    plt.plot(x, np.sin(x))
    plt.axis('equal');
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[71]:
-   : (-0.5, 10.5, -1.0993384025373631, 1.0996461858110391)
-   [[file:./obipy/gDVhhU.png]]
-   :END:
 
    Add title with ~plt.title()~
 
@@ -1473,17 +733,11 @@
    Add legend by specifying label of each line with the ~label~ keyword, then
    call ~plt.legend()~
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/UzYz3Z.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/UzYz3Z.png
    plt.plot(x, np.sin(x), '-g', label='sin(x)')
    plt.plot(x, np.cos(x), ':b', label='cos(x)')
    plt.legend();
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[72]:
-   [[file:./obipy/UzYz3Z.png]]
-   :END:
 
    most ~plt~ functions translate directly to ~ax~ methods. But some are not for
    MATLAB compatibility:
@@ -1496,19 +750,13 @@
 
    But it's usually more convenient to use ~ax.set()~ to set all properties at once:
    
-   #+BEGIN_SRC ipython :ipyfile ./obipy/ZmTq3Q.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/ZmTq3Q.png
      ax = plt.axes()
      ax.plot(x, np.sin(x))
      ax.set(xlim=(0, 10), ylim=(-2, 2),
             xlabel='x', ylabel='sin(x)',
             title='A Simple Plot');
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[73]:
-   [[file:./obipy/ZmTq3Q.png]]
-   :END:
 
 ** Scatter plots
 
@@ -1517,7 +765,7 @@
 
    There are many different markers to choose from:
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/S6FXbL.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/S6FXbL.png
      rng = np.random.RandomState(0)
      for marker in ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd', 'p', 'h']:
          plt.plot(rng.rand(5), rng.rand(5), marker,
@@ -1526,33 +774,20 @@
      plt.xlim(0, 1.8);
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[84]:
-   [[file:./obipy/S6FXbL.png]]
-   :END:
-
    dots and lines can be combined:
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/80EdWz.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/80EdWz.png
    x = np.linspace(0, 10, 30)
    y = np.sin(x)
    plt.plot(x, y, '-o');
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[82]:
-   : [<matplotlib.lines.Line2D at 0x1be819152b0>]
-   [[file:./obipy/80EdWz.png]]
-   :END:
 
    A more powerful method of creating scatter plots is ~plt.scatter()~. It can
    be used to create scatter plots where the properties of each point (size,
    face color, edge color, etc.) can be individually controlled or mapped to
    data.
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/0l54T4.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/0l54T4.png
      rng = np.random.RandomState(0)
      x = rng.randn(100)
      y = rng.randn(100)
@@ -1563,12 +798,6 @@
      plt.colorbar();  # show color scale
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[85]:
-   [[file:./obipy/0l54T4.png]]
-   :END:
-
    Color and size combined with X-Y let us explore four different dimension of
    the data at the same time:
 
@@ -1578,37 +807,24 @@
    
    Draw errorbars graph with ~plt.errorbar~
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/Di5Yea.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/Di5Yea.png
    x = np.linspace(0, 10, 50)
    dy = 0.8
    y = np.sin(x) + dy * np.random.randn(50)
    plt.errorbar(x, y, yerr=dy, fmt='.');
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[170]:
-   [[file:./obipy/Di5Yea.png]]
-   :END:
-
    Show continues error with ~fill_between()~
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/bIPQCT.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/bIPQCT.png
    y = np.sin(x) + dy * np.random.randn(50)
    plt.plot(x, y, '-o');
    plt.fill_between(x, y - 0.8, y+0.8, color='gray', alpha=0.2);
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[175]:
-   : <matplotlib.collections.PolyCollection at 0x1be81755400>
-   [[file:./obipy/bIPQCT.png]]
-   :END:
-
 ** Visualizing three-dimensional function with ~contour()~ and ~imshow()~
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/988afX.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/988afX.png
    def f(x, y):
        return np.sin(x) ** 10 + np.cos(10 + y * x) * np.cos(x)
    x = np.linspace(0, 5, 50)
@@ -1618,61 +834,35 @@
    plt.contour(X, Y, Z, colors='black');
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[178]:
-   [[file:./obipy/988afX.png]]
-   :END:
-
    Or fill with color:
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/K1HLsm.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/K1HLsm.png
      plt.contourf(X, Y, Z, 10);      # 10 steps
      plt.colorbar();                 # add legend
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[200]:
-   : <matplotlib.colorbar.Colorbar at 0x1be8443f048>
-   [[file:./obipy/K1HLsm.png]]
-   :END:
-
    To get smooth image, use ~imshow()~
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/ayIobi.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/ayIobi.png
      plt.imshow(Z, extent=[0, 5, 0, 5], origin='lower')
      plt.colorbar();
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[202]:
-   : <matplotlib.colorbar.Colorbar at 0x1be848690b8>
-   [[file:./obipy/ayIobi.png]]
-   :END:
-
    Combine contour and image, and add labels
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/rbSyz5.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/rbSyz5.png
    plt.imshow(Z, extent=[0, 5, 0, 5], origin='lower', alpha=0.7)
    contours = plt.contour(X, Y, Z, 3, colors='black')
    plt.clabel(contours, inline=True, fontsize=8)
    plt.colorbar();
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[207]:
-   [[file:./obipy/rbSyz5.png]]
-   :END:
-
 ** Histograms, Binnings, and Density
 
    ~histtype='stepfilled'~ with some transparency ~alpha~ very useful when
    comparing several histograms
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/qdKvXJ.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/qdKvXJ.png
      x1 = np.random.normal(0, 0.8, 1000)
      x2 = np.random.normal(-2, 1, 1000)
      x3 = np.random.normal(3, 2, 1000)
@@ -1684,15 +874,9 @@
      plt.hist(x3, **kwargs);
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[221]:
-   [[file:./obipy/qdKvXJ.png]]
-   :END:
-
    Two-dimensional histogram with ~plt.hist2d()~
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/qtPhdT.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/qtPhdT.png
      mean = [0, 0]
      cov = [[1, 1], [1, 2]]
      x, y = np.random.multivariate_normal(mean, cov, 10000).transpose()
@@ -1701,28 +885,16 @@
      cb.set_label('counts in bin')
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[231]:
-   [[file:./obipy/qtPhdT.png]]
-   :END:
-
    Hexagonal binnings
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/qrcEUJ.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/qrcEUJ.png
    plt.hexbin(x, y, gridsize=30, cmap='Blues')
    cb = plt.colorbar(label='count in bin')
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[232]:
-   [[file:./obipy/qrcEUJ.png]]
-   :END:
-
 ** Subplots arrangement
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/xBXM6z.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/xBXM6z.png
      grid = plt.GridSpec(2, 3, wspace=0.4, hspace=0.3)
      plt.subplot(grid[0, 0])
      plt.subplot(grid[0, 1:])
@@ -1730,17 +902,11 @@
      plt.subplot(grid[1, 2]);
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[238]:
-   [[file:./obipy/xBXM6z.png]]
-   :END:
-
 ** Arrows and annotation
 
    Use ~plt.annotate()~ to add an arrow and some text
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/kMItIO.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/kMItIO.png
      fig, ax = plt.subplots()
      x = np.linspace(0, 20, 1000)
      ax.plot(x, np.cos(x))
@@ -1755,12 +921,6 @@
                  connectionstyle="angle3,angleA=0,angleB=-60"));
    #+END_SRC
 
-   #+RESULTS:
-   :RESULTS:
-   # Out[100]:
-   [[file:./obipy/kMItIO.png]]
-   :END:
-
 ** 3D plots
 
    ~from mpl_toolkits import mplot3d~
@@ -1768,7 +928,7 @@
    Once this module is imported, 3d axes can be created by passing
    ~projection='3d'~
 
-   #+BEGIN_SRC ipython :ipyfile ./obipy/yN9LYv.png
+   #+BEGIN_SRC jupyter-python :ipyfile ./obipy/yN9LYv.png
      from mpl_toolkits import mplot3d
      rng = np.random.RandomState(0)
      x = rng.randn(100)
@@ -1778,12 +938,6 @@
      ax = plt.axes(projection='3d')
      ax.scatter3D(x, y, z, c=colors, cmap='viridis');
    #+END_SRC
-
-   #+RESULTS:
-   :RESULTS:
-   # Out[87]:
-   [[file:./obipy/yN9LYv.png]]
-   :END:
 
 ** TODO Geographics data with Basemap
 
