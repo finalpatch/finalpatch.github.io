@@ -2,7 +2,7 @@
 
 *Might & Magic IV & V: World of Xeen freezes and corrupts itself when you play it
 with a Roland MT-32 — on emulators **and** on real hardware. Here's the months-long
-hunt for the bug, and the eight bytes that fix it.*
+hunt for the bug, and the ten bytes that fix it.*
 
 ## The game that raised me
 
@@ -207,48 +207,57 @@ varied crash sites — falls out of this one uninitialized register.
 
 ## The fix: and a second bug hiding behind the first
 
-Fixing the crash means giving that ramp a *real* volume slot to work on instead of
-the uninitialized register. So: which channel is it supposed to fade? The ramp
-hard-codes its MIDI status byte to `0xB9`, and the volume table is indexed by
-channel, so I first pointed it at "channel 8's" slot. The crash stopped — but the
-game told me I had the wrong channel.
+Fixing the crash means giving that ramp a *real* volume slot instead of the
+uninitialized register. So: which channel is it supposed to fade? That question
+turned into a second bug — one I only nailed down by listening.
 
-Playing the patched build, I noticed the **footstep sound effect** got quieter
-every time I talked to a vendor, and stayed quiet until I left the building. My
-"fix" was now reliably ducking the sound-effects volume — something the original
-bug, for all its chaos, never actually did (its wild writes hit random memory, not
-that specific slot).
+My first attempts pointed the ramp at the channel its `0xB9` status byte named, and
+the crash stopped — but the game told me I had it wrong. The **footstep sound
+effect** dropped in volume every time I talked to a vendor and stayed quiet until I
+left the building. I'd switched on a sound-effects duck that the original bug, for
+all its chaos, never actually did.
 
-That sent me back to the driver, and out fell a **second, quieter bug.** This
-driver has no channel 8 — the sound-effects channel is **channel 7** (MIDI status
-`0xB8`). And the driver can't keep that straight: half of it correctly addresses
-the SFX channel as `0xB8` (the "all notes off" and the SFX-volume init both use
-`B8`), while the music-volume init *and* this fade ramp use `0xB9` — channel 8,
-which doesn't exist. A plain off-by-one, baked into the shipped binary, that had
-simply never mattered because nothing downstream cared about a stray MIDI message
-to a nonexistent channel.
+Digging into how the driver sets its volumes exposed the real shape of it. There
+are two non-melodic channels, and the driver has them **transposed**:
+
+- **Sound effects** live on MIDI channel 8 (status `0xB9`) — that's the slot the
+  footsteps actually use, with their own volume (`0x7F`, full), and they should
+  *never* fade with the music.
+- **Percussion** lives on MIDI channel 7 (status `0xB8`), with the normal music
+  volume (`0x4F`), and it *should* fade out with the rest of the music.
+
+But every place the driver names one of those two channels, it uses the **wrong
+number** — all four of them:
+
+| code | what it does | uses | should use |
+|---|---|---|---|
+| all-notes-off (FX start) | silence the effects | `B8` | `B9` |
+| FX volume init (`0x7F`) | set effects volume | `B8` | `B9` |
+| music volume init (`0x4F`) | set percussion volume | `B9` | `B8` |
+| the fade ramp | fade percussion with music | `B9` | `B8` |
+
+It's a clean transposition — the sound designer and the programmer evidently
+disagreed about which channel was which, and since the *audible* result (footsteps
+at a fixed volume) looked fine, nobody ever caught it. It only became visible when
+the fade half of the mistake also turned out to read an uninitialized register and
+started corrupting memory.
 
 So the real fix is two parts:
 
-1. Point the ramp's three volume references at the **correct** SFX slot,
-   `0x014D + 7 = 0x0154`, directly — no register:
+1. Kill the crash: point the ramp's three volume references at a fixed slot
+   (the percussion slot `0x0154`), no register:
    ```
    cmp byte [bx+014D], 28   ->   cmp byte [0154], 28
    dec byte [bx+014D]       ->   dec byte [0154]
    mov ah,  [bx+014D]       ->   mov ah,  [0154]
    ```
-2. Correct the channel number itself everywhere it's wrong — both `mov ah,B9`
-   (`B4 B9`) sends become `mov ah,B8`:
-   ```
-   mov ah, B9   ->   mov ah, B8     (the fade ramp, and the music-volume init)
-   ```
+2. Un-transpose the channels: swap every `mov ah,B8` ⇄ `mov ah,B9` (all four sends).
 
-Eight bytes total, all **length-preserving** — same instruction sizes, so nothing
-else in the binary moves. The uninitialized register is gone, and the ramp now
-fades the channel it's actually addressing. With that, the footsteps behave and
-the music fades cleanly. (Care is needed not to "fix" the `0xB9` bytes that are
-really `mov cx,0xFFFF` opcodes or jump offsets elsewhere in the driver — only the
-two `B4 B9` channel-sends are the bug.)
+Ten bytes total, all **length-preserving** — same instruction sizes, so nothing
+else moves. Now the effects channel keeps its full volume and is never faded, the
+percussion fades with the music, and the crash is gone. (One trap: most `0xB8`/`0xB9`
+bytes in the driver are really `mov ax`/`mov cx,0xFFFF` opcodes and jump offsets —
+only the four `B4 B8`/`B4 B9` *channel sends* should be swapped.)
 
 ## Getting the fix into the game files
 
@@ -260,8 +269,8 @@ a small Python tool (with Claude Code) that:
 1. Decrypts the archive index and locates the driver resource.
 2. De-obfuscates the member (a simple XOR).
 3. **Finds the buggy ramp by pattern** rather than a hardcoded offset — it looks
-   for the SFX fade ramp that runs through an uninitialized register — then
-   verifies and applies the eight-byte fix (and corrects the `B9`→`B8` sends).
+   for the fade ramp that runs through an uninitialized register — then
+   verifies and applies the ten-byte fix (the ramp slot plus the four swapped sends).
 4. Re-obfuscates and splices it back in place. Because the patch is
    length-preserving, the archive index never changes — it's a pure in-place
    patch.
@@ -273,16 +282,20 @@ Install V on top of IV and they fuse into the combined World of Xeen, and the
 **newer (1993) driver from `INTRO.CC` is the one that loads and stays resident.**
 
 So I pulled the ROLMUS driver out of *both* archives and compared them. The 1992
-(Clouds) build doesn't fade the SFX channel at all — it goes straight to the
-melody-channels loop, and has no uninitialized-register ramp to get wrong. The
-1993 (Darkside) build is 246 bytes larger and **adds** the SFX-channel fade ramp —
-ships it with the uninitialized `bx`, *and* gets the channel number off by one.
+(Clouds) build fades only the melodic parts — its **percussion never fades out with
+the music**, and it has no uninitialized-register ramp to get wrong. The 1993
+(Darkside) build is 246 bytes larger and **adds** a ramp to fade the percussion too
+— but ships it with the uninitialized `bx`, *and* with the percussion/SFX channel
+numbers transposed.
 
-In other words, this isn't some dusty unreachable code path. It's a **regression**:
-someone added a feature (fade the SFX channel on the way out) in the 1993 rewrite,
-botched both the register setup and the channel number, and that's the build the
-combined game everyone plays actually runs. The 1992 game was fine. My patch tool
-inspects each archive and only touches the vulnerable 1993 build.
+In other words, this isn't some dusty unreachable code path — it's a **regression,
+and a well-intentioned one.** The likely story: someone noticed the percussion kept
+playing at full volume while the rest of the music faded out in Clouds, added a
+ramp to fix it for the Darkside rewrite, and botched it twice over — the wild
+register that corrupts memory, and a channel number swapped with the effects
+channel so it was fading the wrong thing. That's the build the combined game
+everyone actually plays. The 1992 game was fine. My patch tool inspects each
+archive and only touches the vulnerable 1993 build.
 
 Patched, verified, and the game now plays the MT-32 soundtrack for hours without a
 hiccup — the way it was meant to sound, finally without the self-destruct.
@@ -303,10 +316,11 @@ game.
 **Downloads**
 
 - **Pre-patched `INTRO.CC`** — drop-in replacement; back up your original first.
-  *[download link]*
+  + [English Version](INTRO.CC.zip)
+  + [Chinese Version](INTRO.CC.chinese.zip)
 - **`ccpatch.py`** — the CC extract/patch tool, if you'd rather patch your own copy
   or inspect the change yourself. Run `python3 ccpatch.py patch INTRO.CC 0x5084`.
-  *[download link]*
+  + [Download](ccpatch.py)
 
 **Notes & credits.** The detective work was done in **DOSBox-X's** debugger
 (memory watchpoints were the hero). The patch tool was written with **Claude
