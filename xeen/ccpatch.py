@@ -114,13 +114,18 @@ def cmd_locate(args):
         tag.append("ch9(B9)" if c['ch9'] else "chN(B1+bl)")
         note = ""
         if not c['bx_loaded'] and c['ch9']:
-            note = f"  <-- BUGGY; fix -> [0x{c['disp']+8:04X}] (channel 8)"
+            note = f"  <-- BUGGY; fix -> [0x{c['disp']+SFX_CHANNEL:04X}] (SFX channel {SFX_CHANNEL}, status B8)"
         print(f"  fade ramp @0x{c['pos']:04X}  disp=0x{c['disp']:04X}  [{' '.join(tag)}]{note}")
 
+SFX_CHANNEL = 7   # the SFX channel is 7 (status 0xB8); the driver is inconsistent and
+                  # half its code wrongly addresses it as channel 8 (status 0xB9).
+
 def apply_fix(drv):
-    """Return (patched_drv, info). Patches the buggy BX-uninitialised first fade
-    ramp so its three [bx+volbase] references address the fixed slot of the channel
-    it transmits on (status 0xB9 -> channel 0xB9-0xB1 = 8 -> [volbase+8])."""
+    """Return (patched_drv, info). Two parts:
+      1) the buggy first fade ramp: point its three [bx+volbase] refs at the SFX
+         channel's fixed slot [volbase+7], and correct its send status B9->B8;
+      2) globally correct the off-by-one: every `mov ah,B9` (B4 B9) -> `mov ah,B8`,
+         since channel 8 does not exist and B8 is the real SFX channel."""
     cands = [c for c in find_fade_bug(drv) if not c['bx_loaded'] and c['ch9']]
     if not cands:
         raise SystemExit("no unpatched BX-uninitialised B9 fade ramp found "
@@ -130,14 +135,8 @@ def apply_fix(drv):
     c = cands[0]
     p = c['pos']; volbase = c['disp']
     drv = bytearray(drv)
-    # channel is taken from the hard-coded controller status (mov ah,B9 == B4 B9)
-    bpos = drv.find(b'\xB4\xB9', p, p + 0x40)
-    if bpos < 0:
-        raise SystemExit("could not find the B9 channel-status send in the ramp")
-    channel = drv[bpos + 1] - 0xB1               # 0xB9 -> 8
-    nd = volbase + channel                       # fixed volume slot for that channel
+    nd = volbase + SFX_CHANNEL                    # [014D+7] = [0154]
     lo, hi = nd & 0xFF, (nd >> 8) & 0xFF
-    # the volume send: mov ah,[bx+volbase] = 8A A7 <volbase>
     sp = drv.find(bytes([0x8A, 0xA7, volbase & 0xFF, (volbase >> 8) & 0xFF]), p, p + 0x40)
     if sp < 0:
         raise SystemExit("could not find the volume send (mov ah,[bx+volbase])")
@@ -149,17 +148,26 @@ def apply_fix(drv):
     drv[p+8] = 0x0E; drv[p+9] = lo; drv[p+10] = hi
     # mov ah,[bx+volbase]      -> mov ah,[nd]         (A7->26)
     drv[sp+1] = 0x26; drv[sp+2] = lo; drv[sp+3] = hi
-    return bytes(drv), {'pos': p, 'volbase': volbase, 'channel': channel,
-                        'newdisp': nd, 'cmp': p, 'dec': p+7, 'send': sp}
+    # correct every channel send `mov ah,B9` -> `mov ah,B8`
+    b9 = []
+    i = 0
+    while True:
+        j = drv.find(b'\xB4\xB9', i)
+        if j < 0: break
+        drv[j+1] = 0xB8; b9.append(j); i = j + 2
+    return bytes(drv), {'pos': p, 'volbase': volbase, 'channel': SFX_CHANNEL,
+                        'newdisp': nd, 'cmp': p, 'dec': p+7, 'send': sp, 'b9_to_b8': b9}
 
 def cmd_patch(args):
     data, count, entries = load(args.cc)
     ent = find(entries, int(args.id, 16))
     drv = member_bytes(data, ent, decode=True)
     patched, info = apply_fix(drv)
-    print(f"patching ramp @0x{info['pos']:04X} (channel {info['channel']}): "
+    print(f"fade ramp @0x{info['pos']:04X} -> SFX channel {info['channel']}: "
           f"cmp@0x{info['cmp']:04X} dec@0x{info['dec']:04X} send@0x{info['send']:04X}  "
           f"[bx+0x{info['volbase']:04X}] -> [0x{info['newdisp']:04X}]")
+    print(f"channel-status fix: {len(info['b9_to_b8'])}x  mov ah,B9 -> mov ah,B8  "
+          f"at {[hex(x) for x in info['b9_to_b8']]}")
     # re-encode and splice back in place (size unchanged -> index/offsets unchanged)
     enc = bytes(b ^ XOR for b in patched)
     assert len(enc) == ent['size']
