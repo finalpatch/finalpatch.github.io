@@ -283,10 +283,11 @@ game.
 **Downloads**
 
 - **Pre-patched `INTRO.CC`** — drop-in replacement; back up your original first.
-  *[download link]*
+  + [English Version](INTRO.CC.zip)
+  + [Chinese Version](INTRO.CC.chinese.zip)
 - **`ccpatch.py`** — the CC extract/patch tool, if you'd rather patch your own copy
   or inspect the change yourself. Run `python3 ccpatch.py patch INTRO.CC 0x5084`.
-  *[download link]*
+  + [Download](ccpatch.py)
 
 **Notes & credits.** The detective work was done in **DOSBox-X's** debugger
 (memory watchpoints were the hero). The patch tool was written with **Claude
